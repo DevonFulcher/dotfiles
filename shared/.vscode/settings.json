@@ -1,4 +1,7 @@
 {
     "python.formatting.provider": "black",
-    "editor.renderWhitespace": "all"
+    "editor.renderWhitespace": "all",
+    "files.exclude": {
+        "**/.git": false
+    }
 }
