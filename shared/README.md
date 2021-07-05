@@ -1,0 +1,1 @@
+list extensions: `code --list-extensions > extensions.txt`
