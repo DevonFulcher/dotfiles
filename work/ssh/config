@@ -1,13 +1,21 @@
-Host DevonSandboxEmory
+Host devonemory
   HostName 10.65.167.44
   IdentityFile ~/.ssh/emory_connect.pem
   User ubuntu
   LocalForward 127.0.0.1:4831 127.0.0.1:4831
 
-Host ImageViewer
+Host imageviewer
   HostName 10.65.166.186
   IdentityFile ~/.ssh/emory_connect.pem
   User ubuntu
   LocalForward 127.0.0.1:5000 127.0.0.1:5000
   LocalForward 127.0.0.1:4567 127.0.0.1:4567
   LocalForward 127.0.0.1:1444 127.0.0.1:1444
+
+Host viggy
+  HostName 10.65.167.42
+  User devon
+
+Host danielle
+  HostName 10.65.167.80
+  User devon
