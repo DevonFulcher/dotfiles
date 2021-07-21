@@ -15,7 +15,13 @@ Host imageviewer
 Host viggy
   HostName 10.65.167.42
   User devon
+  LocalForward 127.0.0.1:4831 127.0.0.1:4831
 
 Host danielle
   HostName 10.65.167.80
+  User devon
+  LocalForward 127.0.0.1:4831 127.0.0.1:4831
+
+Host joe
+  HostName 10.65.167.84
   User devon
