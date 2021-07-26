@@ -1,5 +1,6 @@
 {
     "python.formatting.provider": "black",
+    "python.analysis.extraPaths": ["lib"],
     "editor.renderWhitespace": "all",
     "files.exclude": {
         "**/.git": false
