@@ -9,7 +9,7 @@ Host imageviewer
   IdentityFile ~/.ssh/emory_connect.pem
   User ubuntu
   LocalForward 127.0.0.1:5000 127.0.0.1:5000
-  LocalForward 127.0.0.1:4567 127.0.0.1:4567
+  LocalForward 127.0.0.1:5678 127.0.0.1:5678
   LocalForward 127.0.0.1:1444 127.0.0.1:1444
 
 Host viggy
@@ -24,4 +24,21 @@ Host danielle
 
 Host joe
   HostName 10.65.167.84
+  IdentityFile ~/.ssh/MLEngineering.pem
+  User ubuntu
+
+Host ravi
+  HostName 10.65.167.27
+  IdentityFile ~/.ssh/emory_connect.pem
+  LocalForward 127.0.0.1:4831 127.0.0.1:4831
   User devon
+
+Host raviubuntu
+  HostName 10.65.167.27
+  IdentityFile ~/.ssh/emory_connect.pem
+  LocalForward 127.0.0.1:4831 127.0.0.1:4831
+  User ubuntu
+
+Host marina2
+  HostName 10.65.167.11
+  IdentityFile ~/.ssh/MLEngineering.pem

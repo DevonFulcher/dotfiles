@@ -14,5 +14,5 @@
         "ms-python.python"
     ],
     "remote.restoreForwardedPorts": true,
-    "remote.SSH.configFile": "~/.ssh/config"
+    "remote.SSH.configFile": "~/.ssh/config",
 }
