@@ -30,15 +30,21 @@ Host joe
 Host ravi
   HostName 10.65.167.27
   IdentityFile ~/.ssh/emory_connect.pem
-  LocalForward 127.0.0.1:4831 127.0.0.1:4831
+  LocalForward 127.0.0.1:8989 127.0.0.1:8989
   User devon
 
 Host raviubuntu
   HostName 10.65.167.27
   IdentityFile ~/.ssh/emory_connect.pem
-  LocalForward 127.0.0.1:4831 127.0.0.1:4831
+  LocalForward 127.0.0.1:8989 127.0.0.1:8989
   User ubuntu
 
 Host marina2
   HostName 10.65.167.11
   IdentityFile ~/.ssh/MLEngineering.pem
+  User ubuntu
+
+Host ucsf
+  HostName 10.128.3.2
+  LocalForward 127.0.0.1:8888 127.0.0.1:8888
+  LocalForward 127.0.0.1:8890 127.0.0.1:8890
