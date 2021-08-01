@@ -1,6 +1,9 @@
 set number
 set relativenumber
 
+:set list
+:set listchars=tab:→\ ,space:·,nbsp:␣,trail:•,eol:¶,precedes:«,extends:»
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Maintainer: 
 "       Amir Salihefendic — @amix3k
