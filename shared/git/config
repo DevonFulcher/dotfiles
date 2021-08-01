@@ -1,2 +1,3 @@
 [core]
     editor = vi
+    excludesfile = ~/.gitignore_global
