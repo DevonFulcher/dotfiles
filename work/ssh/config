@@ -48,4 +48,4 @@ Host ucsf
   HostName 10.128.3.2
   LocalForward 127.0.0.1:8888 127.0.0.1:8888
   LocalForward 127.0.0.1:8890 127.0.0.1:8890
-  LocalForward 127.0.0.1:75123 127.0.0.1:75123
+  LocalForward 127.0.0.1:8031 127.0.0.1:8031
