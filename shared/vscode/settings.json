@@ -1,0 +1,32 @@
+{
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter-notebook"
+    },
+    "python.showStartPage": false,
+    "workbench.editor.untitled.hint": "hidden",
+    "workbench.startupEditor": "none",
+    "window.zoomLevel": 1,
+    "notebook.cellToolbarLocation": {
+        "default": "right",
+        "jupyter-notebook": "left"
+    },
+    "notebook.lineNumbers": "on",
+    "security.workspace.trust.untrustedFiles": "open",
+    "python.formatting.provider": "black",
+    "editor.renderWhitespace": "all",
+    "files.exclude": {
+        "**/.git": false
+    },
+    "remote.SSH.defaultExtensions": [
+        "mechatroner.rainbow-csv",
+        "ms-azuretools.vscode-docker",
+        "eamodio.gitlens",
+        "zainchen.json",
+        "ms-toolsai.jupyter",
+        "ms-python.vscode-pylance",
+        "ms-python.python"
+    ],
+    "remote.restoreForwardedPorts": true,
+    "remote.SSH.configFile": "~/.ssh/config",
+    "terminal.integrated.inheritEnv": false
+}
