@@ -3,7 +3,6 @@
         "*.ipynb": "jupyter-notebook"
     },
     "go.formatTool": "gofmt",
-    "python.showStartPage": false,
     "workbench.editor.untitled.hint": "hidden",
     "workbench.startupEditor": "none",
     "window.zoomLevel": 1,
@@ -32,5 +31,12 @@
     "[javascript]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-    "files.autoSave": "afterDelay"
+    "files.autoSave": "afterDelay",
+    "editor.wordWrap": "on",
+    "workbench.editor.enablePreview": false,
+    "editor.autoClosingBrackets": "never",
+    "editor.autoClosingDelete": "never",
+    "editor.autoClosingOvertype": "never",
+    "editor.autoClosingQuotes": "never",
+    "editor.bracketPairColorization.independentColorPoolPerBracketType": true
 }
