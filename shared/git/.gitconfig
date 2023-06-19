@@ -1,3 +1,29 @@
 [core]
-    editor = vi
+    editor = vim
     excludesfile = ~/.gitignore_global
+    name = Devon Fulcher
+    email = devonfulcher3@gmail.com
+
+[branch]
+    # Show most recently changed branches first.
+    sort = -committerdate
+
+#[commit]
+
+    # https://help.github.com/articles/signing-commits-using-gpg/
+    # https://withblue.ink/2020/05/17/how-and-why-to-sign-git-commits.html
+    #gpgsign = true
+
+[diff]
+
+    # Detect copies as well as renames.
+    renames = copies
+
+[help]
+
+    # Automatically correct and execute mistyped commands.
+    autocorrect = 1
+
+[init]
+
+    defaultBranch = main
