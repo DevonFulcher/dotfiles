@@ -2,6 +2,7 @@
     "workbench.editorAssociations": {
         "*.ipynb": "jupyter-notebook"
     },
+    "go.formatTool": "gofmt",
     "python.showStartPage": false,
     "workbench.editor.untitled.hint": "hidden",
     "workbench.startupEditor": "none",
@@ -17,5 +18,19 @@
     "files.exclude": {
         "**/.git": false
     },
-    "terminal.integrated.inheritEnv": false
+    "terminal.integrated.inheritEnv": false,
+    "workbench.colorTheme": "Default Dark+",
+    "go.toolsManagement.autoUpdate": true,
+    "redhat.telemetry.enabled": false,
+    "editor.tabSize": 2,
+    "[python]": {
+        "editor.tabSize": 4
+    },
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.formatOnType": true,
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "files.autoSave": "afterDelay"
 }
