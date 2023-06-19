@@ -17,16 +17,5 @@
     "files.exclude": {
         "**/.git": false
     },
-    "remote.SSH.defaultExtensions": [
-        "mechatroner.rainbow-csv",
-        "ms-azuretools.vscode-docker",
-        "eamodio.gitlens",
-        "zainchen.json",
-        "ms-toolsai.jupyter",
-        "ms-python.vscode-pylance",
-        "ms-python.python"
-    ],
-    "remote.restoreForwardedPorts": true,
-    "remote.SSH.configFile": "~/.ssh/config",
     "terminal.integrated.inheritEnv": false
 }
