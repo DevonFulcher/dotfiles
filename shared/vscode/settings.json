@@ -39,5 +39,6 @@
     "editor.autoClosingOvertype": "never",
     "editor.autoClosingQuotes": "never",
     "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
-    "search.useGlobalIgnoreFiles": true
+    "search.useGlobalIgnoreFiles": true,
+    "editor.stickyScroll.enabled": true
 }
