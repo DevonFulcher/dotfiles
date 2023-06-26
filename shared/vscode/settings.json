@@ -23,7 +23,10 @@
     "redhat.telemetry.enabled": false,
     "editor.tabSize": 2,
     "[python]": {
-        "editor.tabSize": 4
+        "editor.tabSize": 4,
+        // https://stackoverflow.com/questions/62427817/black-does-not-support-format-selection-command
+        "editor.formatOnSaveMode": "file",
+        "editor.formatOnPaste": false
     },
     "editor.formatOnSave": true,
     "editor.formatOnPaste": true,
