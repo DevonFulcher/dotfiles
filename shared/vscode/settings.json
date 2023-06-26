@@ -48,5 +48,6 @@
         "**/.git": true
     },
     "typescript.updateImportsOnFileMove.enabled": "always",
-    "javascript.updateImportsOnFileMove.enabled": "always"
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "explorer.confirmDelete": false
 }
