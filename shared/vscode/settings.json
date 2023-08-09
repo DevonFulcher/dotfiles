@@ -28,6 +28,7 @@
     "editor.formatOnPaste": false,
     "editor.defaultFormatter": "ms-python.black-formatter"
   },
+  "python.formatting.provider": "none", // recommended by the Black extension
   "editor.formatOnSave": true,
   "editor.formatOnPaste": true,
   "editor.formatOnType": true,
