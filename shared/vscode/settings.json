@@ -12,7 +12,6 @@
   },
   "notebook.lineNumbers": "on",
   "security.workspace.trust.untrustedFiles": "open",
-  "python.formatting.provider": "black",
   "editor.renderWhitespace": "all",
   "files.exclude": {
     "**/.git": false
@@ -26,7 +25,8 @@
     "editor.tabSize": 4,
     // https://stackoverflow.com/questions/62427817/black-does-not-support-format-selection-command
     "editor.formatOnSaveMode": "file",
-    "editor.formatOnPaste": false
+    "editor.formatOnPaste": false,
+    "editor.defaultFormatter": "ms-python.black-formatter"
   },
   "editor.formatOnSave": true,
   "editor.formatOnPaste": true,
