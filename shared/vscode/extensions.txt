@@ -39,3 +39,4 @@ yoavbls.pretty-ts-errors
 GitHub.vscode-github-actions
 EditorConfig.EditorConfig
 orsenkucher.vscode-graphql
+ms-vscode-remote.remote-containers
