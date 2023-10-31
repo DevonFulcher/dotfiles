@@ -9,29 +9,26 @@
     sort = -committerdate
 
 #[commit]
-
     # https://help.github.com/articles/signing-commits-using-gpg/
     # https://withblue.ink/2020/05/17/how-and-why-to-sign-git-commits.html
     #gpgsign = true
 
 [diff]
-
     # Detect copies as well as renames.
     renames = copies
 
 [help]
-
     # Automatically correct and execute mistyped commands.
     autocorrect = 1
 
 [init]
-
     defaultBranch = main
 
 [push]
-
     autoSetupRemote = true
 
 [pull]
-
     ff = only
+
+[alias]
+    save = "!git add -A && git commit -m $1 && git push"
