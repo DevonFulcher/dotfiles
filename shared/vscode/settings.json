@@ -1,44 +1,68 @@
 {
-    "workbench.editorAssociations": {
-        "*.ipynb": "jupyter-notebook"
-    },
-    "go.formatTool": "gofmt",
-    "workbench.editor.untitled.hint": "hidden",
-    "workbench.startupEditor": "none",
-    "window.zoomLevel": 1,
-    "notebook.cellToolbarLocation": {
-        "default": "right",
-        "jupyter-notebook": "left"
-    },
-    "notebook.lineNumbers": "on",
-    "security.workspace.trust.untrustedFiles": "open",
-    "python.formatting.provider": "black",
-    "editor.renderWhitespace": "all",
-    "files.exclude": {
-        "**/.git": false
-    },
-    "terminal.integrated.inheritEnv": false,
-    "workbench.colorTheme": "Default Dark+",
-    "go.toolsManagement.autoUpdate": true,
-    "redhat.telemetry.enabled": false,
-    "editor.tabSize": 2,
-    "[python]": {
-        "editor.tabSize": 4
-    },
-    "editor.formatOnSave": true,
-    "editor.formatOnPaste": true,
-    "editor.formatOnType": true,
-    "[javascript]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "files.autoSave": "afterDelay",
-    "editor.wordWrap": "on",
-    "workbench.editor.enablePreview": false,
-    "editor.autoClosingBrackets": "never",
-    "editor.autoClosingDelete": "never",
-    "editor.autoClosingOvertype": "never",
-    "editor.autoClosingQuotes": "never",
-    "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
-    "search.useGlobalIgnoreFiles": true,
-    "editor.stickyScroll.enabled": true
+  "workbench.editorAssociations": {
+    "*.ipynb": "jupyter-notebook"
+  },
+  "go.formatTool": "gofmt",
+  "workbench.editor.untitled.hint": "hidden",
+  "workbench.startupEditor": "none",
+  "window.zoomLevel": 1,
+  "notebook.cellToolbarLocation": {
+    "default": "right",
+    "jupyter-notebook": "left"
+  },
+  "notebook.lineNumbers": "on",
+  "security.workspace.trust.untrustedFiles": "open",
+  "editor.renderWhitespace": "all",
+  "files.exclude": {
+    "**/.git": false
+  },
+  "terminal.integrated.inheritEnv": false,
+  "workbench.colorTheme": "Default Dark+",
+  "go.toolsManagement.autoUpdate": true,
+  "redhat.telemetry.enabled": false,
+  "editor.tabSize": 2,
+  "[python]": {
+    "editor.tabSize": 4,
+    // https://stackoverflow.com/questions/62427817/black-does-not-support-format-selection-command
+    "editor.formatOnSaveMode": "file",
+    "editor.formatOnPaste": false,
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  },
+  "python.formatting.provider": "none", // recommended by the Black extension
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "editor.formatOnType": true,
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "files.autoSave": "afterDelay",
+  "editor.wordWrap": "on",
+  "workbench.editor.enablePreview": false,
+  "editor.autoClosingBrackets": "never",
+  "editor.autoClosingDelete": "never",
+  "editor.autoClosingOvertype": "never",
+  "editor.autoClosingQuotes": "never",
+  "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+  "search.useGlobalIgnoreFiles": true,
+  "editor.stickyScroll.enabled": true,
+  "search.exclude": {
+    "**/.git": true
+  },
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+  "editor.inlineSuggest.enabled": true,
+  "github.copilot.enable": {
+    "*": false,
+    "plaintext": false,
+    "markdown": false,
+    "scminput": false
+  }
 }
