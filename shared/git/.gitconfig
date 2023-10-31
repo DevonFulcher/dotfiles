@@ -21,3 +21,5 @@
     ff = only
 [alias]
     save = "!f() { git add -A && git commit -m \"$1\" && git push; }; f"
+    view = "!f() { gh pr view --web; }; f"
+    create = "!f() { gh pr create --web; }; f"
