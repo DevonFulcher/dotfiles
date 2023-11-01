@@ -1,0 +1,60 @@
+format = """
+$time\
+$sudo\
+$directory\
+$git_branch\
+$git_commit\
+$git_state\
+$git_status\
+$python\
+$cmd_duration\
+$memory_usage\
+$container\
+$line_break\
+$character\
+"""
+
+[time]
+format = "[$time]($style) "
+use_12hr = true
+disabled = false
+
+[sudo]
+format = "sudo "
+disabled = false
+
+[directory]
+truncation_length = 10
+truncate_to_repo = false
+truncation_symbol = ".../"
+
+[cmd_duration]
+min_time = 0
+format = "[$duration]($style) "
+
+[container]
+format = "in container: [$name]($style) "
+
+[git_branch]
+format = "[$branch(:$remote_branch)]($style) "
+
+[git_commit]
+format = "commit: [($hash$tag)]($style) "
+
+[git_status]
+format = "([$all_status$ahead_behind]($style)) "
+conflicted = "conflict"
+stashed = "stashed"
+deleted = "deleted"
+renamed = "renamed"
+modified = "modified"
+staged = "staged"
+untracked = "untracked"
+
+[python]
+format = "pyvenv: [$virtualenv]($style) "
+
+[memory_usage]
+threshold = 0
+disabled = false
+format = "[ram: ${ram} swap: ${swap}]($style) "
