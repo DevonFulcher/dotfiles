@@ -42,7 +42,7 @@ format = "[$branch(:$remote_branch)]($style) "
 format = "commit: [($hash$tag)]($style) "
 
 [git_status]
-format = "([$all_status$ahead_behind]($style)) "
+format = "([$all_status-$ahead_behind]($style)) "
 conflicted = "conflict"
 stashed = "stashed"
 deleted = "deleted"
@@ -50,6 +50,10 @@ renamed = "renamed"
 modified = "modified"
 staged = "staged"
 untracked = "untracked"
+diverged = "diverged"
+ahead = "ahead"
+behind = "behind"
+up_to_date = "up_to_date"
 
 [python]
 format = "pyvenv: [$virtualenv]($style) "

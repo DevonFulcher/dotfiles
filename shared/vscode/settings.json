@@ -5,7 +5,7 @@
   "go.formatTool": "gofmt",
   "workbench.editor.untitled.hint": "hidden",
   "workbench.startupEditor": "none",
-  "window.zoomLevel": 1,
+  "window.zoomLevel": 1.5,
   "notebook.cellToolbarLocation": {
     "default": "right",
     "jupyter-notebook": "left"
@@ -64,5 +64,7 @@
     "plaintext": false,
     "markdown": false,
     "scminput": false
-  }
+  },
+  "githubPullRequests.pullBranch": "never",
+  "workbench.editor.empty.hint": "hidden"
 }
