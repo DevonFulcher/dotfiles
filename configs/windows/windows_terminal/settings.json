@@ -3,13 +3,13 @@
     // Add custom actions and keybindings to this array.
     // To unbind a key combination from your defaults.json, set the command to "unbound".
     // To learn more about actions and keybindings, visit https://aka.ms/terminal-keybindings
-    "actions": 
+    "actions":
     [
         // Copy and paste are bound to Ctrl+Shift+C and Ctrl+Shift+V in your defaults.json.
         // These two lines additionally bind them to Ctrl+C and Ctrl+V.
         // To learn more about selection, visit https://aka.ms/terminal-selection
         {
-            "command": 
+            "command":
             {
                 "action": "copy",
                 "singleLine": false
@@ -30,7 +30,7 @@
         // - "splitMode": "duplicate" makes the new pane use the focused pane's profile.
         // To learn more about panes, visit https://aka.ms/terminal-panes
         {
-            "command": 
+            "command":
             {
                 "action": "splitPane",
                 "split": "auto",
@@ -42,12 +42,12 @@
     "copyFormatting": "none",
     "copyOnSelect": false,
     "defaultProfile": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
-    "profiles": 
+    "profiles":
     {
         "defaults": {
             "bellStyle": "none"
         },
-        "list": 
+        "list":
         [
             {
                 "guid": "{07b52e3e-de2c-5db4-bd2d-ba144ed6c273}",
@@ -76,7 +76,7 @@
             }
         ]
     },
-    "schemes": 
+    "schemes":
     [
         {
             "background": "#0C0C0C",
