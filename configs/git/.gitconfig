@@ -24,3 +24,4 @@
     save = "!f() { git add -A && aicommits && git push; }; f"
     pr = "!f() { gh pr view --web || gh pr create --web; }; f"
     difft = "!f() { GIT_EXTERNAL_DIFF=difft git diff; }; f"
+    browse = "!f() { gh browse --branch $(git branch --show-current) ${1:-.}; }; f"
