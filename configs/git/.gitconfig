@@ -23,3 +23,4 @@
 [alias]
     save = "!f() { git add -A && aicommits && git push; }; f"
     pr = "!f() { gh pr view --web || gh pr create --web; }; f"
+    difft = "!f() { GIT_EXTERNAL_DIFF=difft git diff; }; f"
