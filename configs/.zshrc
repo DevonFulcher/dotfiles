@@ -65,6 +65,10 @@ ZSH_THEME="robbyrussell"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
+# setting up autocomplete with these instructions https://github.com/marlonrichert/zsh-autocomplete/issues/658#issuecomment-1800739329
+[[ -r ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autocomplete ]] ||
+    git clone https://github.com/marlonrichert/zsh-autocomplete.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autocomplete
+
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
@@ -77,8 +81,8 @@ plugins=(
   starship
   docker
   docker-compose
+  zsh-autocomplete
 )
-
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
