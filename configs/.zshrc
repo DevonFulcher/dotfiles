@@ -111,4 +111,4 @@ source $ZSH/oh-my-zsh.sh
 
 alias tt=toolbelt
 alias g=git
-alias ls="eza --classify --all --group-directories-first --long --git --git-repos --total-size --no-permissions --no-user --no-time"
+alias ls="eza --classify --all --group-directories-first --long --git --git-repos --no-permissions --no-user --no-time"
