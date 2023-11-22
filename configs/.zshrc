@@ -78,6 +78,7 @@ plugins=(
   aliases
   starship
   zsh-autocomplete
+  gh
 )
 
 source $ZSH/oh-my-zsh.sh
