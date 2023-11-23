@@ -3,7 +3,6 @@
     "*.ipynb": "jupyter-notebook"
   },
   "go.formatTool": "gofmt",
-  "workbench.editor.untitled.hint": "hidden",
   "workbench.startupEditor": "none",
   "window.zoomLevel": 1.5,
   "notebook.cellToolbarLocation": {
@@ -66,5 +65,6 @@
     "scminput": false
   },
   "githubPullRequests.pullBranch": "never",
-  "workbench.editor.empty.hint": "hidden"
+  "workbench.editor.empty.hint": "hidden",
+  "debug.allowBreakpointsEverywhere": true
 }
