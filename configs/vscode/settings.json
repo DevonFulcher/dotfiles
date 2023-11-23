@@ -66,5 +66,6 @@
   },
   "githubPullRequests.pullBranch": "never",
   "workbench.editor.empty.hint": "hidden",
-  "debug.allowBreakpointsEverywhere": true
+  "debug.allowBreakpointsEverywhere": true,
+  "terminal.integrated.defaultProfile.linux": "zsh"
 }
