@@ -21,7 +21,7 @@
 [pull]
     ff = only
 [alias]
-    save = "!f() { sh ~/scripts/git_save.sh $1; }; f"
+    save = "!f() { sh ~/scripts/git_save.sh \"$1\"; }; f"
     pr = "!f() { gh pr view --web || gh pr create --web; }; f"
     difft = "!f() { GIT_EXTERNAL_DIFF=difft git diff; }; f"
     browse = "!f() { gh browse --branch $(git branch --show-current) ${1:-.}; }; f"
