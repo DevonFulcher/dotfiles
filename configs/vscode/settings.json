@@ -25,7 +25,8 @@
     // https://stackoverflow.com/questions/62427817/black-does-not-support-format-selection-command
     "editor.formatOnSaveMode": "file",
     "editor.formatOnPaste": false,
-    "editor.defaultFormatter": "ms-python.black-formatter"
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.formatOnSave": true
   },
   "python.formatting.provider": "none", // recommended by the Black extension
   "editor.formatOnSave": true,
