@@ -39,3 +39,33 @@
     line-numbers = true
     hyperlinks = true
     hyperlinks-file-link-format = "vscode://file/{path}:{line}" # TODO: Github instead?
+    features = mine
+
+# more options here: https://raw.githubusercontent.com/dandavison/delta/master/themes.gitconfig
+[delta "mine"]
+    commit-decoration-style = 130 box
+    dark = true
+    file-decoration-style = "#606018" overline
+    file-added-label = [added]
+    file-copied-label = [copied]
+    file-modified-label = [modified]
+    file-removed-label = [removed]
+    file-renamed-label = [renamed]
+    file-style = 232 bold 184
+    hunk-header-style = syntax
+    line-numbers = true
+    line-numbers-left-format = "{nm:>1}│"
+    line-numbers-left-style = red
+    line-numbers-minus-style = red bold
+    line-numbers-plus-style = green bold
+    line-numbers-right-format = "{np:>1}│"
+    line-numbers-right-style = green
+    line-numbers-zero-style = "#C8C8C8"
+    minus-emph-style = normal "#940320"
+    minus-style = normal "#5e0000"
+    plus-emph-style = syntax "#007e5e"
+    plus-style = syntax "#003500"
+    syntax-theme = OneHalfDark
+    whitespace-error-style = "#80002a" reverse
+    zero-style = syntax
+    blame-format = "{author:<18} ({commit:>7}) ┊{timestamp:^16}┊ "
