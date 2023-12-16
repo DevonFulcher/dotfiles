@@ -116,3 +116,4 @@ alias g=git
 alias ls="eza --classify --all --group-directories-first --long --git --git-repos --no-permissions --no-user --no-time"
 export FPATH="$GIT_PROJECTS_WORKDIR/eza/completions/zsh:$FPATH"
 alias cat=bat
+alias less=bat
