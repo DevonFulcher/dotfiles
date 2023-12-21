@@ -69,5 +69,9 @@
   "githubPullRequests.pullBranch": "never",
   "debug.allowBreakpointsEverywhere": true,
   "terminal.integrated.defaultProfile.linux": "zsh",
-  "terminal.integrated.inheritEnv": false
+  "terminal.integrated.inheritEnv": false,
+  "security.promptForLocalFileProtocolHandling": false,
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }
