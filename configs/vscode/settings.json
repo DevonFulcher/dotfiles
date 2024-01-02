@@ -25,7 +25,9 @@
     "editor.defaultFormatter": "ms-python.black-formatter",
     "editor.formatOnSave": true,
     "formatting.provider": "none", // recommended by the Black extension
-    "testing.pytestEnabled": true
+    "testing.pytestEnabled": true,
+    "analysis.autoImportCompletions": true,
+    "analysis.typeCheckingMode": "basic"
   },
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
