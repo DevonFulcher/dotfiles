@@ -1,0 +1,2 @@
+* * * * * sh ~/scripts/git_sync_branches.sh
+* * * * * sh ~/scripts/git_sync_main.sh
