@@ -1,2 +1,3 @@
 * * * * * sh ~/scripts/git_sync_branches.sh
 * * * * * sh ~/scripts/git_sync_main.sh
+* * * * * sh ~/scripts/git_safe_pull.sh
