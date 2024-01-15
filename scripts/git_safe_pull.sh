@@ -1,6 +1,3 @@
-#!/bin/bash
-
-# Check if the directory exists
 if [ ! -d "$GIT_PROJECTS_WORKDIR" ]; then
     echo "Directory $GIT_PROJECTS_WORKDIR does not exist."
     exit 1

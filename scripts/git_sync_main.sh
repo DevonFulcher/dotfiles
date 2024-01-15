@@ -1,6 +1,3 @@
-#!/bin/bash
-
-# Check if GIT_PROJECTS_WORKDIR is set
 if [ -z "$GIT_PROJECTS_WORKDIR" ]; then
     echo "GIT_PROJECTS_WORKDIR is not set. Exiting."
     exit 1

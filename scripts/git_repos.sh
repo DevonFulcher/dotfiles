@@ -1,11 +1,9 @@
-REPO_DIR="${GIT_PROJECTS_WORKDIR}"
-
-if [ -z "$REPO_DIR" ]; then
+if [ -z "$GIT_PROJECTS_WORKDIR" ]; then
     echo "The GIT_PROJECTS_WORKDIR environment variable is not set. Exiting..."
     exit 1
 fi
 
-for dir in "$REPO_DIR"/*; do
+for dir in "$GIT_PROJECTS_WORKDIR"/*; do
     if [ -d "$dir" ]; then
         cd "$dir"
         # Check if directory is a git repository
