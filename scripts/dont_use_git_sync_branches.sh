@@ -17,7 +17,10 @@ for repo_dir in "$GIT_PROJECTS_WORKDIR"/*; do
             fi
 
             # List and delete local branches where the corresponding remote-tracking branch is gone
-            git branch -vv | grep ': gone]' | awk '{print $1}' | xargs -r git branch -d
+            # git branch -vv | grep ': gone]' | awk '{print $1}' | xargs -r git branch -D
+            # git branch -vv | grep ': gone]' | awk '{print $1}' | while read -r branch_name; do
+            #     git branch -m "$branch_name" "archived/$branch_name"
+            # done
 
             echo "Local branches corresponding to deleted remote branches have been removed for $repo_dir."
         else
