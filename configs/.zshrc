@@ -117,3 +117,17 @@ alias ls="eza --classify --all --group-directories-first --long --git --git-repo
 export FPATH="$GIT_PROJECTS_WORKDIR/eza/completions/zsh:$FPATH"
 alias cat=bat
 alias less=bat
+
+function git() {
+  if [[ $1 == "clone" && -n $2 && -n $GIT_PROJECTS_WORKDIR ]]; then
+    command git "$@" "$GIT_PROJECTS_WORKDIR"
+    local status=$?
+    # If git clone was successful, change directory
+    if [ $status -eq 0 ]; then
+      local repo_name=$(basename -s .git "$2")
+      cd "$GIT_PROJECTS_WORKDIR/$repo_name"
+    fi
+  else
+    command git "$@"
+  fi
+}
