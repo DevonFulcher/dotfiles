@@ -11,7 +11,7 @@ list_repos() {
             if git rev-parse --git-dir > /dev/null 2>&1; then
                 # Get the last commit date authored by Devon Fulcher
                 commit_date=$(git log -1 --format="%cd" --date=format:"%Y-%m-%d %H:%M:%S" --author="Devon Fulcher")
-                status=$(git status -sb 2>/dev/null | sed 's/^## //g' | head -n 1)
+                status=$(git status -sb 2>/dev/null | sed 's/^## //g' | head -n 1 | cut -d '/' -f 2)
 
                 # Check if there are any commits at all
                 if [[ -n "$(git log --all)" ]]; then
