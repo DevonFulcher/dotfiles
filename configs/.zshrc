@@ -127,6 +127,23 @@ function git() {
       local repo_name=$(basename -s .git "$2")
       cd "$GIT_PROJECTS_WORKDIR/$repo_name"
     fi
+  elif [[ $1 == "checkout" || $1 == "merge" ]]; then
+    if [ "$2" = "main" ] || [ "$2" = "master" ]; then
+        if git rev-parse --verify main >/dev/null 2>&1; then
+            # If 'main' exists, checkout to 'main'
+            branch_name="main"
+        elif git rev-parse --verify master >/dev/null 2>&1; then
+            # If 'master' exists but 'main' does not, checkout to 'master'
+            branch_name="master"
+        else
+            echo "Neither 'main' nor 'master' branch exists."
+            exit 1
+        fi
+        command git $1 $branch_name
+    else
+        # If not 'main' or 'master', pass all arguments to git
+        command git "$@"
+    fi
   else
     command git "$@"
   fi
