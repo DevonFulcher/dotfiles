@@ -29,7 +29,6 @@
     browse = "!f() { gh browse --branch $(git branch --show-current) ${1:-.}; }; f"
     repos = "!f() { sh ~/scripts/git_repos.sh \"$1\"; }; f"
     checkout = "!f() { ~/scripts/git_checkout.sh \"$@\"; }; f"
-    clone = "!f() { git clone \"$1\" \"$GIT_PROJECTS_WORKDIR\"; }; f"
 [merge]
     conflictstyle = diff3
 [interactive]
