@@ -27,6 +27,7 @@
     send = "!f() { git save \"$1\" && git pr; }; f"
     pr = "!f() { gh pr view --web || gh pr create --web; }; f"
     browse = "!f() { gh browse --branch $(git branch --show-current) ${1:-.}; }; f"
+    repos = "!f() { sh ~/scripts/git_repos.sh \"$1\"; }; f"
 [merge]
     conflictstyle = diff3
 [interactive]
