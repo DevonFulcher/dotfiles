@@ -119,14 +119,14 @@ alias cat=bat
 alias less=bat
 
 function git() {
+  # always git clone to the same directory
   if [[ $1 == "clone" && -n $2 && -n $GIT_PROJECTS_WORKDIR ]]; then
-    command git "$@" "$GIT_PROJECTS_WORKDIR"
-    local status=$?
-    # If git clone was successful, change directory
-    if [ $status -eq 0 ]; then
-      local repo_name=$(basename -s .git "$2")
+    repo_name=$(echo "$2" | awk -F/ '{sub(/\..*/,"",$NF); print $NF}')
+    command git "$@" "$GIT_PROJECTS_WORKDIR/$repo_name"
+    if [ -d "$GIT_PROJECTS_WORKDIR/$repo_name" ]; then
       cd "$GIT_PROJECTS_WORKDIR/$repo_name"
     fi
+  # make commands main/master agnostic
   elif [[ $1 == "checkout" || $1 == "merge" ]]; then
     if [ "$2" = "main" ] || [ "$2" = "master" ]; then
         if git rev-parse --verify main >/dev/null 2>&1; then
