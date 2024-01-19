@@ -5,7 +5,7 @@ fi
 # Check for uncommitted changes
 if ! git diff-index --quiet HEAD --; then
     echo "Uncommitted changes found in $PWD. Skipping."
-    return
+    exit 0
 fi
 
 # Fetch the latest changes
@@ -14,7 +14,7 @@ git fetch
 # Check for potential merge conflicts
 if ! git merge-base --is-ancestor HEAD origin/master; then
     echo "Potential merge conflicts detected in $PWD. Skipping."
-    return
+    exit 0
 fi
 
 # Perform the pull
