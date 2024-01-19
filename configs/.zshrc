@@ -128,9 +128,6 @@ function git() {
     fi
   # make commands main/master agnostic
   elif [[ $1 == "checkout" || $1 == "merge" ]]; then
-    if [ $1 == "checkout" ]; then
-      sh $GIT_PROJECTS_WORKDIR/scripts/git_safe_pull.sh
-    fi
     if [ "$2" = "main" ] || [ "$2" = "master" ]; then
         if git rev-parse --verify main >/dev/null 2>&1; then
             # If 'main' exists, checkout to 'main'
@@ -146,6 +143,10 @@ function git() {
     else
         # If not 'main' or 'master', pass all arguments to git
         command git "$@"
+    fi
+    if [ $1 = "checkout" ]; then
+      sh $GIT_PROJECTS_WORKDIR/dotfiles/scripts/git_safe_pull.sh
+      sh $GIT_PROJECTS_WORKDIR/dotfiles/scripts/git_auto_merge.sh
     fi
   else
     command git "$@"
