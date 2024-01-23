@@ -158,6 +158,10 @@ function git() {
 function cd() {
   builtin cd "$@"
 
+  if git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
+    sh $GIT_PROJECTS_WORKDIR/dotfiles/scripts/git_safe_pull.sh
+  fi
+
   if [[ -z "$VIRTUAL_ENV" ]] ; then
     ## If env folder is found then activate the vitualenv
     if [[ -d ./venv ]] ; then
