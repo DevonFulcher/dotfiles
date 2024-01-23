@@ -3,6 +3,7 @@
 My configurations.
 
 ## Required dependencies
+- [Oh My Zsh](https://ohmyz.sh/)
 - [Github CLI](https://cli.github.com/)
 - [aicommits](https://github.com/Nutlope/aicommits)
 - [eza](https://github.com/eza-community/eza)
