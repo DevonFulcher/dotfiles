@@ -3,6 +3,11 @@ if [ -z "$GIT_PROJECTS_WORKDIR" ]; then
     exit 1
 fi
 
+if [ ! -d "$GIT_PROJECTS_WORKDIR" ]; then
+    echo "Directory $GIT_PROJECTS_WORKDIR does not exist."
+    exit 1
+fi
+
 for repo_dir in "$GIT_PROJECTS_WORKDIR"/*; do
     if [ -d "$repo_dir" ]; then
         echo "Processing repository: $repo_dir"
