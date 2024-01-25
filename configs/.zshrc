@@ -144,10 +144,6 @@ function git() {
         # If not 'main' or 'master', pass all arguments to git
         command git "$@"
     fi
-    if [ $1 = "checkout" ]; then
-      sh $GIT_PROJECTS_WORKDIR/dotfiles/scripts/git_safe_pull.sh
-      sh $GIT_PROJECTS_WORKDIR/dotfiles/scripts/git_auto_merge.sh
-    fi
   elif [ $1 = "branch" ] && [ "$#" -eq 1 ]; then
     command git branch | head -n 20
   else
