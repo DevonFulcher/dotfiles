@@ -7,7 +7,6 @@ if [ -z "$json_output" ]; then
   exit 0
 fi
 
+# Format the JSON output into a table
 header="Number\tTitle\tAuthor\tReview Decision\tReviewers\n"
-
-# Format the JSON output into a table without the -n option
 echo "$json_output" | jq -r '.[] | [.number, .title, .author.login, .reviewDecision, ([.reviewRequests[].login] | join(", "))] | @tsv' | sed "1s/^/$header/" | column -t -s $'\t'
