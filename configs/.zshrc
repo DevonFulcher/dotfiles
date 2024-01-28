@@ -117,14 +117,14 @@ alias cat=bat
 alias less=bat
 
 function git() {
-  # always git clone to the same directory
+  # Always git clone to the same directory
   if [[ $1 == "clone" && -n $2 && -n $GIT_PROJECTS_WORKDIR ]]; then
     repo_name=$(echo "$2" | awk -F/ '{sub(/\..*/,"",$NF); print $NF}')
     command git "$@" "$GIT_PROJECTS_WORKDIR/$repo_name"
     if [ -d "$GIT_PROJECTS_WORKDIR/$repo_name" ]; then
       cd "$GIT_PROJECTS_WORKDIR/$repo_name"
     fi
-  # make commands main/master agnostic
+  # Make commands main/master agnostic
   elif [[ $1 == "checkout" || $1 == "merge" ]]; then
     if [ "$2" = "main" ] || [ "$2" = "master" ]; then
         if git rev-parse --verify main >/dev/null 2>&1; then
@@ -144,9 +144,13 @@ function git() {
     fi
   elif [ $1 = "branch" ] && [ "$#" -eq 1 ]; then
     command git branch | head -n 20
-  elif [ $1 = "diff" ]: then
+  elif [ $1 = "diff" ]; then
     # Exclude files from diff that I rarely care about. Reference: https://stackoverflow.com/a/48259275/8925314
-    command git diff "$@" -- ':!*Cargo.lock' ':!*poetry.lock' ':!*package-lock.json'
+    command git "$@" -- ':!*Cargo.lock' ':!*poetry.lock' ':!*package-lock.json'
+  elif [ $1 = "commit" ]; then
+    # Alway push after I commit.
+    command git "$@"
+    command git push
   elif [ $1 = "pr" ]; then
     if [ "$#" -eq 1 ]; then
       gh pr view --web || gh pr create --web
