@@ -144,6 +144,9 @@ function git() {
     fi
   elif [ $1 = "branch" ] && [ "$#" -eq 1 ]; then
     command git branch | head -n 20
+  elif [ $1 = "diff" ]: then
+    # Exclude files from diff that I rarely care about. Reference: https://stackoverflow.com/a/48259275/8925314
+    command git diff "$@" -- ':!*Cargo.lock' ':!*poetry.lock' ':!*package-lock.json'
   elif [ $1 = "pr" ]; then
     if [ "$#" -eq 1 ]; then
       gh pr view --web || gh pr create --web
