@@ -23,10 +23,8 @@ ZSH_THEME="robbyrussell"
 # Case-sensitive completion must be off. _ and - will be interchangeable.
 # HYPHEN_INSENSITIVE="true"
 
-# Uncomment one of the following lines to change the auto-update behavior
-# zstyle ':omz:update' mode disabled  # disable automatic updates
-# zstyle ':omz:update' mode auto      # update automatically without asking
-# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
+# update automatically without asking
+zstyle ':omz:update' mode auto
 
 # Uncomment the following line to change how often to auto-update (in days).
 # zstyle ':omz:update' frequency 13
@@ -146,6 +144,15 @@ function git() {
     fi
   elif [ $1 = "branch" ] && [ "$#" -eq 1 ]; then
     command git branch | head -n 20
+  elif [ $1 = "pr" ]; then
+    if [ "$#" -eq 1 ]; then
+      gh pr view --web || gh pr create --web
+    elif [ $2 = "list" ]; then
+      sh $GIT_PROJECTS_WORKDIR/dotfiles/scripts/git_pr_list.sh
+    else
+      echo "Unrecognized command."
+      return 1
+    fi
   else
     command git "$@"
   fi
