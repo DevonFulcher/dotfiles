@@ -4,4 +4,3 @@ if [ -n "$1" ]; then
 else
   aicommits;
 fi
-git push;

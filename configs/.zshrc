@@ -150,6 +150,11 @@ function git() {
   elif [ $1 = "commit" ]; then
     # Alway push after I commit.
     command git "$@"
+    for arg in "$@"; do
+      if [[ "$arg" == "--no-push" ]]; then
+        return 0
+      fi
+    done
     command git push
   elif [ $1 = "pr" ]; then
     if [ "$#" -eq 1 ]; then
