@@ -152,7 +152,7 @@ function git() {
     filtered_args=()
     for arg in "$@"; do
       if [[ "$arg" != "--no-push" ]]; then
-          filtered_args+=("$arg")
+        filtered_args+=("$arg")
       fi
     done
     command git "${filtered_args[@]}"
