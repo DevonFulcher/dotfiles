@@ -149,7 +149,13 @@ function git() {
     command git "$@" -- ':!*Cargo.lock' ':!*poetry.lock' ':!*package-lock.json'
   elif [ $1 = "commit" ]; then
     # Alway push after I commit.
-    command git "$@"
+    filtered_args=()
+    for arg in "$@"; do
+      if [[ "$arg" != "--no-push" ]]; then
+          filtered_args+=("$arg")
+      fi
+    done
+    command git "${filtered_args[@]}"
     for arg in "$@"; do
       if [[ "$arg" == "--no-push" ]]; then
         return 0
