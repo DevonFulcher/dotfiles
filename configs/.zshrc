@@ -162,6 +162,10 @@ function git() {
       fi
     done
     command git push
+  elif [[ $1 == "add" || $1 == "restore" ]]; then
+    # Always run git status after git add or git restore.
+    command git "$@"
+    command git status
   elif [ $1 = "pr" ]; then
     if [ "$#" -eq 1 ]; then
       gh pr view --web || gh pr create --web
