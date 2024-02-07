@@ -31,6 +31,7 @@ truncation_symbol = ".../"
 [cmd_duration]
 min_time = 0
 format = "[$duration]($style) "
+show_notifications = true
 
 [container]
 format = "in container: [$name]($style) "
@@ -40,6 +41,7 @@ format = "[$branch(:$remote_branch)]($style) "
 
 [git_commit]
 format = "commit: [($hash$tag)]($style) "
+tag_disabled = false
 
 [git_status]
 format = "([$all_status$ahead_behind]($style)) "
@@ -60,4 +62,3 @@ format = "pyvenv: [$virtualenv]($style) "
 
 [fill]
 symbol = "-"
-style = "bold cyan"
