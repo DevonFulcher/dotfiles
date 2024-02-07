@@ -9,6 +9,7 @@ $git_status\
 $python\
 $cmd_duration\
 $container\
+$fill\
 $line_break\
 $character\
 """
@@ -56,3 +57,7 @@ up_to_date = "up_to_date"
 
 [python]
 format = "pyvenv: [$virtualenv]($style) "
+
+[fill]
+symbol = "-"
+style = "bold cyan"
