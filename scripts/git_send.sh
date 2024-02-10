@@ -16,4 +16,5 @@ else
 fi
 
 git save "$message"
-sh $GIT_PROJECTS_WORKDIR/dotfiles/scripts/git_pr.sh
+# TODO: fix this issue with having to specify an empty argument
+sh $GIT_PROJECTS_WORKDIR/dotfiles/scripts/git_pr.sh ""
