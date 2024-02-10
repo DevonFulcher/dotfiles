@@ -156,7 +156,7 @@ function git() {
         filtered_args+=("$arg")
       fi
     done
-    command git "${filtered_args[@]}" --quiet && echo "code committed"
+    command git "${filtered_args[@]} --quiet" && echo "code committed"
     for arg in "$@"; do
       if [[ "$arg" == "--no-push" ]]; then
         return 0
