@@ -16,4 +16,4 @@ else
 fi
 
 git save "$message"
-git pr
+sh $GIT_PROJECTS_WORKDIR/dotfiles/scripts/git_pr.sh
