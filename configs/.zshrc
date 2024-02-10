@@ -127,21 +127,22 @@ function git() {
   # Make commands main/master agnostic
   elif [[ $1 == "checkout" || $1 == "merge" ]]; then
     if [ "$2" = "main" ] || [ "$2" = "master" ]; then
-        if git rev-parse --verify main >/dev/null 2>&1; then
-            # If 'main' exists, checkout to 'main'
-            branch_name="main"
-        elif git rev-parse --verify master >/dev/null 2>&1; then
-            # If 'master' exists but 'main' does not, checkout to 'master'
-            branch_name="master"
-        else
-            echo "Neither 'main' nor 'master' branch exists."
-            exit 1
-        fi
-        command git $1 $branch_name
+      if git rev-parse --verify main >/dev/null 2>&1; then
+        # If 'main' exists, checkout to 'main'
+        branch_name="main"
+      elif git rev-parse --verify master >/dev/null 2>&1; then
+        # If 'master' exists but 'main' does not, checkout to 'master'
+        branch_name="master"
+      else
+        echo "Neither 'main' nor 'master' branch exists."
+        exit 1
+      fi
+      command git $1 $branch_name
     else
-        # If not 'main' or 'master', pass all arguments to git
-        command git "$@"
+      # If not 'main' or 'master', pass all arguments to git
+      command git "$@"
     fi
+    command git status
   elif [ $1 = "branch" ] && [ "$#" -eq 1 ]; then
     command git branch | head -n 20
   elif [ $1 = "diff" ]; then
@@ -162,6 +163,7 @@ function git() {
       fi
     done
     command git push
+    command git status
   elif [[ $1 == "add" || $1 == "restore" ]]; then
     # Always run git status after git add or git restore.
     command git "$@"
