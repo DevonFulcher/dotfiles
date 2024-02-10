@@ -164,8 +164,8 @@ function git() {
     done
     command git push --quiet && echo "commit pushed"
     command git status
-  elif [[ $1 == "add" || $1 == "restore" ]]; then
-    # Always run git status after git add or git restore.
+  elif [[ $1 == "add" || $1 == "restore" || $1 == "stash" || $1 == "reset" ]]; then
+    # Always run git status after these commands.
     command git "$@"
     command git status
   elif [ $1 = "pr" ]; then
