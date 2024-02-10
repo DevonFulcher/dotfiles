@@ -4,4 +4,4 @@ if [ -n "$1" ]; then
 else
   aicommits;
 fi
-git push --quiet && echo "code pushed";
+git push --quiet && echo "commit pushed";
