@@ -156,13 +156,13 @@ function git() {
         filtered_args+=("$arg")
       fi
     done
-    command git "${filtered_args[@]}"
+    command git "${filtered_args[@]}" --quiet && echo "code committed"
     for arg in "$@"; do
       if [[ "$arg" == "--no-push" ]]; then
         return 0
       fi
     done
-    command git push
+    command git push --quiet && echo "commit pushed"
     command git status
   elif [[ $1 == "add" || $1 == "restore" ]]; then
     # Always run git status after git add or git restore.
