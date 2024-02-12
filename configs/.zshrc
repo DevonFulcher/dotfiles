@@ -185,3 +185,5 @@ function cd() {
     fi
   }
 }
+
+cd $GIT_PROJECTS_WORKDIR
