@@ -1,1 +1,2 @@
-* * * * * sh ~/scripts/git_sync_main.sh
+*/5 * * * * sh $GIT_PROJECTS_WORKDIR/dotfiles/scripts/git_sync_all.sh
+*/5 * * * * sh $GIT_PROJECTS_WORKDIR/dotfiles/scripts/git_fetch_all.sh
