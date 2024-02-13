@@ -1,9 +1,9 @@
 git add -A;
 if [ -n "$1" ]; then
   verify=true;
+  echo "$@"
   for arg in "$@"; do
     if [ "$arg" = "--no-verify" ]; then
-      echo "there"
       verify=false;
     fi
   done
