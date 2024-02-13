@@ -15,6 +15,6 @@ else
   echo "You are not on a default branch. Current branch is $current_branch"
 fi
 
-git save "$message"
-# TODO: fix this issue with having to specify an empty argument
+git save "$message" || { echo "git save failed"; exit 1; }
+# If git save is successful, proceed with the script
 sh $GIT_PROJECTS_WORKDIR/dotfiles/scripts/git_pr.sh ""
