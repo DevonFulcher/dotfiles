@@ -3,13 +3,13 @@ if [ -n "$1" ]; then
   verify=true;
   for arg in "$@"; do
     if [ "$arg" = "--no-verify" ]; then
+      echo "there"
       verify=false;
     fi
   done
   if [ $verify ]; then
     git commit -m "$1" --quiet && echo "code committed" || { echo "commit failed"; exit 1; }
   else
-    echo "here"
     git commit -m "$1" --quiet --no-verify && echo "code committed" || { echo "commit failed"; exit 1; }
   fi
 else
