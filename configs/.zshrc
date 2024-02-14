@@ -156,7 +156,7 @@ function git() {
         filtered_args+=("$arg")
       fi
     done
-    command git "${filtered_args[@]}" || { echo "commit failed"; exit 1; }
+    command git "${filtered_args[@]}" || { echo "commit failed"; return 1; }
     for arg in "$@"; do
       if [[ "$arg" == "--no-push" ]]; then
         return 0
