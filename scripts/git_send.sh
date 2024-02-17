@@ -9,12 +9,12 @@ current_branch=$(git rev-parse --abbrev-ref HEAD)
 
 if [[ "$current_branch" == "main" || "$current_branch" == "master" ]]; then
   # Create a new branch with spaces replaced by hyphens
-  branch_name="${message// /-}"
+  branch_name="${message// /_}"
+  branch_name="${branch_name,,}"
   git checkout -b $branch_name
 else
   echo "You are not on a default branch. Current branch is $current_branch"
 fi
 
 git save "$message" || { echo "git save failed"; exit 1; }
-# If git save is successful, proceed with the script
 sh $GIT_PROJECTS_WORKDIR/dotfiles/scripts/git_pr.sh ""
