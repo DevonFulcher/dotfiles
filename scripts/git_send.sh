@@ -8,9 +8,8 @@ fi
 current_branch=$(git rev-parse --abbrev-ref HEAD)
 
 if [[ "$current_branch" == "main" || "$current_branch" == "master" ]]; then
-  # Create a new branch with spaces replaced by hyphens
+  # Create a new branch with spaces replaced by underscores
   branch_name="${message// /_}"
-  branch_name="${branch_name,,}"
   git checkout -b $branch_name
 else
   echo "You are not on a default branch. Current branch is $current_branch"
