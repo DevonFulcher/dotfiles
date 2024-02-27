@@ -159,11 +159,12 @@ function git() {
     command git "${filtered_args[@]}" || { echo "commit failed"; return 1; }
     for arg in "$@"; do
       if [[ "$arg" == "--no-push" ]]; then
+        command git status && echo "ran git status"
         return 0
       fi
     done
     command git push --quiet && echo "commit pushed"
-    command git status
+    command git status && echo "ran git status"
   elif [[ $1 == "add" || $1 == "restore" || $1 == "stash" || $1 == "reset" ]]; then
     # Always run git status after these commands.
     command git "$@"
