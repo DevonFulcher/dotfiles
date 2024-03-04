@@ -5,7 +5,7 @@
   "workbench.startupEditor": "none",
   "workbench.colorTheme": "Default Dark+",
   "go.formatTool": "gofmt",
-  "window.zoomLevel": 1.5,
+  "window.zoomLevel": 2,
   "notebook.cellToolbarLocation": {
     "default": "right",
     "jupyter-notebook": "left"
@@ -75,5 +75,6 @@
   "security.promptForLocalFileProtocolHandling": false,
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "remote.autoForwardPortsSource": "hybrid"
 }
