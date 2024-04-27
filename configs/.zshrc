@@ -142,6 +142,7 @@ function git() {
       # If not 'main' or 'master', pass all arguments to git
       command git "$@"
     fi
+    echo "git status:"
     command git status
   elif [ $1 = "branch" ] && [ "$#" -eq 1 ]; then
     command git branch | head -n 20
@@ -159,15 +160,18 @@ function git() {
     command git "${filtered_args[@]}" || { echo "commit failed"; return 1; }
     for arg in "$@"; do
       if [[ "$arg" == "--no-push" ]]; then
-        command git status && echo "ran git status"
+        echo "git status:"
+        command git status
         return 0
       fi
     done
     command git push --quiet && echo "commit pushed"
-    command git status && echo "ran git status"
+    echo "git status:"
+    command git status
   elif [[ $1 == "add" || $1 == "restore" || $1 == "stash" || $1 == "reset" ]]; then
     # Always run git status after these commands.
     command git "$@"
+    echo "git status:"
     command git status
   elif [ $1 = "pr" ]; then
     sh $GIT_PROJECTS_WORKDIR/dotfiles/scripts/git_pr.sh "$@"
@@ -181,6 +185,7 @@ function cd() {
     if git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
       local git_root=$(git rev-parse --show-toplevel)
       if [ "$git_root" = "$(pwd)" ]; then
+        echo "git status:"
         command git status
       fi
     fi
