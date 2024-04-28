@@ -77,6 +77,7 @@ plugins=(
   starship
   zsh-autocomplete
   gh
+  git-auto-fetch
 )
 
 source $ZSH/oh-my-zsh.sh
