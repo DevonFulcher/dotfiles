@@ -148,7 +148,7 @@ function git() {
     command git status
   elif [ $1 = "branch" ] && [ "$#" -eq 1 ]; then
     command git branch | head -n 20
-  elif [ $1 = "diff" ]; then
+  elif [ $1 = "diff" ] && [ "$#" -eq 1 ]; then
     # Exclude files from diff that I rarely care about. Reference: https://stackoverflow.com/a/48259275/8925314
     command git "$@" -- ':!*Cargo.lock' ':!*poetry.lock' ':!*package-lock.json'
   elif [ $1 = "commit" ]; then
