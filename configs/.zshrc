@@ -78,6 +78,7 @@ plugins=(
   zsh-autocomplete
   gh
   git-auto-fetch
+  jump
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -182,7 +183,7 @@ function git() {
 }
 
 function cd() {
-  builtin cd "$@" && {
+  builtin cd "$@" 2>/dev/null || jump "$@" && {
     if git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
       local git_root=$(git rev-parse --show-toplevel)
       if [ "$git_root" = "$(pwd)" ]; then
