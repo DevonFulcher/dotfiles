@@ -127,8 +127,12 @@ function git() {
       cd "$GIT_PROJECTS_WORKDIR/$repo_name"
     fi
   elif [[ $1 == "checkout" || $1 == "merge" ]]; then
+    if [ -z "$2" ]; then
+      # Handle checkout & merge without parameters
+      branch_name=$(echo $(command git branch | gum filter))
+      command git $1 $branch_name
     # Make commands main/master agnostic
-    if [ "$2" = "main" ] || [ "$2" = "master" ]; then
+    elif [ "$2" = "main" ] || [ "$2" = "master" ]; then
       if git rev-parse --verify main >/dev/null 2>&1; then
         # If 'main' exists, checkout to 'main'
         branch_name="main"
