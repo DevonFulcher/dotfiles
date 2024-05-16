@@ -11,3 +11,4 @@ My configurations.
 - [delta](https://github.com/dandavison/delta)
 - [bat](https://github.com/sharkdp/bat)
 - [gum](https://github.com/charmbracelet/gum)
+- [toolbelt](https://github.com/DevonFulcher/toolbelt)
