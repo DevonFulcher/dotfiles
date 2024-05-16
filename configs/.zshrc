@@ -126,8 +126,8 @@ function git() {
     if [ -d "$GIT_PROJECTS_WORKDIR/$repo_name" ]; then
       cd "$GIT_PROJECTS_WORKDIR/$repo_name"
     fi
-  # Make commands main/master agnostic
   elif [[ $1 == "checkout" || $1 == "merge" ]]; then
+    # Make commands main/master agnostic
     if [ "$2" = "main" ] || [ "$2" = "master" ]; then
       if git rev-parse --verify main >/dev/null 2>&1; then
         # If 'main' exists, checkout to 'main'
@@ -140,8 +140,21 @@ function git() {
         exit 1
       fi
       command git $1 $branch_name
+    elif [ "$2" = "-" ]; then
+      # Handle 'git merge -'
+      if [ "$1" = "merge" ]; then
+        previous_branch=$(git rev-parse --abbrev-ref @{-1})
+        if [ -z "$previous_branch" ]; then
+          echo "Could not determine the previous branch."
+          exit 1
+        fi
+        command git merge "$previous_branch"
+      else
+        # Handle 'git checkout -'
+        command git checkout -
+      fi
     else
-      # If not 'main' or 'master', pass all arguments to git
+      # If not 'main', 'master', or '-', pass all arguments to git
       command git "$@"
     fi
     echo "git status:"
