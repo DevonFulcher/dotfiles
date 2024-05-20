@@ -67,18 +67,22 @@ zstyle ':omz:update' mode auto
 [[ -r ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autocomplete ]] ||
     git clone https://github.com/marlonrichert/zsh-autocomplete.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autocomplete
 
+# source: https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/fzf
+# fzf install directory with homebrew
+export FZF_BASE=/opt/homebrew/bin/fzf
+
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  aliases
   starship
   zsh-autocomplete
   gh
   git-auto-fetch
   jump
+  fzf
 )
 
 source $ZSH/oh-my-zsh.sh
