@@ -83,6 +83,8 @@ plugins=(
   git-auto-fetch
   jump
   fzf
+  docker
+  docker-compose
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -213,6 +215,16 @@ function cd() {
       fi
     fi
   }
+}
+
+function code() {
+  if [ "$#" -eq 0 ]; then
+    directories=$(echo "$(eza ~/vscode) $(eza $GIT_PROJECTS_WORKDIR)")
+    directory=$(echo "$directories" | gum filter)
+    command code "$directory"
+  else
+    command code $@
+  fi
 }
 
 cd $GIT_PROJECTS_WORKDIR
