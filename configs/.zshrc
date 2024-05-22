@@ -226,7 +226,7 @@ function cd() {
 
 function code() {
   if [ "$#" -eq 0 ]; then
-    directories=$(echo "$(eza ~/vscode) $(eza $GIT_PROJECTS_WORKDIR)")
+    directories=$(echo "$(find ~/vscode -mindepth 1 -maxdepth 1 -not -path '*/\.*' -print) $(find $GIT_PROJECTS_WORKDIR -mindepth 1 -maxdepth 1 -not -path '*/\.*' -print)")
     directory=$(echo "$directories" | gum filter)
     command code "$directory"
   else
