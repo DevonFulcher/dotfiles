@@ -2,16 +2,23 @@
     editor = vim
     excludesfile = ~/.gitignore_global
     pager = delta
+[gpg]
+    format = ssh
 [user]
+    signingkey = ~/.ssh/personal_email_id_ed25519.pub
     name = Devon Fulcher
     email = devonfulcher3@gmail.com
+[gpg]
+    format = ssh
+[commit]
+    gpgsign = true
+[tag]
+    gpgSign = true
+[url "git@github.com:"]
+    insteadOf = https://github.com/
 [branch]
     # Show most recently changed branches first.
     sort = -committerdate
-#[commit]
-    # https://help.github.com/articles/signing-commits-using-gpg/
-    # https://withblue.ink/2020/05/17/how-and-why-to-sign-git-commits.html
-    #gpgsign = true
 [diff]
     # Detect copies as well as renames.
     renames = copies

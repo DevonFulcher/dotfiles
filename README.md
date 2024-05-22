@@ -17,3 +17,6 @@ Unlike other dotfile repos, this repo is fairly unopinionated on how to install 
 - [gum](https://github.com/charmbracelet/gum)
 - [toolbelt](https://github.com/DevonFulcher/toolbelt)
 - [brew install fzf](https://github.com/junegunn/fzf)
+
+## Setup
+- [Setup SSH commit signing](https://docs.github.com/en/authentication/managing-commit-signature-verification/about-commit-signature-verification#ssh-commit-signature-verification)
