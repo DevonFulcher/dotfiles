@@ -19,16 +19,14 @@ find "$DIRECTORY" -type f -print | while read -r FILE; do
   # Get the filename without the path
   FILENAME=$(basename "$FILE")
   
-  # Extract the part between the first dot and the last underscore
-  PARSED_VALUE=$(echo "$FILENAME" | sed -e 's/^[^.]*\.//' -e 's/_[^_]*$//')
+  # Remove the suffix '_zshrc.sh' from the filename
+  BASENAME="${FILENAME%_zshrc.sh}"
   
-  # Check if the parsed value matches the target value
-  if [ "$PARSED_VALUE" = "$TARGET_VALUE" ]; then
+  # Check if the basename matches the target value
+  if [ "$BASENAME" = "$TARGET_VALUE" ]; then
     # Source the file using the POSIX-compliant dot command
     if [ -f "$FILE" ]; then
       . "$FILE"
-    else
-      echo "File not found: $FILE"
     fi
   fi
 done
