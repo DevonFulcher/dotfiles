@@ -115,7 +115,8 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-export GIT_PROJECTS_WORKDIR="/Users/devonfulcher/git"
+export CURRENT_ORG="dbt_labs"
+export GIT_PROJECTS_WORKDIR="$HOME/git"
 alias tt=toolbelt
 alias g=git
 # lsd https://github.com/lsd-rs/lsd is an alternative to eza worth exploring one day
@@ -123,6 +124,12 @@ alias ls="eza --classify --all --group-directories-first --long --git --git-repo
 export FPATH="$GIT_PROJECTS_WORKDIR/eza/completions/zsh:$FPATH"
 alias cat=bat
 alias less=bat
+alias k='kubectl'
+export PATH="$PATH:/usr/local/bin"
+export PATH="$HOME/.local/bin:$PATH"
+
+source $GIT_PROJECTS_WORKDIR/dotfiles/scripts/source_all.sh $GIT_PROJECTS_WORKDIR/dotfiles/configs/secrets
+source $GIT_PROJECTS_WORKDIR/dotfiles/scripts/find_and_source.sh $GIT_PROJECTS_WORKDIR/dotfiles/configs/work $CURRENT_ORG
 
 function git() {
   # Always git clone to the same directory
