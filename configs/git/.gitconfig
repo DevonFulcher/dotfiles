@@ -23,10 +23,10 @@
 [pull]
     ff = only
 [alias]
-    save = "!f() { sh $GIT_PROJECTS_WORKDIR/dotfiles/scripts/git_save.sh \"$1\"; }; f"
-    send = "!f() { sh $GIT_PROJECTS_WORKDIR/dotfiles/scripts/git_send.sh \"$1\"; }; f"
+    save = "!f() { sh $GIT_PROJECTS_WORKDIR/dotfiles/scripts/git/git_save.sh \"$1\"; }; f"
+    send = "!f() { sh $GIT_PROJECTS_WORKDIR/dotfiles/scripts/git/git_send.sh \"$1\"; }; f"
     browse = "!f() { gh browse --branch $(git branch --show-current) ${1:-.}; }; f"
-    repos = "!f() { sh $GIT_PROJECTS_WORKDIR/dotfiles/scripts/git_repos.sh; }; f"
+    repos = "!f() { sh $GIT_PROJECTS_WORKDIR/dotfiles/scripts/git/git_repos.sh; }; f"
 [merge]
     conflictstyle = diff3
 [interactive]

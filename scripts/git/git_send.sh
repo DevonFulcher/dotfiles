@@ -16,4 +16,4 @@ else
 fi
 
 git save "$message" || { echo "git save failed"; exit 1; }
-sh $GIT_PROJECTS_WORKDIR/dotfiles/scripts/git_pr.sh ""
+sh $GIT_PROJECTS_WORKDIR/dotfiles/scripts/git/git_pr.sh ""

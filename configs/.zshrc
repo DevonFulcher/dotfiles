@@ -199,7 +199,7 @@ function git() {
     echo "git status:"
     command git status
   elif [ $1 = "pr" ]; then
-    sh $GIT_PROJECTS_WORKDIR/dotfiles/scripts/git_pr.sh "$@"
+    sh $GIT_PROJECTS_WORKDIR/dotfiles/scripts/git/git_pr.sh "$@"
   else
     command git "$@"
   fi
