@@ -10,7 +10,6 @@ Unlike other dotfile repos, this repo is fairly unopinionated on how to install 
 
 ### Manually install
 - [Oh My Zsh](https://ohmyz.sh/)
-- [delta](https://github.com/dandavison/delta)
 - [toolbelt](https://github.com/DevonFulcher/toolbelt)
 - [asdf](https://asdf-vm.com/guide/getting-started.html#_2-download-asdf)
 
@@ -23,3 +22,4 @@ Unlike other dotfile repos, this repo is fairly unopinionated on how to install 
 - aicommits
 - gum
 - fzf
+- git-delta
