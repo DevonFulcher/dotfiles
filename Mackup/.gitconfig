@@ -1,6 +1,5 @@
 [core]
     editor = vim
-    excludesfile = ~/.gitignore_global
     pager = delta
 [gpg]
     format = ssh

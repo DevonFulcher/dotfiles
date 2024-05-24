@@ -128,8 +128,9 @@ alias k='kubectl'
 export PATH="$PATH:/usr/local/bin"
 export PATH="$HOME/.local/bin:$PATH"
 
-source $GIT_PROJECTS_WORKDIR/dotfiles/scripts/source_all.sh $GIT_PROJECTS_WORKDIR/dotfiles/configs/secrets
-source $GIT_PROJECTS_WORKDIR/dotfiles/scripts/find_and_source.sh $GIT_PROJECTS_WORKDIR/dotfiles/configs/work $CURRENT_ORG
+eval "$(/opt/homebrew/bin/brew shellenv)"
+source $GIT_PROJECTS_WORKDIR/dotfiles/scripts/source_all.sh $GIT_PROJECTS_WORKDIR/dotfiles/secrets
+source $GIT_PROJECTS_WORKDIR/dotfiles/scripts/find_and_source.sh $GIT_PROJECTS_WORKDIR/dotfiles/scripts/work $CURRENT_ORG
 
 function git() {
   # Always git clone to the same directory
