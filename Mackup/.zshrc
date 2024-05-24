@@ -85,6 +85,7 @@ plugins=(
   fzf
   docker
   docker-compose
+  asdf
 )
 
 source $ZSH/oh-my-zsh.sh
