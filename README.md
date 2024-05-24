@@ -22,7 +22,3 @@ Unlike other dotfile repos, this repo is fairly unopinionated on how to install 
 - aicommits
 - gum
 - fzf
-
-## Setup
-- [Setup SSH commit signing](https://docs.github.com/en/authentication/managing-commit-signature-verification/about-commit-signature-verification#ssh-commit-signature-verification)
-- [Use a no-reply email for commits](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-email-preferences/setting-your-commit-email-address)
