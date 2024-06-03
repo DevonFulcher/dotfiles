@@ -6,20 +6,9 @@ My configurations.
 
 Unlike other dotfile repos, this repo is fairly unopinionated on how to install the required dependencies. Config files are managed with [mackup](https://github.com/lra/mackup).
 
-## Required dependencies
+## Setup
 
-### Manually install
-- [Oh My Zsh](https://ohmyz.sh/)
-- [toolbelt](https://github.com/DevonFulcher/toolbelt)
-- [asdf](https://asdf-vm.com/guide/getting-started.html#_2-download-asdf)
-
-### Install with Homebrew
-- mackup
-- eza
-  - be sure to configure completions too: https://eza.rocks/#completions
-- bat
-- gh
-- aicommits
-- gum
-- fzf
-- git-delta
+1. Run `./bootstrap.sh`
+2. Manually install
+  - [Oh My Zsh](https://ohmyz.sh/)
+  - [asdf](https://asdf-vm.com/guide/getting-started.html#_2-download-asdf)
