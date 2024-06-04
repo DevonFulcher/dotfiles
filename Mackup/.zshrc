@@ -151,6 +151,7 @@ function git() {
     command git "$@" "$GIT_PROJECTS_WORKDIR/$repo_name"
     if [ -d "$GIT_PROJECTS_WORKDIR/$repo_name" ]; then
       cd "$GIT_PROJECTS_WORKDIR/$repo_name"
+      code .
     fi
   elif [[ $1 == "checkout" || $1 == "merge" ]]; then
     if [ -z "$2" ]; then
