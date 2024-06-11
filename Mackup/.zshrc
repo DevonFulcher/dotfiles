@@ -156,7 +156,7 @@ function git() {
   elif [[ $1 == "checkout" || $1 == "merge" ]]; then
     if [ -z "$2" ]; then
       # Handle checkout & merge without parameters
-      branch_name=$(echo $(command git branch | gum filter))
+      branch_name=$(echo $(command git branch | fzf ))
       command git $1 $branch_name
     # Make commands main/master agnostic
     elif [ "$2" = "main" ] || [ "$2" = "master" ]; then
@@ -241,7 +241,7 @@ function cd() {
 function code() {
   if [ "$#" -eq 0 ]; then
     directories=$(echo "$(find ~/vscode -mindepth 1 -maxdepth 1 -not -path '*/\.*' -print)\n$(find $GIT_PROJECTS_WORKDIR -mindepth 1 -maxdepth 1 -not -path '*/\.*' -print)")
-    directory=$(echo "$directories" | gum filter)
+    directory=$(echo "$directories" | fzf)
     command code "$directory"
   else
     command code $@

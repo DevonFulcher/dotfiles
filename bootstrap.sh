@@ -4,6 +4,5 @@ brew install \
   bat \
   gh \
   aicommits \
-  gum \
   fzf \
   git-delta
