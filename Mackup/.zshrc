@@ -128,6 +128,10 @@ alias k='kubectl'
 export PATH="$PATH:/usr/local/bin"
 export PATH="$HOME/.local/bin:$PATH"
 
+eval "$(/opt/homebrew/bin/brew shellenv)"
+# Setup direnv https://direnv.net/
+eval "$(direnv hook zsh)"
+
 # setup toolbelt
 [[ -r $GIT_PROJECTS_WORKDIR/toolbelt ]] ||
     git clone git@github.com:DevonFulcher/toolbelt.git $GIT_PROJECTS_WORKDIR/toolbelt
@@ -138,11 +142,8 @@ function tt() {
 [[ -r $GIT_PROJECTS_WORKDIR/dotfiles ]] ||
     git clone git@github.com:DevonFulcher/dotfiles.git $GIT_PROJECTS_WORKDIR/dotfiles
 
-eval "$(/opt/homebrew/bin/brew shellenv)" # TODO: not sure what this does
-
 source $GIT_PROJECTS_WORKDIR/dotfiles/scripts/source_all.sh $GIT_PROJECTS_WORKDIR/dotfiles/secrets
 source $GIT_PROJECTS_WORKDIR/dotfiles/scripts/find_and_source.sh $GIT_PROJECTS_WORKDIR/dotfiles/scripts/work $CURRENT_ORG
-
 
 function git() {
   # Always git clone to the same directory

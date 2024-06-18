@@ -5,4 +5,5 @@ brew install \
   gh \
   aicommits \
   fzf \
-  git-delta
+  git-delta \
+  direnv

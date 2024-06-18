@@ -1,2 +1,5 @@
 *.pem
 .DS_Store
+
+# for https://direnv.net/
+.envrc
