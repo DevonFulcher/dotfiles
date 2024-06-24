@@ -17,6 +17,7 @@ golang.go
 jock.svg
 mathiasfrohlich.kotlin
 mechatroner.rainbow-csv
+mk12.better-git-line-blame
 ms-python.black-formatter
 ms-python.debugpy
 ms-python.isort

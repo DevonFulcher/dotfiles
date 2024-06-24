@@ -232,7 +232,7 @@ function git() {
 }
 
 function dot() {
-  if diff -u ~/git/dotfiles/vscode/extensions.txt <(code --list-extensions); then
+  if diff -u ~/git/dotfiles/vscode/extensions.txt <(code --list-extensions) > /dev/null; then
     git -C $GIT_PROJECTS_WORKDIR/dotfiles $@
   else
     echo "Installed VS Code extensions don't match listed ones. Run 'code --list-extensions > ~/git/dotfiles/vscode/extensions.txt'."
