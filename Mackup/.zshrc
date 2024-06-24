@@ -125,6 +125,7 @@ export FPATH="$GIT_PROJECTS_WORKDIR/eza/completions/zsh:$FPATH"
 alias cat=bat
 alias less=bat
 alias k='kubectl'
+alias dot="git -C $GIT_PROJECTS_WORKDIR/dotfiles"
 export PATH="$PATH:/usr/local/bin"
 export PATH="$HOME/.local/bin:$PATH"
 
