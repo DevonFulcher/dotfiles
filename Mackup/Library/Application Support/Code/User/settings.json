@@ -78,5 +78,7 @@
   },
   "remote.autoForwardPortsSource": "hybrid",
   "github.copilot.editor.enableAutoCompletions": true,
-  "workbench.trustedDomains.promptInTrustedWorkspace": false
+  "workbench.trustedDomains.promptInTrustedWorkspace": false,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "javascript.updateImportsOnFileMove.enabled": "always"
 }
