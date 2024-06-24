@@ -228,15 +228,20 @@ function git() {
 }
 
 function cd() {
-  builtin cd "$@" 2>/dev/null || jump "$@" && {
-    if git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
-      local git_root=$(git rev-parse --show-toplevel)
-      if [ "$git_root" = "$(pwd)" ]; then
-        echo "git status:"
-        command git status
-      fi
+  if [ "$#" -eq 0 ]; then
+    directories=$(find $GIT_PROJECTS_WORKDIR -mindepth 1 -maxdepth 1 -not -path '*/\.*' -print)
+    directory=$(echo "$directories" | fzf)
+    builtin cd "$directory"
+  else
+    builtin cd "$@" 2>/dev/null || jump "$@"
+  fi
+  if git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
+    local git_root=$(git rev-parse --show-toplevel)
+    if [ "$git_root" = "$(pwd)" ]; then
+      echo "git status:"
+      command git status
     fi
-  }
+  fi
 }
 
 function code() {
