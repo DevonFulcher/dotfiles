@@ -125,13 +125,16 @@ export FPATH="$GIT_PROJECTS_WORKDIR/eza/completions/zsh:$FPATH"
 alias cat=bat
 alias less=bat
 alias k='kubectl'
-alias dot="git -C $GIT_PROJECTS_WORKDIR/dotfiles"
 export PATH="$PATH:/usr/local/bin"
 export PATH="$HOME/.local/bin:$PATH"
+
 
 eval "$(/opt/homebrew/bin/brew shellenv)"
 # Setup direnv https://direnv.net/
 eval "$(direnv hook zsh)"
+# Delta completions https://dandavison.github.io/delta/tips-and-tricks/shell-completion.html
+eval "$(delta --generate-completion zsh)"
+
 
 # setup toolbelt
 [[ -r $GIT_PROJECTS_WORKDIR/toolbelt ]] ||
@@ -225,6 +228,14 @@ function git() {
     sh $GIT_PROJECTS_WORKDIR/dotfiles/scripts/git/git_pr.sh "$@"
   else
     command git "$@"
+  fi
+}
+
+function dot() {
+  if diff -u ~/git/dotfiles/vscode/extensions.txt <(code --list-extensions); then
+    git -C $GIT_PROJECTS_WORKDIR/dotfiles $@
+  else
+    echo "Installed VS Code extensions don't match listed ones. Run 'code --list-extensions > ~/git/dotfiles/vscode/extensions.txt'."
   fi
 }
 
