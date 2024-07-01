@@ -5,7 +5,6 @@ christian-kohler.path-intellisense
 dbaeumer.vscode-eslint
 dnicolson.binary-plist
 editorconfig.editorconfig
-elagil.pre-commit-helper
 esbenp.prettier-vscode
 formulahendry.auto-rename-tag
 ghmcadams.lintlens
