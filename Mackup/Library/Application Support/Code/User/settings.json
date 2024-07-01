@@ -5,7 +5,8 @@
   "workbench.startupEditor": "none",
   "workbench.colorTheme": "Default Dark+",
   "go.formatTool": "gofmt",
-  "window.zoomLevel": 2,
+  "window.zoomLevel": 1.5,
+  "editor.fontSize": 18,
   "notebook.cellToolbarLocation": {
     "default": "right",
     "jupyter-notebook": "left"
