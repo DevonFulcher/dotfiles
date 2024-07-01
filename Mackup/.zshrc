@@ -141,9 +141,6 @@ eval "$(delta --generate-completion zsh)"
     git clone git@github.com:DevonFulcher/toolbelt.git $GIT_PROJECTS_WORKDIR/toolbelt
 (cd $GIT_PROJECTS_WORKDIR/toolbelt/cli && go build)
 alias tt=$GIT_PROJECTS_WORKDIR/toolbelt/cli/toolbelt
-# function tt() {
-#   (cd $GIT_PROJECTS_WORKDIR/toolbelt/cli && go run . $@)
-# }
 
 [[ -r $GIT_PROJECTS_WORKDIR/dotfiles ]] ||
     git clone git@github.com:DevonFulcher/dotfiles.git $GIT_PROJECTS_WORKDIR/dotfiles
@@ -228,8 +225,6 @@ function git() {
     command git status
   elif [ $1 = "pr" ]; then
     sh $GIT_PROJECTS_WORKDIR/dotfiles/scripts/git/git_pr.sh "$@"
-  elif [ $1 = "save" ]; then
-    tt git $@
   else
     command git "$@"
   fi
