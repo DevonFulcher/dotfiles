@@ -53,28 +53,3 @@ alias dbti=~/cli/dbt
 
 export ASDF_HASHICORP_OVERWRITE_ARCH=amd64
 . /opt/homebrew/opt/asdf/libexec/asdf.sh
-
-function make() {
-  CURRENT_DIR=$(pwd)
-  TARGET_DIR="$GIT_PROJECTS_WORKDIR/metricflow-server"
-  # Check if the current directory is within the specified directory
-  if [[ "$PWD" == "$TARGET_DIR"/* || "$PWD" == "$TARGET_DIR" ]]; then
-    echo -e "\033[0;31m!!! Warning: doing some really hacky stuff right now !!!\033[0m"
-    # Add # type: ignore to specific lines in mfs/clients/cloud_config_client.py
-    sed -i '' '/from dbt_cloud_grpc_gen.warehouse_credentials.v1 import (/ s/$/  # type: ignore/' mfs/clients/cloud_config_client.py
-    sed -i '' '/from dbt_cloud_grpc_gen.profiles.v1 import profiles_pb2, profiles_pb2_grpc/ s/$/  # type: ignore/' mfs/clients/cloud_config_client.py
-    sed -i '' '/from dbt_cloud_grpc_gen.authz.v1 import authz_pb2, authz_pb2_grpc/ s/$/  # type: ignore/' mfs/clients/cloud_config_client.py
-    sed -i '' '/from dbt_cloud_grpc_gen.profiles.v1 import profiles_pb2/ s/$/  # type: ignore/' tests/mf_caching/stubs/stub_cloud_config_client.py
-
-    # Run pre-commit
-    poetry run pre-commit run --all-files
-
-    # Remove # type: ignore from specific lines
-    sed -i '' '/from dbt_cloud_grpc_gen.warehouse_credentials.v1 import (/ s/  # type: ignore//' mfs/clients/cloud_config_client.py
-    sed -i '' '/from dbt_cloud_grpc_gen.profiles.v1 import profiles_pb2, profiles_pb2_grpc/ s/  # type: ignore//' mfs/clients/cloud_config_client.py
-    sed -i '' '/from dbt_cloud_grpc_gen.authz.v1 import authz_pb2, authz_pb2_grpc/ s/  # type: ignore//' mfs/clients/cloud_config_client.py
-    sed -i '' '/from dbt_cloud_grpc_gen.profiles.v1 import profiles_pb2/ s/  # type: ignore//' tests/mf_caching/stubs/stub_cloud_config_client.py
-  else
-    command make $@
-  fi
-}
