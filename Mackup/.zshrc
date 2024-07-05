@@ -1,3 +1,5 @@
+START=$(perl -MTime::HiRes -e 'printf("%d\n", Time::HiRes::time()*1000)')
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -269,3 +271,7 @@ function code() {
 }
 
 cd $GIT_PROJECTS_WORKDIR
+
+END=$(perl -MTime::HiRes -e 'printf("%d\n", Time::HiRes::time()*1000)')
+DURATION=$((END - START))
+echo "shell took $DURATION milliseconds to start up."
