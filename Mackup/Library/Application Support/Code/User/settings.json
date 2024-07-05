@@ -26,6 +26,10 @@
     "editor.defaultFormatter": "ms-python.black-formatter",
     "editor.formatOnSave": true,
     "formatting.provider": "none", // recommended by the Black extension
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
+    },
+    "isort.args": ["--profile", "black"],
     "testing.pytestEnabled": true,
     "analysis.autoImportCompletions": true,
     "analysis.typeCheckingMode": "basic"
