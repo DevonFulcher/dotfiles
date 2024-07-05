@@ -52,3 +52,6 @@ alias dbti=~/cli/dbt
 
 export ASDF_HASHICORP_OVERWRITE_ARCH=amd64
 . /opt/homebrew/opt/asdf/libexec/asdf.sh
+
+fpath+=~/.zfunc
+autoload -Uz compinit && compinit
