@@ -134,7 +134,8 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 eval "$(direnv hook zsh)"
 # Delta completions https://dandavison.github.io/delta/tips-and-tricks/shell-completion.html
 eval "$(delta --generate-completion zsh)"
-
+# Git Town completions https://www.git-town.com/commands/completions#zsh
+source <(git-town completions zsh)
 
 # setup toolbelt
 [[ -r $GIT_PROJECTS_WORKDIR/toolbelt ]] ||

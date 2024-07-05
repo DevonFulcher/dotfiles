@@ -3,3 +3,6 @@
 
 # for https://direnv.net/
 .envrc
+
+# for Git Town https://www.git-town.com
+.git-branches.toml

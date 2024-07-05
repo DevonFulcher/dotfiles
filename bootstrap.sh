@@ -6,4 +6,5 @@ brew install \
   aicommits \
   fzf \
   git-delta \
-  direnv
+  direnv \
+  git-town
