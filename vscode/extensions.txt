@@ -20,7 +20,6 @@ mechatroner.rainbow-csv
 mk12.better-git-line-blame
 ms-python.black-formatter
 ms-python.debugpy
-ms-python.isort
 ms-python.python
 ms-python.vscode-pylance
 ms-toolsai.jupyter

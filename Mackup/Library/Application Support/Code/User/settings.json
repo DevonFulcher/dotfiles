@@ -29,7 +29,6 @@
     "editor.codeActionsOnSave": {
       "source.organizeImports": "explicit"
     },
-    "isort.args": ["--profile", "black"],
     "testing.pytestEnabled": true,
     "analysis.autoImportCompletions": true,
     "analysis.typeCheckingMode": "basic"
