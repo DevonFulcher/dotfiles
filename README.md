@@ -11,4 +11,3 @@ Unlike other dotfile repos, this repo is fairly unopinionated on how to install 
 1. Run `./bootstrap.sh`
 2. Manually install
   - [Oh My Zsh](https://ohmyz.sh/)
-  - [asdf](https://asdf-vm.com/guide/getting-started.html#_2-download-asdf)

@@ -82,12 +82,10 @@ plugins=(
   starship
   zsh-autocomplete
   gh
-  git-auto-fetch
   jump
   fzf
   docker
   docker-compose
-  asdf
 )
 
 source $ZSH/oh-my-zsh.sh
