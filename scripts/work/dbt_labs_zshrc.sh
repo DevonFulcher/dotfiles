@@ -17,6 +17,9 @@ export JAVA_HOME=/Library/Java/JavaVirtualMachines/amazon-corretto-17.jdk/Conten
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
+# Rust & Cargo
+. "$HOME/.cargo/env"
+
 export AWS_USER="devon.fulcher"
 export AFS_JDBC_DRIVER=/Users/devonfulcher/drivers/flight-sql-jdbc-driver-12.0.0.jar
 alias tableau="/Applications/Tableau\ Desktop\ 2023.2.app/Contents/MacOS/Tableau -DDisableVerifyConnectorPluginSignature=true -DConnectPluginsPath=$GIT_PROJECTS_WORKDIR/semantic-layer-gateway/integrations/tableau"
@@ -47,8 +50,6 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
-
-alias dbti=~/cli/dbt
 
 fpath+=~/.zfunc
 autoload -Uz compinit && compinit
