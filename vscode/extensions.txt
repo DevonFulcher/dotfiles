@@ -38,6 +38,7 @@ oderwat.indent-rainbow
 orsenkucher.vscode-graphql
 redhat.java
 redhat.vscode-yaml
+richie5um2.vscode-sort-json
 rust-lang.rust-analyzer
 samuelcolvin.jinjahtml
 tamasfe.even-better-toml
