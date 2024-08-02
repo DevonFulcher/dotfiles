@@ -7,4 +7,5 @@ brew install \
   fzf \
   git-delta \
   direnv \
-  git-town
+  git-town \
+  asdf

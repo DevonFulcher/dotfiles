@@ -5,3 +5,5 @@ else
   aicommits || { echo "aicommits failed"; exit 1; }
 fi
 git push --quiet && echo "commit pushed" || echo "push failed";
+echo "git status:"
+git status
