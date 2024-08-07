@@ -19,6 +19,7 @@ mathiasfrohlich.kotlin
 mechatroner.rainbow-csv
 mk12.better-git-line-blame
 ms-azuretools.vscode-docker
+ms-kubernetes-tools.vscode-kubernetes-tools
 ms-python.black-formatter
 ms-python.debugpy
 ms-python.mypy-type-checker
