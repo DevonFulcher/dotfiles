@@ -28,13 +28,29 @@ export NAMESPACE="dev-devonfulcher"
 source ~/.devspace-completion
 
 function devspace() {
-  if [ "$(git -C "$GIT_PROJECTS_WORKDIR/helm-releases" rev-parse --abbrev-ref HEAD)" != "main" ]; then
-    echo "helm-releases is not on the 'main' branch."
-  elif [ "$(git -C "$GIT_PROJECTS_WORKDIR/helm-charts" rev-parse --abbrev-ref HEAD)" != "main" ]; then
-    echo "helm-charts is not on the 'main' branch."
-  else
-    command devspace "$@"
+  local force=false
+  local args=()
+
+  # Parse arguments to check for --force flag
+  for arg in "$@"; do
+    if [ "$arg" = "--force" ]; then
+      force=true
+    else
+      args+=("$arg")
+    fi
+  done
+
+  if ! $force; then
+    if [ "$(git -C "$GIT_PROJECTS_WORKDIR/helm-releases" rev-parse --abbrev-ref HEAD)" != "main" ]; then
+      echo "helm-releases is not on the 'main' branch. Use --force to run anyway."
+      return 1
+    elif [ "$(git -C "$GIT_PROJECTS_WORKDIR/helm-charts" rev-parse --abbrev-ref HEAD)" != "main" ]; then
+      echo "helm-charts is not on the 'main' branch. Use --force to run anyway."
+      return 1
+    fi
   fi
+
+  command devspace "${args[@]}"
 }
 
 # nvm
