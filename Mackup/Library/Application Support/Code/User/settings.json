@@ -30,7 +30,6 @@
     "analysis.autoImportCompletions": true,
     "analysis.typeCheckingMode": "basic"
   },
-  "python.envFile": "${workspaceFolder}/.envrc",
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
