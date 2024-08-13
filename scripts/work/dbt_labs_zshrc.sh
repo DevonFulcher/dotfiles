@@ -4,6 +4,9 @@ alias afs='python3.12 $GIT_PROJECTS_WORKDIR/afs-cli/afs.py $@'
 export APPLE_SSH_ADD_BEHAVIOR="macos"
 export GITHUB_TOKEN="$HOMEBREW_GITHUB_API_TOKEN"
 
+# Hatch: https://hatch.pypa.io/1.12/cli/about/#tab-completion
+. ~/.hatch-complete.zsh
+
 # Go
 export GOPATH=/usr/local/go/bin
 export PATH="$PATH:${GOPATH}/bin"
