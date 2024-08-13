@@ -81,5 +81,6 @@
   "typescript.updateImportsOnFileMove.enabled": "always",
   "javascript.updateImportsOnFileMove.enabled": "always",
   "cursor.cpp.disabledLanguages": ["plaintext", "markdown", "scminput"],
-  "editor.accessibilitySupport": "off"
+  "editor.accessibilitySupport": "off",
+  "git.openRepositoryInParentFolders": "never"
 }

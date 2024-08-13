@@ -229,6 +229,11 @@ function git() {
     command git status
   elif [ $1 = "pr" ]; then
     sh $GIT_PROJECTS_WORKDIR/dotfiles/scripts/git/git_pr.sh "$@"
+  elif [ $1 = "branch-clean" ]; then
+    git fetch -p
+    git branch -vv | grep ': gone]' | awk '{print $1}' | while read branch; do
+      git branch -D "$branch"
+    done
   else
     command git "$@"
   fi

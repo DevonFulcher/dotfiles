@@ -34,6 +34,7 @@
     save = "!f() { sh $GIT_PROJECTS_WORKDIR/dotfiles/scripts/git/git_save.sh \"$1\"; }; f"
     send = "!f() { sh $GIT_PROJECTS_WORKDIR/dotfiles/scripts/git/git_send.sh \"$1\"; }; f"
     browse = "!f() { gh browse --branch $(git branch --show-current) ${1:-.}; }; f"
+    graph = "log --graph --oneline --decorate --branches"
 [merge]
     conflictstyle = diff3
 [interactive]
@@ -46,7 +47,7 @@
     side-by-side = false
     line-numbers = true
     hyperlinks = true
-    hyperlinks-file-link-format = "vscode://file/{path}:{line}" # TODO: Github instead?
+    hyperlinks-file-link-format = "cursor://file/{path}:{line}"
     features = mine
 
 # more options here: https://raw.githubusercontent.com/dandavison/delta/master/themes.gitconfig
