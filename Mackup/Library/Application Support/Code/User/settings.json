@@ -81,5 +81,6 @@
   "github.copilot.editor.enableAutoCompletions": true,
   "workbench.trustedDomains.promptInTrustedWorkspace": false,
   "typescript.updateImportsOnFileMove.enabled": "always",
-  "javascript.updateImportsOnFileMove.enabled": "always"
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "git.openRepositoryInParentFolders": "never"
 }
