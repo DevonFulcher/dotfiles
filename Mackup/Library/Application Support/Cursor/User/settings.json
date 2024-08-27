@@ -82,5 +82,6 @@
   "javascript.updateImportsOnFileMove.enabled": "always",
   "cursor.cpp.disabledLanguages": ["plaintext", "markdown", "scminput"],
   "editor.accessibilitySupport": "off",
-  "git.openRepositoryInParentFolders": "never"
+  "git.openRepositoryInParentFolders": "never",
+  "makefile.configureOnOpen": false
 }

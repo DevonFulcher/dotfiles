@@ -8,4 +8,5 @@ brew install \
   git-delta \
   direnv \
   git-town \
-  asdf
+  asdf \
+  koekeishiya/formulae/yabai
