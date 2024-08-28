@@ -35,6 +35,7 @@ ms-vscode.makefile-tools
 ms-vscode.remote-explorer
 ms-vscode.remote-server
 ms-vscode.vscode-typescript-next
+ms-vsliveshare.vsliveshare
 oderwat.indent-rainbow
 orsenkucher.vscode-graphql
 redhat.java
