@@ -9,4 +9,6 @@ brew install \
   direnv \
   git-town \
   asdf \
-  koekeishiya/formulae/yabai
+  koekeishiya/formulae/yabai \
+  koekeishiya/formulae/skhd
+brew install --cask raycast

@@ -4,7 +4,7 @@ My configurations.
 
 ## Usage
 
-Unlike other dotfile repos, this repo is fairly unopinionated on how to install the required dependencies. Config files are managed with [mackup](https://github.com/lra/mackup).
+Config files are managed with [mackup](https://github.com/lra/mackup).
 
 ## Setup
 
