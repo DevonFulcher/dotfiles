@@ -137,7 +137,7 @@ eval "$(delta --generate-completion zsh)"
 # Git Town completions https://www.git-town.com/commands/completions#zsh
 source <(git-town completions zsh)
 # Setup asdf https://asdf-vm.com/guide/getting-started.html
-. /opt/homebrew/opt/asdf/libexec/asdf.sh
+. /opt/homebrew/opt/asdf/libexec/asdf.sh # TODO: this is not working
 
 
 # setup toolbelt

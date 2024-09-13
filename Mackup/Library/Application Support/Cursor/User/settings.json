@@ -84,5 +84,7 @@
   "editor.accessibilitySupport": "off",
   "git.openRepositoryInParentFolders": "never",
   "makefile.configureOnOpen": false,
-  "git.autofetch": true
+  "git.autofetch": true,
+  "window.customTitleBarVisibility": "never",
+  "window.titleBarStyle": "native"
 }
