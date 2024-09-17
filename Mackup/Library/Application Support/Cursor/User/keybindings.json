@@ -15,5 +15,12 @@
   {
     "key": "ctrl+shift+tab",
     "command": "workbench.action.previousEditor"
+  },
+
+  // Show definition preview hover
+  {
+    "key": "ctrl+alt+;",
+    "command": "editor.action.showDefinitionPreviewHover",
+    "when": "editorTextFocus"
   }
 ]
