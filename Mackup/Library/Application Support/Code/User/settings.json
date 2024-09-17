@@ -84,5 +84,6 @@
   "javascript.updateImportsOnFileMove.enabled": "always",
   "git.openRepositoryInParentFolders": "never",
   "window.customTitleBarVisibility": "never",
-  "window.titleBarStyle": "native"
+  "window.titleBarStyle": "native",
+  "workbench.statusBar.visible": false
 }

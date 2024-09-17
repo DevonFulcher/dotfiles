@@ -86,5 +86,6 @@
   "makefile.configureOnOpen": false,
   "git.autofetch": true,
   "window.customTitleBarVisibility": "never",
-  "window.titleBarStyle": "native"
+  "window.titleBarStyle": "native",
+  "workbench.statusBar.visible": false
 }
