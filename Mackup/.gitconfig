@@ -41,6 +41,8 @@
     diffFilter = delta --color-only
 [status]
     short = true
+[rerere]
+    enabled = true
 [delta]
     navigate = true # use n and N to move between diff sections
     light = false
