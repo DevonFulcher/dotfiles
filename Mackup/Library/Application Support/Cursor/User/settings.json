@@ -87,5 +87,16 @@
   "git.autofetch": true,
   "window.customTitleBarVisibility": "never",
   "window.titleBarStyle": "native",
-  "workbench.statusBar.visible": false
+  "workbench.statusBar.visible": false,
+  "breadcrumbs.enabled": false,
+  "window.title": "${dirty}${separator}${activeEditorMedium}${separator}${activeRepositoryBranchName}${separator}${rootName}${separator}${profileName}",
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
+  "files.watcherExclude": {
+    "**/.git/subtree-cache/**": true,
+    "**/.git/objects/**": true,
+    "**/site-packages/**": true,
+    "**/node_modules/*/**": true
+  },
+  "workbench.reduceMotion": "on"
 }
