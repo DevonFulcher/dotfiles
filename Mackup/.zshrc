@@ -228,13 +228,15 @@ function git() {
     command git "$@"
     echo "git status:"
     command git status
+  elif [ $1 = "pr" ]; then
+    python $GIT_PROJECTS_WORKDIR/dotfiles/scripts/python/git.py "$@"
   elif [ $1 = "branch-clean" ]; then
     git fetch -p
     git branch -vv | grep ': gone]' | awk '{print $1}' | while read branch; do
       git branch -D "$branch"
     done
   else
-    python $GIT_PROJECTS_WORKDIR/dotfiles/scripts/python/git.py "$@"
+    command git "$@"
   fi
 }
 

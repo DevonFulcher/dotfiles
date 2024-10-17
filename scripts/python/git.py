@@ -8,7 +8,16 @@ def main():
 
     # Check if the command is 'pr'
     if git_args and git_args[0] == "pr":
-        subprocess.run(["gh", "pr", "view", "--web"], check=True)
+        match git_args:
+            case ["pr", *_]:
+                result = subprocess.run(["gh", "pr", "view", "--web"])
+                if result.returncode != 0:
+                    result = subprocess.run(
+                        ["gh", "pr", "create", "--web"],
+                    )
+            case _:
+                print("Unrecognized command.", file=sys.stderr)
+                sys.exit(1)
     else:
         # Construct the git command
         command = ["git"] + git_args
