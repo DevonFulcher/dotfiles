@@ -136,9 +136,10 @@ eval "$(direnv hook zsh)"
 eval "$(delta --generate-completion zsh)"
 # Git Town completions https://www.git-town.com/commands/completions#zsh
 source <(git-town completions zsh)
-# Setup asdf https://asdf-vm.com/guide/getting-started.html
+# Setup asdf completions https://asdf-vm.com/guide/getting-started.html
 . /opt/homebrew/opt/asdf/libexec/asdf.sh # TODO: this is not working
 
+#export PYTHON_PATH=$(asdf which python)
 
 # setup toolbelt
 [[ -r $GIT_PROJECTS_WORKDIR/toolbelt ]] ||
@@ -153,16 +154,7 @@ source $GIT_PROJECTS_WORKDIR/dotfiles/scripts/source_all.sh $GIT_PROJECTS_WORKDI
 source $GIT_PROJECTS_WORKDIR/dotfiles/scripts/find_and_source.sh $GIT_PROJECTS_WORKDIR/dotfiles/scripts/work $CURRENT_ORG
 
 function git() {
-  # Always git clone to the same directory
-  if [[ $1 == "clone" && -n $2 && -n $GIT_PROJECTS_WORKDIR ]]; then
-    repo_name=$(echo "$2" | awk -F/ '{sub(/\..*/,"",$NF); print $NF}')
-    command git "$@" "$GIT_PROJECTS_WORKDIR/$repo_name"
-    if [ -d "$GIT_PROJECTS_WORKDIR/$repo_name" ]; then
-      cd "$GIT_PROJECTS_WORKDIR/$repo_name"
-      cp $GIT_PROJECTS_WORKDIR/dotfiles/config/git-branches.toml .
-      cursor .
-    fi
-  elif [[ $1 == "checkout" || $1 == "merge" ]]; then
+  if [[ $1 == "checkout" || $1 == "merge" ]]; then
     if [ -z "$2" ]; then
       # Handle checkout & merge without parameters
       branch_name=$(echo $(command git branch | fzf ))
@@ -228,6 +220,12 @@ function git() {
     command git "$@"
     echo "git status:"
     command git status
+  elif [ $1 = "pr" ]; then
+    python $GIT_PROJECTS_WORKDIR/dotfiles/scripts/python/git.py "$@"
+  elif [ $1 = "clone" ] && [ -n $2 ]; then
+    python $GIT_PROJECTS_WORKDIR/dotfiles/scripts/python/git.py "$@"
+    # repo_name=$(echo "$2" | awk -F/ '{sub(/\..*/,"",$NF); print $NF}')
+    # cd $GIT_PROJECTS_WORKDIR/$repo_name
   elif [ $1 = "branch-clean" ]; then
     git fetch -p
     git branch -vv | grep ': gone]' | awk '{print $1}' | while read branch; do

@@ -12,3 +12,6 @@ brew install \
   koekeishiya/formulae/yabai \
   koekeishiya/formulae/skhd
 brew install --cask raycast
+asdf plugin add python
+asdf install
+pip install toml
