@@ -1,4 +1,3 @@
-FaroSystemAppender constructor
 4ops.terraform
 anysphere.pyright
 charliermarsh.ruff
@@ -15,13 +14,13 @@ github.vscode-github-actions
 github.vscode-pull-request-github
 golang.go
 jock.svg
+matangover.mypy
 mathiasfrohlich.kotlin
 mechatroner.rainbow-csv
 mk12.better-git-line-blame
 ms-azuretools.vscode-docker
 ms-python.black-formatter
 ms-python.debugpy
-ms-python.mypy-type-checker
 ms-python.python
 ms-python.vscode-pylance
 ms-toolsai.jupyter
@@ -31,7 +30,6 @@ ms-toolsai.vscode-jupyter-cell-tags
 ms-toolsai.vscode-jupyter-slideshow
 ms-vscode-remote.remote-containers
 ms-vscode.makefile-tools
-ms-vscode.remote-explorer
 ms-vscode.remote-server
 ms-vscode.vscode-typescript-next
 oderwat.indent-rainbow
@@ -41,6 +39,7 @@ redhat.vscode-yaml
 rust-lang.rust-analyzer
 samuelcolvin.jinjahtml
 tamasfe.even-better-toml
+tim-koehler.helm-intellisense
 uniquevision.vscode-plpgsql-lsp
 visualstudioexptteam.intellicode-api-usage-examples
 visualstudioexptteam.vscodeintellicode

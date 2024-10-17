@@ -237,12 +237,13 @@ function git() {
 }
 
 function dot() {
-  if [ "$1" = "code-fix" ]; then
+  if [ "$1" = "fix" ]; then
     code --list-extensions > ~/git/dotfiles/vscode/extensions.txt
-  elif diff -u ~/git/dotfiles/vscode/extensions.txt <(code --list-extensions) > /dev/null; then
+    cursor --list-extensions > ~/git/dotfiles/cursor/extensions.txt
+  elif diff -u ~/git/dotfiles/vscode/extensions.txt <(code --list-extensions) > /dev/null && diff -u ~/git/dotfiles/cursor/extensions.txt <(cursor --list-extensions) > /dev/null; then
     git -C $GIT_PROJECTS_WORKDIR/dotfiles $@
   else
-    echo "Installed VS Code extensions don't match listed ones. Run 'dot code-fix'."
+    echo "Installed VS Code or Cursor extensions don't match listed ones. Run 'dot fix'."
   fi
 }
 
