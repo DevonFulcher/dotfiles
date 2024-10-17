@@ -139,7 +139,7 @@ source <(git-town completions zsh)
 # Setup asdf completions https://asdf-vm.com/guide/getting-started.html
 . /opt/homebrew/opt/asdf/libexec/asdf.sh # TODO: this is not working
 
-#export PYTHON_PATH=$(asdf which python)
+export PYTHON_PATH=$(asdf which python)
 
 # setup toolbelt
 [[ -r $GIT_PROJECTS_WORKDIR/toolbelt ]] ||
@@ -221,18 +221,18 @@ function git() {
     echo "git status:"
     command git status
   elif [ $1 = "pr" ]; then
-    python $GIT_PROJECTS_WORKDIR/dotfiles/scripts/python/git.py "$@"
+    $PYTHON_PATH $GIT_PROJECTS_WORKDIR/dotfiles/scripts/python/git.py "$@"
   elif [ $1 = "clone" ] && [ -n $2 ]; then
-    python $GIT_PROJECTS_WORKDIR/dotfiles/scripts/python/git.py "$@"
-    # repo_name=$(echo "$2" | awk -F/ '{sub(/\..*/,"",$NF); print $NF}')
-    # cd $GIT_PROJECTS_WORKDIR/$repo_name
+    $PYTHON_PATH $GIT_PROJECTS_WORKDIR/dotfiles/scripts/python/git.py "$@"
+    repo_name=$(echo "$2" | awk -F/ '{sub(/\..*/,"",$NF); print $NF}')
+    cd $GIT_PROJECTS_WORKDIR/$repo_name
   elif [ $1 = "branch-clean" ]; then
     git fetch -p
     git branch -vv | grep ': gone]' | awk '{print $1}' | while read branch; do
       git branch -D "$branch"
     done
   else
-    python $GIT_PROJECTS_WORKDIR/dotfiles/scripts/python/git.py "$@"
+    command git "$@"
   fi
 }
 
