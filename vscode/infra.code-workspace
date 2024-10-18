@@ -1,0 +1,26 @@
+{
+  "folders": [
+    {
+      "path": "../../helm-charts"
+    },
+    {
+      "path": "../../helm-releases"
+    },
+    {
+      "path": "../../dbt-cloud-infra-single-tenant"
+    },
+    {
+      "path": "../../dbt-cloud-infra-terraform-modules"
+    },
+    {
+      "path": "../../dbt-cloud-infra-terraform"
+    },
+    {
+      "path": "../../devspace-tools"
+    },
+    {
+      "path": "../../terraform-datadog"
+    }
+  ],
+  "settings": {}
+}

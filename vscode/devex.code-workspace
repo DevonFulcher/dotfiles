@@ -1,0 +1,14 @@
+{
+  "folders": [
+    {
+      "path": "../dotfiles"
+    },
+    {
+      "path": "../../toolbelt"
+    },
+    {
+      "path": "../../afs-cli"
+    }
+  ],
+  "settings": {}
+}
