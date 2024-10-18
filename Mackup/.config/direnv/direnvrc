@@ -1,0 +1,54 @@
+# source: https://github.com/direnv/direnv/wiki/Python#poetry
+# Loads poetry environment when `layout poetry` is added to .envrc
+layout_poetry() {
+    if [[ -d ".venv" ]]; then
+        VIRTUAL_ENV="$(pwd)/.venv"
+    else
+        VIRTUAL_ENV=$(poetry env info --path 2>/dev/null ; true)
+    fi
+
+    if [[ -z $VIRTUAL_ENV || ! -d $VIRTUAL_ENV ]]; then
+        log_status "No virtual environment exists. Executing \`poetry install\` to create one."
+        poetry install
+        VIRTUAL_ENV=$(poetry env info --path)
+    fi
+
+    PATH_add "$VIRTUAL_ENV/bin"
+    export POETRY_ACTIVE=1  # or VENV_ACTIVE=1
+    export VIRTUAL_ENV
+}
+
+# source: https://github.com/direnv/direnv/wiki/Python#hatch
+# Loads hatch environment when `layout hatch` is added to .envrc
+layout_hatch() {
+    HATCH_ENV=${HATCH_ENV_ACTIVE:-default}
+    # We need this to error out if the env doesn't exist in the pyproject.toml file.
+    VIRTUAL_ENV=$(hatch env find $HATCH_ENV)
+
+    if [[ ! -d $VIRTUAL_ENV ]]; then
+        log_status "No virtual environment exists. Executing \`hatch env create\` to create one."
+        hatch env create $HATCH_ENV
+    fi
+
+    PATH_add "$VIRTUAL_ENV/bin"
+    export HATCH_ENV_ACTIVE=$HATCH_ENV  # or VENV_ACTIVE=1
+    export VIRTUAL_ENV
+}
+
+# source: https://github.com/direnv/direnv/wiki/Python#uv
+# Loads uv environment when `layout uv` is added to .envrc
+layout_uv() {
+    if [[ -d ".venv" ]]; then
+        VIRTUAL_ENV="$(pwd)/.venv"
+    fi
+
+    if [[ -z $VIRTUAL_ENV || ! -d $VIRTUAL_ENV ]]; then
+        log_status "No virtual environment exists. Executing \`uv venv\` to create one."
+        uv venv
+        VIRTUAL_ENV="$(pwd)/.venv"
+    fi
+
+    PATH_add "$VIRTUAL_ENV/bin"
+    export UV_ACTIVE=1  # or VENV_ACTIVE=1
+    export VIRTUAL_ENV
+}

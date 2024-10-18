@@ -1,0 +1,10 @@
+{
+  "folders": [
+    {
+      "path": "../../ai-codegen-api"
+    }
+  ],
+  "settings": {
+    "python.venvPath": "${workspaceFolder}/.venv"
+  }
+}

@@ -1,19 +1,14 @@
 {
   "folders": [
     {
-      "name": "metricflow",
       "path": "../../metricflow"
     },
     {
-      "name": "metricflow-server",
       "path": "../../metricflow-server"
     },
     {
-      "name": "dbt-semantic-interfaces",
       "path": "../../dbt-semantic-interfaces"
     }
   ],
-  "settings": {
-    "black-formatter.args": ["--line-length", "120"]
-  }
+  "settings": {}
 }
