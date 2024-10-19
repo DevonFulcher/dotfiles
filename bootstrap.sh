@@ -1,3 +1,4 @@
+brew tap FelixKratz/formulae # used for borders
 brew install \
   mackup \
   eza \
@@ -10,7 +11,8 @@ brew install \
   git-town \
   asdf \
   koekeishiya/formulae/yabai \
-  koekeishiya/formulae/skhd
+  koekeishiya/formulae/skhd \
+  borders
 brew install --cask raycast
 asdf plugin add python
 asdf install
