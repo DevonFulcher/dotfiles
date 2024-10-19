@@ -4,6 +4,7 @@
 # for https://direnv.net/
 .envrc
 .env
+.direnv
 
 # for Git Town https://www.git-town.com
 .git-branches.toml
