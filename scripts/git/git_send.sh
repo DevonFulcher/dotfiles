@@ -15,5 +15,6 @@ else
   echo "You are not on a default branch. Current branch is $current_branch"
 fi
 
+
 git save "$message" || { echo "git save failed"; exit 1; }
-sh $GIT_PROJECTS_WORKDIR/dotfiles/scripts/git/git_pr.sh ""
+$PYTHON_PATH $GIT_PROJECTS_WORKDIR/dotfiles/scripts/python/git.py pr
