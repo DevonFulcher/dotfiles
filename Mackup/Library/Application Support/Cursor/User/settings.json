@@ -88,7 +88,7 @@
   "window.customTitleBarVisibility": "never",
   "window.titleBarStyle": "native",
   "workbench.statusBar.visible": false,
-  "breadcrumbs.enabled": false,
+  "breadcrumbs.enabled": true,
   "window.title": "${dirty}${separator}${activeEditorMedium}${separator}${activeRepositoryBranchName}${separator}${rootName}${separator}${profileName}",
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
