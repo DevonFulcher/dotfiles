@@ -89,7 +89,7 @@
   "window.titleBarStyle": "native",
   "workbench.statusBar.visible": false,
   "breadcrumbs.enabled": true,
-  "window.title": "${dirty}${separator}${activeEditorMedium}${separator}${activeRepositoryBranchName}${separator}${rootName}${separator}${profileName}",
+  "window.title": "${dirty}${separator}${activeEditorShort}${separator}${activeRepositoryBranchName}${separator}${rootName}${separator}${profileName}",
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
   "files.watcherExclude": {
