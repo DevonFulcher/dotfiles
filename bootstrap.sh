@@ -12,7 +12,8 @@ brew install \
   asdf \
   koekeishiya/formulae/yabai \
   koekeishiya/formulae/skhd \
-  borders
+  borders \
+  charmbracelet/tap/mods
 brew install --cask raycast
 asdf plugin add python
 asdf install
