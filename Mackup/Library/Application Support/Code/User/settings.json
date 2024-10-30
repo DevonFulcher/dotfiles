@@ -59,7 +59,9 @@
   "editor.renderWhitespace": "all",
   "search.useGlobalIgnoreFiles": true,
   "search.exclude": {
-    "**/.git": true
+    "**/.git": true,
+    "**/site-packages/*/**": true,
+    "**/node_modules/*/**": true
   },
   "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
