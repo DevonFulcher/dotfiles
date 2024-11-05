@@ -1,7 +1,7 @@
 export AFS_DATASOURCES_PATH="$GIT_PROJECTS_WORKDIR/afs-cli/datasources.yaml"
 alias afs='python3.12 $GIT_PROJECTS_WORKDIR/afs-cli/afs.py $@'
 
-alias core="$GIT_PROJECTS_WORKDIR/dbt-core/env/bin/python"
+alias core="$GIT_PROJECTS_WORKDIR/dbt-core/env/bin/dbt"
 
 export APPLE_SSH_ADD_BEHAVIOR="macos"
 export GITHUB_TOKEN="$HOMEBREW_GITHUB_API_TOKEN"
