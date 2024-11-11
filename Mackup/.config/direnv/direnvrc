@@ -18,22 +18,23 @@ layout_poetry() {
     export VIRTUAL_ENV
 }
 
+# TODO: This doesn't actually activate the dev environment. It activates the default environment instead.
+# For now, just copy-paste this into .envrc and change HATCH_ENV to be the dev env.
 # source: https://github.com/direnv/direnv/wiki/Python#hatch
 # Loads hatch environment when `layout hatch` is added to .envrc
-layout_hatch() {
-    HATCH_ENV=${HATCH_ENV_ACTIVE:-default}
-    # We need this to error out if the env doesn't exist in the pyproject.toml file.
-    VIRTUAL_ENV=$(hatch env find $HATCH_ENV)
+# layout_hatch() {
+#     HATCH_ENV=${HATCH_ENV_ACTIVE:-default}
+#     VIRTUAL_ENV=$(hatch env find $HATCH_ENV)
 
-    if [[ ! -d $VIRTUAL_ENV ]]; then
-        log_status "No virtual environment exists. Executing \`hatch env create\` to create one."
-        hatch env create $HATCH_ENV
-    fi
+#     if [[ ! -d $VIRTUAL_ENV ]]; then
+#         log_status "No virtual environment exists. Executing \`hatch env create\` to create one."
+#         hatch env create $HATCH_ENV
+#     fi
 
-    PATH_add "$VIRTUAL_ENV/bin"
-    export HATCH_ENV_ACTIVE=$HATCH_ENV  # or VENV_ACTIVE=1
-    export VIRTUAL_ENV
-}
+#     PATH_add "$VIRTUAL_ENV/bin"
+#     export HATCH_ENV_ACTIVE=$HATCH_ENV  # or VENV_ACTIVE=1
+#     export VIRTUAL_ENV
+# }
 
 # source: https://github.com/direnv/direnv/wiki/Python#uv
 # Loads uv environment when `layout uv` is added to .envrc
