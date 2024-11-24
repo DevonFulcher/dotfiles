@@ -105,12 +105,12 @@ def main():
                 if commit_result.returncode == 0:
                     print("code committed")
                 else:
-                    print(commit_result.stderr, file=sys.stderr)
+                    print(str(commit_result.stderr), file=sys.stderr)
             push_result = subprocess.run(["git", "push"], capture_output=True)
             if push_result.returncode == 0:
                 print("commit pushed")
             else:
-                print(push_result.stderr, file=sys.stderr)
+                print(str(push_result.stderr), file=sys.stderr)
             print("git status:")
             subprocess.run(["git", "status"], check=True)
         case _:
