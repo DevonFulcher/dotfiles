@@ -53,7 +53,13 @@ def main():
                     start_dir = os.getcwd()
                     repo = filtered_repos[0]
                     os.chdir(repo.path())
-                    subprocess.run(repo.unit())
+                    unit_result = subprocess.run(repo.unit())
+                    if unit_result.returncode != 0:
+                        print(
+                            "Unit tests failed. Exiting without creating a PR.",
+                            file=sys.stderr,
+                        )
+                        sys.exit(1)
                     os.chdir(start_dir)
 
                 # Create a pr
