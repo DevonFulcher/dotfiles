@@ -270,8 +270,10 @@ function code() {
     directories=$(echo "$(find $GIT_PROJECTS_WORKDIR/dotfiles/workspaces -mindepth 1 -maxdepth 1 -not -path '*/\.*' -print)\n$(find $GIT_PROJECTS_WORKDIR -mindepth 1 -maxdepth 1 -not -path '*/\.*' -print)")
     directory=$(echo "$directories" | fzf)
     command code "$directory"
+    $PYTHON_PATH $GIT_PROJECTS_WORKDIR/dotfiles/scripts/python/yabai.py "$@"
   else
     command code $@
+    $PYTHON_PATH $GIT_PROJECTS_WORKDIR/dotfiles/scripts/python/yabai.py "$@"
   fi
 }
 
@@ -281,8 +283,10 @@ function cursor() {
     directories=$(echo "$(find $GIT_PROJECTS_WORKDIR/dotfiles/workspaces -mindepth 1 -maxdepth 1 -not -path '*/\.*' -print)\n$(find $GIT_PROJECTS_WORKDIR -mindepth 1 -maxdepth 1 -not -path '*/\.*' -print)")
     directory=$(echo "$directories" | fzf)
     command cursor "$directory"
+    $PYTHON_PATH $GIT_PROJECTS_WORKDIR/dotfiles/scripts/python/yabai.py "$@"
   else
     command cursor $@
+    $PYTHON_PATH $GIT_PROJECTS_WORKDIR/dotfiles/scripts/python/yabai.py "$@"
   fi
 }
 
