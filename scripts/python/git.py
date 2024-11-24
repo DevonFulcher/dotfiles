@@ -81,7 +81,10 @@ def git_save(git_args: list[str]):
             print("code committed")
         else:
             print(str(commit_result.stderr), file=sys.stderr)
-    push_result = subprocess.run(["git", "push"], capture_output=True)
+    git_push_command = ["git", "push"]
+    if "-f" in git_save_args or "--force" in git_save_args:
+        git_push_command.append("-f")
+    push_result = subprocess.run(git_push_command, capture_output=True)
     if push_result.returncode == 0:
         print("commit pushed")
     else:
