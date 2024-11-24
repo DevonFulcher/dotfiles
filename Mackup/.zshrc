@@ -140,6 +140,7 @@ source <(git-town completions zsh)
 . /opt/homebrew/opt/asdf/libexec/asdf.sh # TODO: this is not working
 
 export PYTHON_PATH=$(asdf which python)
+export EDITOR="cursor"
 
 # setup toolbelt
 [[ -r $GIT_PROJECTS_WORKDIR/toolbelt ]] ||
@@ -264,28 +265,14 @@ function cd() {
   fi
 }
 
-# VS Code override
-function code() {
+function edit() {
   if [ "$#" -eq 0 ]; then
     directories=$(echo "$(find $GIT_PROJECTS_WORKDIR/dotfiles/workspaces -mindepth 1 -maxdepth 1 -not -path '*/\.*' -print)\n$(find $GIT_PROJECTS_WORKDIR -mindepth 1 -maxdepth 1 -not -path '*/\.*' -print)")
     directory=$(echo "$directories" | fzf)
-    command code "$directory"
+    command $EDITOR "$directory"
     $PYTHON_PATH $GIT_PROJECTS_WORKDIR/dotfiles/scripts/python/yabai.py "$@"
   else
-    command code $@
-    $PYTHON_PATH $GIT_PROJECTS_WORKDIR/dotfiles/scripts/python/yabai.py "$@"
-  fi
-}
-
-# Cursor override
-function cursor() {
-  if [ "$#" -eq 0 ]; then
-    directories=$(echo "$(find $GIT_PROJECTS_WORKDIR/dotfiles/workspaces -mindepth 1 -maxdepth 1 -not -path '*/\.*' -print)\n$(find $GIT_PROJECTS_WORKDIR -mindepth 1 -maxdepth 1 -not -path '*/\.*' -print)")
-    directory=$(echo "$directories" | fzf)
-    command cursor "$directory"
-    $PYTHON_PATH $GIT_PROJECTS_WORKDIR/dotfiles/scripts/python/yabai.py "$@"
-  else
-    command cursor $@
+    command $EDITOR $@
     $PYTHON_PATH $GIT_PROJECTS_WORKDIR/dotfiles/scripts/python/yabai.py "$@"
   fi
 }
