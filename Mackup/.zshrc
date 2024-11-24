@@ -221,7 +221,7 @@ function git() {
     command git "$@"
     echo "git status:"
     command git status
-  elif [[ $1 == "pr" || $1 == "save" ]]; then
+  elif [[ $1 == "pr" || $1 == "save" || $1 == "send" ]]; then
     $PYTHON_PATH $GIT_PROJECTS_WORKDIR/dotfiles/scripts/python/git.py "$@"
   elif [ $1 = "clone" ] && [ -n $2 ]; then
     $PYTHON_PATH $GIT_PROJECTS_WORKDIR/dotfiles/scripts/python/git.py "$@"
