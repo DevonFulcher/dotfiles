@@ -42,30 +42,40 @@ def main():
 
     match git_args:
         case ["pr", *_]:
-            result = subprocess.run(["gh", "pr", "view", "--web"])
-            if result.returncode != 0:
-                # Run the tests of this repo
-                repo_name = Path(os.getcwd()).parts[
-                    : len(Path(git_projects_workdir).parts) + 1
-                ][-1]
-                filtered_repos = list(filter(lambda r: r.name() == repo_name, repos))
-                if filtered_repos:
-                    start_dir = os.getcwd()
-                    repo = filtered_repos[0]
-                    os.chdir(repo.path())
-                    unit_result = subprocess.run(repo.unit())
-                    if unit_result.returncode != 0:
-                        print(
-                            "Unit tests failed. Exiting without creating a PR.",
-                            file=sys.stderr,
-                        )
-                        sys.exit(1)
-                    os.chdir(start_dir)
+            view_pr = subprocess.run(["gh", "pr", "view", "--web"])
+            if view_pr.returncode == 0:
+                return
+            # Run the tests of this repo
+            repo_name = Path(os.getcwd()).parts[
+                : len(Path(git_projects_workdir).parts) + 1
+            ][-1]
+            filtered_repos = list(filter(lambda r: r.name() == repo_name, repos))
+            if filtered_repos:
+                start_dir = os.getcwd()
+                repo = filtered_repos[0]
+                os.chdir(repo.path())
+                unit_result = subprocess.run(repo.unit())
+                os.chdir(start_dir)
+                if unit_result.returncode != 0:
+                    print(
+                        "Unit tests failed. Exiting without creating a PR.",
+                        file=sys.stderr,
+                    )
+                    sys.exit(1)
 
-                # Create a pr
-                result = subprocess.run(
-                    ["git-town", "propose"],
+            # Compress the branch
+            compress_result = subprocess.run(["git-town", "compress"])
+            if compress_result != 0:
+                print(
+                    "Branch compression failed. Exiting without creating a PR.",
+                    file=sys.stderr,
                 )
+                sys.exit(1)
+
+            # Create a pr
+            subprocess.run(
+                ["git-town", "propose"],
+            )
         case ["clone", repo_url]:
             repo_name = re.sub(r"\..*$", "", os.path.basename(repo_url))
             clone_path = os.path.join(git_projects_workdir, repo_name)
