@@ -45,6 +45,7 @@ def main():
             view_pr = subprocess.run(["gh", "pr", "view", "--web"])
             if view_pr.returncode == 0:
                 return
+
             # Run the tests of this repo
             repo_name = Path(os.getcwd()).parts[
                 : len(Path(git_projects_workdir).parts) + 1
@@ -64,13 +65,7 @@ def main():
                     sys.exit(1)
 
             # Compress the branch
-            compress_result = subprocess.run(["git-town", "compress"])
-            if compress_result != 0:
-                print(
-                    "Branch compression failed. Exiting without creating a PR.",
-                    file=sys.stderr,
-                )
-                sys.exit(1)
+            subprocess.run(["git-town", "compress"], check=True)
 
             # Create a pr
             subprocess.run(
@@ -93,6 +88,31 @@ def main():
                     toml.dump(git_branches, f)
 
                 subprocess.run(["cursor", "."], check=True)
+        case ["save", *_]:
+            git_save_args = git_args[1:]
+            subprocess.run(["git", "add", "-A"], check=True)
+            if git_save_args:
+                git_commit_command = [
+                    "git",
+                    "commit",
+                    "-m",
+                    git_save_args[0],
+                ]
+                flags = git_save_args[1:]
+                if "--no-verify" in flags:
+                    git_commit_command.append("--no-verify")
+                commit_result = subprocess.run(git_commit_command, capture_output=True)
+                if commit_result.returncode == 0:
+                    print("code committed")
+                else:
+                    print(commit_result.stderr, file=sys.stderr)
+            push_result = subprocess.run("git push", capture_output=True)
+            if push_result.returncode == 0:
+                print("commit pushed")
+            else:
+                print(push_result.stderr, file=sys.stderr)
+            print("git status:")
+            subprocess.run(["git", "status"], check=True)
         case _:
             print("Unrecognized command.", file=sys.stderr)
             sys.exit(1)
