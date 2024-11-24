@@ -4,6 +4,7 @@ import re
 import sys
 import subprocess
 import toml
+from repos import repos
 
 
 def get_default_branch():
@@ -43,8 +44,21 @@ def main():
         case ["pr", *_]:
             result = subprocess.run(["gh", "pr", "view", "--web"])
             if result.returncode != 0:
+                # Run the tests of this repo
+                repo_name = Path(os.getcwd()).parts[
+                    : len(Path(git_projects_workdir).parts) + 1
+                ][-1]
+                filtered_repos = list(filter(lambda r: r.name() == repo_name, repos))
+                if filtered_repos:
+                    start_dir = os.getcwd()
+                    repo = filtered_repos[0]
+                    os.chdir(repo.path())
+                    subprocess.run(repo.unit())
+                    os.chdir(start_dir)
+
+                # Create a pr
                 result = subprocess.run(
-                    ["gh", "pr", "create", "--web"],
+                    ["git-town", "propose"],
                 )
         case ["clone", repo_url]:
             repo_name = re.sub(r"\..*$", "", os.path.basename(repo_url))
