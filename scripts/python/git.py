@@ -65,7 +65,13 @@ def git_pr(git_projects_workdir: Path):
 
 
 def git_save(args: argparse.Namespace) -> None:
-    subprocess.run(["git", "add", "-A"], check=True)
+    git_add_command = ["git", "add"]
+    if args.pathspec:
+        git_add_command.extend(args.pathspec)
+    else:
+        git_add_command.append("-A")
+    subprocess.run(git_add_command, check=True)
+
     git_commit_command = [
         "git",
         "commit",
@@ -110,6 +116,9 @@ def create_parser() -> argparse.ArgumentParser:
         "--no-verify", action="store_true", help="Skip pre-commit hooks"
     )
     save_parser.add_argument("-f", "--force", action="store_true", help="Force push")
+    save_parser.add_argument(
+        "pathspec", nargs="*", help="Files to stage (defaults to '-A')"
+    )
 
     # Send command
     send_parser = subparsers.add_parser("send", help="Save changes and create PR")
@@ -120,6 +129,9 @@ def create_parser() -> argparse.ArgumentParser:
         "--no-verify", action="store_true", help="Skip pre-commit hooks"
     )
     send_parser.add_argument("-f", "--force", action="store_true", help="Force push")
+    send_parser.add_argument(
+        "pathspec", nargs="*", help="Files to stage (defaults to '-A')"
+    )
 
     return parser
 
