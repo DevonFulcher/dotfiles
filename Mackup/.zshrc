@@ -196,26 +196,7 @@ function git() {
   elif [ $1 = "diff" ] && [ "$#" -eq 1 ]; then
     # Exclude files from diff that I rarely care about. Reference: https://stackoverflow.com/a/48259275/8925314
     command git "$@" -- ':!*Cargo.lock' ':!*poetry.lock' ':!*package-lock.json' ':!*pnpm-lock.yaml' ':!*uv.lock'
-  elif [ $1 = "commit" ]; then
-    # Alway push after I commit.
-    filtered_args=()
-    for arg in "$@"; do
-      if [[ "$arg" != "--no-push" ]]; then
-        filtered_args+=("$arg")
-      fi
-    done
-    command git "${filtered_args[@]}" || { echo "commit failed"; return 1; }
-    for arg in "$@"; do
-      if [[ "$arg" == "--no-push" ]]; then
-        echo "git status:"
-        command git status
-        return 0
-      fi
-    done
-    command git push --quiet && echo "commit pushed"
-    echo "git status:"
-    command git status
-  elif [[ $1 == "add" || $1 == "restore" || $1 == "stash" || $1 == "reset" ]]; then
+  elif [[ $1 == "add" || $1 == "restore" || $1 == "stash" || $1 == "reset" || $1 == "commit" ]]; then
     # Always run git status after these commands.
     command git "$@"
     echo "git status:"
