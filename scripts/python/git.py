@@ -105,7 +105,7 @@ def create_parser() -> argparse.ArgumentParser:
 
     # Save command
     save_parser = subparsers.add_parser("save", help="Save and push changes")
-    save_parser.add_argument("message", help="Commit message")
+    save_parser.add_argument("-m", "--message", required=True, help="Commit message")
     save_parser.add_argument(
         "--no-verify", action="store_true", help="Skip pre-commit hooks"
     )
@@ -113,7 +113,9 @@ def create_parser() -> argparse.ArgumentParser:
 
     # Send command
     send_parser = subparsers.add_parser("send", help="Save changes and create PR")
-    send_parser.add_argument("message", help="Commit/branch message")
+    send_parser.add_argument(
+        "-m", "--message", required=True, help="Commit/branch message"
+    )
     send_parser.add_argument(
         "--no-verify", action="store_true", help="Skip pre-commit hooks"
     )
