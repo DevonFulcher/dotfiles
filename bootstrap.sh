@@ -18,3 +18,4 @@ brew install --cask raycast
 asdf plugin add python
 asdf install
 pip install toml
+pip install nbdime
