@@ -1,93 +1,93 @@
 [core]
-    editor = vim
-    pager = delta
+	editor = vim
+	pager = delta
 [gpg]
-    format = ssh
+	format = ssh
 [user]
-    # https://docs.github.com/en/authentication/managing-commit-signature-verification/about-commit-signature-verification#ssh-commit-signature-verification
-    signingkey = ~/.ssh/personal_email_id_ed25519.pub
-    name = Devon Fulcher
-    # https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-email-preferences/setting-your-commit-email-address
-    email = 24593113+DevonFulcher@users.noreply.github.com
+	# https://docs.github.com/en/authentication/managing-commit-signature-verification/about-commit-signature-verification#ssh-commit-signature-verification
+	signingkey = ~/.ssh/personal_email_id_ed25519.pub
+	name = Devon Fulcher
+	# https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-email-preferences/setting-your-commit-email-address
+	email = 24593113+DevonFulcher@users.noreply.github.com
 [gpg]
-    format = ssh
+	format = ssh
 [commit]
-    gpgsign = true
+	gpgsign = true
 [tag]
-    gpgSign = true
+	gpgSign = true
 [url "git@github.com:"]
-    insteadOf = https://github.com/
+	insteadOf = https://github.com/
 [branch]
-    # Show most recently changed branches first.
-    sort = -committerdate
+	# Show most recently changed branches first.
+	sort = -committerdate
 [diff]
-    # Detect copies as well as renames.
-    renames = copies
-    colorMoved = default
+	# Detect copies as well as renames.
+	renames = copies
+	colorMoved = default
 [init]
-    defaultBranch = main
+	defaultBranch = main
 [push]
-    autoSetupRemote = true
+	autoSetupRemote = true
 [pull]
-    ff = only
+	ff = only
 [alias]
-    browse = "!f() { gh browse --branch $(git branch --show-current) ${1:-.}; }; f"
-    graph = "log --graph --oneline --decorate --branches"
+	browse = "!f() { gh browse --branch $(git branch --show-current) ${1:-.}; }; f"
+	graph = "log --graph --oneline --decorate --branches"
 [merge]
-    conflictstyle = diff3
+	conflictstyle = diff3
 [interactive]
-    diffFilter = delta --color-only
+	diffFilter = delta --color-only
 [status]
-    short = true
+	short = true
 [rerere]
-    enabled = true
+	enabled = true
 [delta]
-    navigate = true # use n and N to move between diff sections
-    light = false
-    side-by-side = false
-    line-numbers = true
-    hyperlinks = true
-    hyperlinks-file-link-format = "cursor://file/{path}:{line}"
-    features = mine
+	navigate = true # use n and N to move between diff sections
+	light = false
+	side-by-side = false
+	line-numbers = true
+	hyperlinks = true
+	hyperlinks-file-link-format = "cursor://file/{path}:{line}"
+	features = mine
 
 # more options here: https://raw.githubusercontent.com/dandavison/delta/master/themes.gitconfig
 [delta "mine"]
-    commit-decoration-style = 130 box
-    dark = true
-    file-decoration-style = "#606018" overline
-    file-added-label = [added]
-    file-copied-label = [copied]
-    file-modified-label = [modified]
-    file-removed-label = [removed]
-    file-renamed-label = [renamed]
-    file-style = 232 bold 184
-    hunk-header-style = syntax
-    line-numbers = true
-    line-numbers-left-format = "{nm:>1}│"
-    line-numbers-left-style = red
-    line-numbers-minus-style = red bold
-    line-numbers-plus-style = green bold
-    line-numbers-right-format = "{np:>1}│"
-    line-numbers-right-style = green
-    line-numbers-zero-style = "#C8C8C8"
-    minus-emph-style = normal "#940320"
-    minus-style = normal "#5e0000"
-    plus-emph-style = syntax "#007e5e"
-    plus-style = syntax "#003500"
-    syntax-theme = OneHalfDark
-    whitespace-error-style = "#80002a" reverse
-    zero-style = syntax
-    blame-format = "{author:<18} ({commit:>7}) ┊{timestamp:^16}┊ "
+	commit-decoration-style = 130 box
+	dark = true
+	file-decoration-style = "#606018" overline
+	file-added-label = [added]
+	file-copied-label = [copied]
+	file-modified-label = [modified]
+	file-removed-label = [removed]
+	file-renamed-label = [renamed]
+	file-style = 232 bold 184
+	hunk-header-style = syntax
+	line-numbers = true
+	line-numbers-left-format = "{nm:>1}│"
+	line-numbers-left-style = red
+	line-numbers-minus-style = red bold
+	line-numbers-plus-style = green bold
+	line-numbers-right-format = "{np:>1}│"
+	line-numbers-right-style = green
+	line-numbers-zero-style = "#C8C8C8"
+	minus-emph-style = normal "#940320"
+	minus-style = normal "#5e0000"
+	plus-emph-style = syntax "#007e5e"
+	plus-style = syntax "#003500"
+	syntax-theme = OneHalfDark
+	whitespace-error-style = "#80002a" reverse
+	zero-style = syntax
+	blame-format = "{author:<18} ({commit:>7}) ┊{timestamp:^16}┊ "
 [diff "jupyternotebook"]
-    command = git-nbdiffdriver diff
+	command = git-nbdiffdriver diff
 [merge "jupyternotebook"]
-    driver = git-nbmergedriver merge %O %A %B %L %P
-    name = jupyter notebook merge driver
+	driver = git-nbmergedriver merge %O %A %B %L %P
+	name = jupyter notebook merge driver
 [difftool "nbdime"]
-    cmd = git-nbdifftool diff \"$LOCAL\" \"$REMOTE\" \"$BASE\"
+	cmd = git-nbdifftool diff \"$LOCAL\" \"$REMOTE\" \"$BASE\"
 [difftool]
-    prompt = false
+	prompt = false
 [mergetool "nbdime"]
-    cmd = git-nbmergetool merge \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
+	cmd = git-nbmergetool merge \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
 [mergetool]
-    prompt = false
+	prompt = false
