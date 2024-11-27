@@ -81,11 +81,11 @@ export FZF_BASE=/opt/homebrew/bin/fzf
 plugins=(
   starship
   zsh-autocomplete
-  gh
   jump
-  fzf
   docker
   docker-compose
+  kubectl
+  alias-finder
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -118,15 +118,18 @@ source $ZSH/oh-my-zsh.sh
 
 export CURRENT_ORG="dbt_labs"
 export GIT_PROJECTS_WORKDIR="$HOME/git"
-alias g=git
 # lsd https://github.com/lsd-rs/lsd is an alternative to eza worth exploring one day
 alias ls="eza --classify --all --group-directories-first --long --git --git-repos --no-permissions --no-user --no-time"
 export FPATH="$GIT_PROJECTS_WORKDIR/eza/completions/zsh:$FPATH"
 alias cat=bat
 alias less=bat
-alias k='kubectl'
 export PATH="$PATH:/usr/local/bin"
 export PATH="$HOME/.local/bin:$PATH"
+alias g=git
+
+# Setup alias-finder https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/alias-finder
+zstyle ':omz:plugins:alias-finder' autoload yes # disabled by default
+zstyle ':omz:plugins:alias-finder' cheaper yes # disabled by default
 
 
 eval "$(/opt/homebrew/bin/brew shellenv)"
