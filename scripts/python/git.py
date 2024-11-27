@@ -64,26 +64,24 @@ def git_pr(git_projects_workdir: Path):
     )
 
 
-def git_save(git_args: list[str]):
-    git_save_args = git_args[1:]
+def git_save(args: argparse.Namespace) -> None:
     subprocess.run(["git", "add", "-A"], check=True)
-    if git_save_args:
-        git_commit_command = [
-            "git",
-            "commit",
-            "-m",
-            git_save_args[0],
-        ]
-        flags = git_save_args[1:]
-        if "--no-verify" in flags:
-            git_commit_command.append("--no-verify")
-        commit_result = subprocess.run(git_commit_command, capture_output=True)
-        if commit_result.returncode == 0:
-            print("code committed")
-        else:
-            print(str(commit_result.stderr), file=sys.stderr)
+    git_commit_command = [
+        "git",
+        "commit",
+        "-m",
+        args.message,
+    ]
+    if args.no_verify:
+        git_commit_command.append("--no-verify")
+    commit_result = subprocess.run(git_commit_command, capture_output=True)
+    if commit_result.returncode == 0:
+        print("code committed")
+    else:
+        print(str(commit_result.stderr), file=sys.stderr)
+
     git_push_command = ["git", "push"]
-    if "-f" in git_save_args or "--force" in git_save_args:
+    if args.force:
         git_push_command.append("-f")
     push_result = subprocess.run(git_push_command, capture_output=True)
     if push_result.returncode == 0:
@@ -155,14 +153,7 @@ def main():
 
                 subprocess.run(["cursor", "."], check=True)
         case "save":
-            git_save_args = ["save"]
-            if args.message:
-                git_save_args.append(args.message)
-            if args.no_verify:
-                git_save_args.append("--no-verify")
-            if args.force:
-                git_save_args.append("--force")
-            git_save(git_save_args)
+            git_save(args)
         case "send":
             branch_name_result = subprocess.run(
                 ["git", "rev-parse", "--abbrev-ref", "HEAD"],
@@ -186,12 +177,7 @@ def main():
                     "Not on a default branch. "
                     + f"Continuing from this branch: {current_branch}"
                 )
-            git_save_args = ["save", args.message]
-            if args.no_verify:
-                git_save_args.append("--no-verify")
-            if args.force:
-                git_save_args.append("--force")
-            git_save(git_save_args)
+            git_save(args)
             git_pr(git_projects_workdir)
 
 
