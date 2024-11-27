@@ -6,6 +6,7 @@ import subprocess
 from typing import Literal
 import toml
 from repos import repos
+import argparse
 
 
 def get_default_branch() -> Literal["main", "master"]:
@@ -93,25 +94,56 @@ def git_save(git_args: list[str]):
     subprocess.run(["git", "status"], check=True)
 
 
+def create_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(description="Git workflow helper")
+    subparsers = parser.add_subparsers(dest="command", required=True)
+
+    # PR command
+    subparsers.add_parser("pr", help="Create or view a pull request")
+
+    # Clone command
+    clone_parser = subparsers.add_parser("clone", help="Clone a repository")
+    clone_parser.add_argument("repo_url", help="URL of the repository to clone")
+
+    # Save command
+    save_parser = subparsers.add_parser("save", help="Save and push changes")
+    save_parser.add_argument("message", help="Commit message")
+    save_parser.add_argument(
+        "--no-verify", action="store_true", help="Skip pre-commit hooks"
+    )
+    save_parser.add_argument("-f", "--force", action="store_true", help="Force push")
+
+    # Send command
+    send_parser = subparsers.add_parser("send", help="Save changes and create PR")
+    send_parser.add_argument("message", help="Commit/branch message")
+    send_parser.add_argument(
+        "--no-verify", action="store_true", help="Skip pre-commit hooks"
+    )
+    send_parser.add_argument("-f", "--force", action="store_true", help="Force push")
+
+    return parser
+
+
 def main():
-    # Get all command line arguments except the script name
-    git_args = sys.argv[1:]
+    parser = create_parser()
+    args = parser.parse_args()
+
     git_projects_workdir_env_var = os.getenv("GIT_PROJECTS_WORKDIR")
     if git_projects_workdir_env_var is None:
         print("GIT_PROJECTS_WORKDIR environment variable is not set.", file=sys.stderr)
         sys.exit(1)
     git_projects_workdir = Path(git_projects_workdir_env_var)
 
-    match git_args:
-        case ["pr", *_]:
+    match args.command:
+        case "pr":
             git_pr(git_projects_workdir)
-        case ["clone", repo_url]:
-            repo_name = re.sub(r"\..*$", "", os.path.basename(repo_url))
+        case "clone":
+            repo_name = re.sub(r"\..*$", "", os.path.basename(args.repo_url))
             clone_path = os.path.join(git_projects_workdir, repo_name)
-            subprocess.run(["git", "clone", repo_url, clone_path], check=True)
+            subprocess.run(["git", "clone", args.repo_url, clone_path], check=True)
             if os.path.isdir(clone_path):
                 git_branches_path = (
-                    git_projects_workdir / "/dotfiles/config/.git-branches.toml"
+                    git_projects_workdir / "dotfiles/config/.git-branches.toml"
                 )
                 with git_branches_path.open("r") as f:
                     git_branches = toml.loads(f.read())
@@ -122,15 +154,16 @@ def main():
                     toml.dump(git_branches, f)
 
                 subprocess.run(["cursor", "."], check=True)
-        case ["save", *_]:
-            git_save(git_args)
-        case ["send", *_]:
-            git_send_args = git_args[1:]
-            if not git_send_args:
-                print(
-                    "Please provide a message as the first argument.", file=sys.stderr
-                )
-                sys.exit(1)
+        case "save":
+            git_save_args = ["save"]
+            if args.message:
+                git_save_args.append(args.message)
+            if args.no_verify:
+                git_save_args.append("--no-verify")
+            if args.force:
+                git_save_args.append("--force")
+            git_save(git_save_args)
+        case "send":
             branch_name_result = subprocess.run(
                 ["git", "rev-parse", "--abbrev-ref", "HEAD"],
                 check=True,
@@ -139,7 +172,7 @@ def main():
             current_branch = str(branch_name_result.stdout).strip()
             default_branch = get_default_branch()
             if default_branch == current_branch:
-                new_branch_name = git_send_args[0].replace(" ", "_")
+                new_branch_name = args.message.replace(" ", "_")
                 print(
                     "On a default branch. "
                     + f"Creating a new branch called {new_branch_name}"
@@ -153,11 +186,13 @@ def main():
                     "Not on a default branch. "
                     + f"Continuing from this branch: {current_branch}"
                 )
-            git_save(git_args)
+            git_save_args = ["save", args.message]
+            if args.no_verify:
+                git_save_args.append("--no-verify")
+            if args.force:
+                git_save_args.append("--force")
+            git_save(git_save_args)
             git_pr(git_projects_workdir)
-        case _:
-            print("Unrecognized command.", file=sys.stderr)
-            sys.exit(1)
 
 
 if __name__ == "__main__":
