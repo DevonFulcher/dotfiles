@@ -86,14 +86,15 @@ def git_save(args: argparse.Namespace) -> None:
     else:
         print(str(commit_result.stderr), file=sys.stderr)
 
-    git_push_command = ["git", "push"]
-    if args.force:
-        git_push_command.append("-f")
-    push_result = subprocess.run(git_push_command, capture_output=True)
-    if push_result.returncode == 0:
-        print("commit pushed")
-    else:
-        print(str(push_result.stderr), file=sys.stderr)
+    if not args.no_push:
+        git_push_command = ["git", "push"]
+        if args.force:
+            git_push_command.append("-f")
+        push_result = subprocess.run(git_push_command, capture_output=True)
+        if push_result.returncode == 0:
+            print("commit pushed")
+        else:
+            print(str(push_result.stderr), file=sys.stderr)
     print("git status:")
     subprocess.run(["git", "status"], check=True)
 
@@ -117,6 +118,9 @@ def create_parser() -> argparse.ArgumentParser:
     )
     save_parser.add_argument("-f", "--force", action="store_true", help="Force push")
     save_parser.add_argument(
+        "--no-push", action="store_true", help="Skip pushing changes"
+    )
+    save_parser.add_argument(
         "pathspec", nargs="*", help="Files to stage (defaults to '-A')"
     )
 
@@ -129,6 +133,9 @@ def create_parser() -> argparse.ArgumentParser:
         "--no-verify", action="store_true", help="Skip pre-commit hooks"
     )
     send_parser.add_argument("-f", "--force", action="store_true", help="Force push")
+    send_parser.add_argument(
+        "--no-push", action="store_true", help="Skip pushing changes"
+    )
     send_parser.add_argument(
         "pathspec", nargs="*", help="Files to stage (defaults to '-A')"
     )
