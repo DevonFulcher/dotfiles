@@ -93,3 +93,5 @@
 	prompt = false
 [rebase]
 	autoSquash = true
+[fetch]
+	prune = true
