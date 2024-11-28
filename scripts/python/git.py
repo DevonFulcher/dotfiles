@@ -34,6 +34,15 @@ def get_default_branch() -> Literal["main", "master"]:
             sys.exit(1)
 
 
+def get_current_branch_name() -> str:
+    return subprocess.run(
+        ["git", "rev-parse", "--abbrev-ref", "HEAD"],
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout.strip()
+
+
 def git_pr(git_projects_workdir: Path):
     view_pr = subprocess.run(["gh", "pr", "view", "--web"])
     if view_pr.returncode == 0:
@@ -65,6 +74,30 @@ def git_pr(git_projects_workdir: Path):
 
 
 def git_save(args: argparse.Namespace) -> None:
+    current_org = os.getenv("CURRENT_ORG")
+    if current_org:
+        current_branch = get_current_branch_name()
+        default_branch = get_default_branch()
+        remote_url = subprocess.run(
+            ["git", "remote", "get-url", "origin"],
+            check=True,
+            capture_output=True,
+            text=True,
+        ).stdout.strip()
+        # Extract org from GitHub URL (handles both HTTPS and SSH formats)
+        org_match = re.search(r"[:/]([^/]+)/[^/]+$", remote_url)
+        if (
+            org_match
+            and org_match.group(1) == current_org.replace("_", "-")
+            and current_branch == default_branch
+        ):
+            print(
+                "Cannot commit to the default branch"
+                + " for a repo of the current organization.",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+
     git_add_command = ["git", "add"]
     if args.pathspec:
         git_add_command.extend(args.pathspec)
@@ -176,12 +209,7 @@ def main():
         case "save":
             git_save(args)
         case "send":
-            branch_name_result = subprocess.run(
-                ["git", "rev-parse", "--abbrev-ref", "HEAD"],
-                check=True,
-                capture_output=True,
-            )
-            current_branch = str(branch_name_result.stdout).strip()
+            current_branch = get_current_branch_name()
             default_branch = get_default_branch()
             if default_branch == current_branch:
                 new_branch_name = args.message.replace(" ", "_")
