@@ -125,7 +125,19 @@ alias cat=bat
 alias less=bat
 export PATH="$PATH:/usr/local/bin"
 export PATH="$HOME/.local/bin:$PATH"
+
+# git aliases
 alias g=git
+alias gv="git save"
+alias gd="git diff"
+alias gc="git checkout"
+alias gs="git status"
+alias gu="git push"
+alias gl="git pull"
+alias gn="git send"
+alias ga="git add"
+alias gm="git commit"
+alias gr="git pr"
 
 # Setup alias-finder https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/alias-finder
 zstyle ':omz:plugins:alias-finder' autoload yes # disabled by default
