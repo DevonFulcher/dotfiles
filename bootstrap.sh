@@ -21,3 +21,4 @@ asdf install
 # Install Python packages
 pip install toml # Used for git-town configuration setup
 pip install nbdime # Used for jupyter notebook diffs
+pip install textual # TUI library

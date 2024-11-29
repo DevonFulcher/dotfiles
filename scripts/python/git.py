@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 import os
 from pathlib import Path
 import re
@@ -7,6 +8,56 @@ from typing import Literal
 import toml
 from repos import repos
 import argparse
+from textual.app import App, ComposeResult
+from textual.containers import Container
+from textual.widgets import Button, Input, Static
+import yaml
+from datetime import datetime
+
+
+@dataclass
+class PrInfo:
+    pr_title: str
+    pr_description: str
+    pr_reviewers: str
+
+
+class PrApp(App):
+    # CSS = """
+    # Screen {
+    #     align: center middle;
+    # }
+    # Container {
+    #     width: 50%;
+    #     height: auto;
+    #     border: round $accent;
+    #     padding: 1;
+    # }
+    # Input {
+    #     margin: 1 0;
+    # }
+    # Button {
+    #     margin-top: 1;
+    # }
+    # """
+
+    def compose(self) -> ComposeResult:
+        yield Container(
+            Static("Please enter your details:", id="form-title"),
+            Input(placeholder="PR Title", id="pr-title-input"),
+            Input(placeholder="PR Description", id="pr-description-input"),
+            Input(placeholder="Reviewers", id="pr-reviewers-input"),
+            Button("Submit", id="submit-button"),
+        )
+
+    def on_button_pressed(self, event: Button.Pressed) -> None:
+        if event.button.id == "submit-button":
+            self.pr_info = PrInfo(
+                self.query_one("#pr-title-input", Input).value,
+                self.query_one("#pr-description-input", Input).value,
+                self.query_one("#pr-reviewers-input", Input).value,
+            )
+            self.exit()
 
 
 def get_default_branch() -> Literal["main", "master"]:
@@ -43,6 +94,31 @@ def get_current_branch_name() -> str:
     ).stdout.strip()
 
 
+def store_pr_info(pr_info: PrInfo):
+    cache_dir = os.path.expanduser("~/.cache/git-helper")
+    os.makedirs(cache_dir, exist_ok=True, parents=True)
+    pr_file = os.path.join(cache_dir, "pr.yaml")
+    existing_data = []
+    if os.path.exists(pr_file):
+        with open(pr_file, "r") as f:
+            try:
+                existing_data = yaml.safe_load(f) or []
+                if not isinstance(existing_data, list):
+                    existing_data = [existing_data]
+            except yaml.YAMLError:
+                existing_data = []
+    existing_data.append(
+        {
+            "timestamp": datetime.now().isoformat(),
+            "pr_title": pr_info.pr_title,
+            "pr_description": pr_info.pr_description,
+            "pr_reviewers": pr_info.pr_reviewers,
+        }
+    )
+    with open(pr_file, "w") as f:
+        yaml.dump(existing_data, f)
+
+
 def git_pr(git_projects_workdir: Path):
     view_pr = subprocess.run(["gh", "pr", "view", "--web"])
     if view_pr.returncode == 0:
@@ -63,6 +139,10 @@ def git_pr(git_projects_workdir: Path):
                 file=sys.stderr,
             )
             sys.exit(1)
+
+    app = PrApp()
+    app.run()
+    store_pr_info(app.pr_info)
 
     # Compress the branch
     subprocess.run(["git-town", "compress"], check=True)
