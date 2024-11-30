@@ -65,7 +65,7 @@ def git_pr(git_projects_workdir: Path):
             sys.exit(1)
 
     # Compress the branch
-    subprocess.run(["git-town", "compress"], check=True)
+    subprocess.run(["git-town", "compress"])
 
     # Create a pr
     subprocess.run(
