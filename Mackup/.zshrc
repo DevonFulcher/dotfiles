@@ -1,8 +1,5 @@
 START=$(perl -MTime::HiRes -e 'printf("%d\n", Time::HiRes::time()*1000)')
 
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
-
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -69,10 +66,6 @@ zstyle ':omz:update' mode auto
 [[ -r ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autocomplete ]] ||
     git clone https://github.com/marlonrichert/zsh-autocomplete.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autocomplete
 
-# source: https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/fzf
-# fzf install directory with homebrew
-export FZF_BASE=/opt/homebrew/bin/fzf
-
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
@@ -90,8 +83,6 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
-
-# export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
