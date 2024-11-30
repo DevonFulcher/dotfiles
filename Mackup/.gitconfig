@@ -95,5 +95,3 @@
 	autoSquash = true
 [fetch]
 	prune = true
-[git-town]
-	ship-strategy = api
