@@ -5,8 +5,9 @@ import sys
 import subprocess
 from typing import Literal
 import toml
-from repos import repos
+from repos import current_repo, repos, current_repo_name
 import argparse
+from env_var import get_git_projects_workdir
 
 
 def get_default_branch() -> Literal["main", "master"]:
@@ -43,31 +44,12 @@ def get_current_branch_name() -> str:
     ).stdout.strip()
 
 
-def git_pr(git_projects_workdir: Path):
+def git_pr():
     view_pr = subprocess.run(["gh", "pr", "view", "--web"])
     if view_pr.returncode == 0:
         return
-
-    # Run the tests of this repo
-    repo_name = Path(os.getcwd()).parts[: len(git_projects_workdir.parts) + 1][-1]
-    filtered_repos = list(filter(lambda r: r.name() == repo_name, repos))
-    if filtered_repos:
-        start_dir = os.getcwd()
-        repo = filtered_repos[0]
-        os.chdir(repo.path())
-        unit_result = subprocess.run(repo.unit())
-        os.chdir(start_dir)
-        if unit_result.returncode != 0:
-            print(
-                "Unit tests failed. Exiting without creating a PR.",
-                file=sys.stderr,
-            )
-            sys.exit(1)
-
-    # Compress the branch
+    current_repo().unit()
     subprocess.run(["git-town", "compress"])
-
-    # Create a pr
     subprocess.run(
         ["git-town", "propose"],
     )
@@ -180,15 +162,11 @@ def main():
     parser = create_parser()
     args = parser.parse_args()
 
-    git_projects_workdir_env_var = os.getenv("GIT_PROJECTS_WORKDIR")
-    if git_projects_workdir_env_var is None:
-        print("GIT_PROJECTS_WORKDIR environment variable is not set.", file=sys.stderr)
-        sys.exit(1)
-    git_projects_workdir = Path(git_projects_workdir_env_var)
+    git_projects_workdir = get_git_projects_workdir()
 
     match args.command:
         case "pr":
-            git_pr(git_projects_workdir)
+            git_pr()
         case "clone":
             repo_name = re.sub(r"\..*$", "", os.path.basename(args.repo_url))
             clone_path = os.path.join(git_projects_workdir, repo_name)
@@ -227,7 +205,7 @@ def main():
                     + f"Continuing from this branch: {current_branch}"
                 )
             git_save(args)
-            git_pr(git_projects_workdir)
+            git_pr()
 
 
 if __name__ == "__main__":

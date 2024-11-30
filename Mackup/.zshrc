@@ -261,8 +261,8 @@ function edit() {
   fi
 }
 
-function test() {
-  $PYTHON_PATH $PY_SCRIPTS/test.py "$@"
+function unit() {
+  $PYTHON_PATH $PY_SCRIPTS/unit.py "$@"
 }
 
 cd $GIT_PROJECTS_WORKDIR
