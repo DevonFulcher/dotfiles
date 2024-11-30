@@ -262,7 +262,12 @@ function edit() {
 }
 
 function unit() {
-  $PYTHON_PATH $PY_SCRIPTS/unit.py "$@"
+  $PYTHON_PATH $PY_SCRIPTS/repos.py unit
+}
+
+# TODO: the python script needs to return the command that is run in shell
+function run() {
+  $PYTHON_PATH $PY_SCRIPTS/repos.py run
 }
 
 cd $GIT_PROJECTS_WORKDIR
