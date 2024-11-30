@@ -4,7 +4,6 @@ brew install \
   eza \
   bat \
   gh \
-  aicommits \
   fzf \
   git-delta \
   direnv \

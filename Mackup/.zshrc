@@ -115,15 +115,25 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# Setup brew
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# Setup environment variables
 export CURRENT_ORG="dbt_labs"
 export GIT_PROJECTS_WORKDIR="$HOME/git"
-# lsd https://github.com/lsd-rs/lsd is an alternative to eza worth exploring one day
-alias ls="eza --classify --all --group-directories-first --long --git --git-repos --no-permissions --no-user --no-time"
-export FPATH="$GIT_PROJECTS_WORKDIR/eza/completions/zsh:$FPATH"
-alias cat=bat
-alias less=bat
+export PYTHON_PATH=$(asdf which python)
+export EDITOR="cursor"
+export PY_SCRIPTS=$GIT_PROJECTS_WORKDIR/dotfiles/scripts/python
+export DOTFILES=$GIT_PROJECTS_WORKDIR/dotfiles
+
+# Add executables to PATH
 export PATH="$PATH:/usr/local/bin"
 export PATH="$HOME/.local/bin:$PATH"
+
+# Alias Unix commands
+alias ls="eza --classify --all --group-directories-first --long --git --git-repos --no-permissions --no-user --no-time" # lsd https://github.com/lsd-rs/lsd is an alternative to eza worth exploring one day
+alias cat=bat
+alias less=bat
 
 # git aliases
 alias g=git
@@ -139,16 +149,14 @@ alias gm="git commit"
 alias gr="git pr"
 alias gta="git-town append"
 
-# directory aliases
+# Directory aliases
 alias lab="$GIT_PROJECTS_WORKDIR/TheLaboratory"
 alias tool="$GIT_PROJECTS_WORKDIR/toolbelt"
 
 # Setup alias-finder https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/alias-finder
-zstyle ':omz:plugins:alias-finder' autoload yes # disabled by default
-zstyle ':omz:plugins:alias-finder' cheaper yes # disabled by default
+zstyle ':omz:plugins:alias-finder' autoload yes
+zstyle ':omz:plugins:alias-finder' cheaper yes
 
-
-eval "$(/opt/homebrew/bin/brew shellenv)"
 # Setup direnv https://direnv.net/
 eval "$(direnv hook zsh)"
 # Delta completions https://dandavison.github.io/delta/tips-and-tricks/shell-completion.html
@@ -156,23 +164,13 @@ eval "$(delta --generate-completion zsh)"
 # Git Town completions https://www.git-town.com/commands/completions#zsh
 source <(git-town completions zsh)
 # Setup asdf completions https://asdf-vm.com/guide/getting-started.html
-. /opt/homebrew/opt/asdf/libexec/asdf.sh # TODO: this is not working
-
-export PYTHON_PATH=$(asdf which python)
-export EDITOR="cursor"
-export PY_SCRIPTS=$GIT_PROJECTS_WORKDIR/dotfiles/scripts/python
-
-# setup toolbelt
-[[ -r $GIT_PROJECTS_WORKDIR/toolbelt ]] ||
-    git clone git@github.com:DevonFulcher/toolbelt.git $GIT_PROJECTS_WORKDIR/toolbelt
-(cd $GIT_PROJECTS_WORKDIR/toolbelt/cli && go build)
-alias tt=$GIT_PROJECTS_WORKDIR/toolbelt/cli/toolbelt
+. /opt/homebrew/opt/asdf/libexec/asdf.sh
 
 [[ -r $GIT_PROJECTS_WORKDIR/dotfiles ]] ||
-    git clone git@github.com:DevonFulcher/dotfiles.git $GIT_PROJECTS_WORKDIR/dotfiles
+    git clone git@github.com:DevonFulcher/dotfiles.git $DOTFILES
 
-source $GIT_PROJECTS_WORKDIR/dotfiles/scripts/source_all.sh $GIT_PROJECTS_WORKDIR/dotfiles/secrets
-source $GIT_PROJECTS_WORKDIR/dotfiles/scripts/find_and_source.sh $GIT_PROJECTS_WORKDIR/dotfiles/scripts/work $CURRENT_ORG
+source $DOTFILES/scripts/source_all.sh $DOTFILES/secrets
+source $DOTFILES/scripts/find_and_source.sh $DOTFILES/scripts/work $CURRENT_ORG
 
 function git() {
   if [[ $1 == "checkout" || $1 == "merge" ]]; then
