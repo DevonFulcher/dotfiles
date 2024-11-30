@@ -142,20 +142,16 @@ alias gta="git-town append"
 
 # Directory aliases
 alias lab="$GIT_PROJECTS_WORKDIR/TheLaboratory"
-alias tool="$GIT_PROJECTS_WORKDIR/toolbelt"
 
 # Setup alias-finder https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/alias-finder
 zstyle ':omz:plugins:alias-finder' autoload yes
 zstyle ':omz:plugins:alias-finder' cheaper yes
 
-# Setup direnv https://direnv.net/
-eval "$(direnv hook zsh)"
-# Delta completions https://dandavison.github.io/delta/tips-and-tricks/shell-completion.html
-eval "$(delta --generate-completion zsh)"
-# Git Town completions https://www.git-town.com/commands/completions#zsh
-source <(git-town completions zsh)
-# Setup asdf completions https://asdf-vm.com/guide/getting-started.html
-. /opt/homebrew/opt/asdf/libexec/asdf.sh
+# Shell completions
+eval "$(direnv hook zsh)" # Setup direnv https://direnv.net/
+eval "$(delta --generate-completion zsh)" # Delta completions https://dandavison.github.io/delta/tips-and-tricks/shell-completion.html
+source <(git-town completions zsh) # Git Town completions https://www.git-town.com/commands/completions#zsh
+. /opt/homebrew/opt/asdf/libexec/asdf.sh # Setup asdf completions https://asdf-vm.com/guide/getting-started.html
 
 [[ -r $GIT_PROJECTS_WORKDIR/dotfiles ]] ||
     git clone git@github.com:DevonFulcher/dotfiles.git $DOTFILES
