@@ -3,6 +3,20 @@ alias afs='python3.12 $GIT_PROJECTS_WORKDIR/afs-cli/afs.py $@'
 
 alias core="$GIT_PROJECTS_WORKDIR/dbt-core/env/bin/dbt"
 
+alias charts="$GIT_PROJECTS_WORKDIR/helm-charts"
+alias cloud="$GIT_PROJECTS_WORKDIR/dbt-cloud"
+alias codegen="$GIT_PROJECTS_WORKDIR/ai-codegen-api"
+alias dsi="$GIT_PROJECTS_WORKDIR/dbt-semantic-interfaces"
+alias excel="$GIT_PROJECTS_WORKDIR/semantic-layer-spreadsheet-integrations/apps/excel"
+alias gsheets="$GIT_PROJECTS_WORKDIR/semantic-layer-spreadsheet-integrations/apps/gsheets"
+alias mantle="$GIT_PROJECTS_WORKDIR/dbt-mantle"
+alias mf="$GIT_PROJECTS_WORKDIR/metricflow"
+alias mfs="$GIT_PROJECTS_WORKDIR/metricflow-server"
+alias releases="$GIT_PROJECTS_WORKDIR/helm-releases"
+alias sheet="$GIT_PROJECTS_WORKDIR/semantic-layer-spreadsheet-integrations"
+alias slg="$GIT_PROJECTS_WORKDIR/semantic-layer-gateway"
+alias ui="$GIT_PROJECTS_WORKDIR/cloud-ui"
+
 export APPLE_SSH_ADD_BEHAVIOR="macos"
 export GITHUB_TOKEN="$HOMEBREW_GITHUB_API_TOKEN"
 

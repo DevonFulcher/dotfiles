@@ -81,7 +81,6 @@ export FZF_BASE=/opt/homebrew/bin/fzf
 plugins=(
   starship
   zsh-autocomplete
-  jump
   docker
   docker-compose
   kubectl
@@ -139,6 +138,10 @@ alias ga="git add"
 alias gm="git commit"
 alias gr="git pr"
 alias gta="git-town append"
+
+# directory aliases
+alias lab="$GIT_PROJECTS_WORKDIR/TheLaboratory"
+alias tool="$GIT_PROJECTS_WORKDIR/toolbelt"
 
 # Setup alias-finder https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/alias-finder
 zstyle ':omz:plugins:alias-finder' autoload yes # disabled by default
@@ -235,9 +238,9 @@ function git() {
 
 function dot() {
   if [ "$1" = "fix" ]; then
-    code --list-extensions > ~/git/dotfiles/vscode/extensions.txt
-    cursor --list-extensions > ~/git/dotfiles/cursor/extensions.txt
-  elif diff -u ~/git/dotfiles/vscode/extensions.txt <(code --list-extensions) > /dev/null && diff -u ~/git/dotfiles/cursor/extensions.txt <(cursor --list-extensions) > /dev/null; then
+    code --list-extensions > $GIT_PROJECTS_WORKDIR/dotfiles/vscode/extensions.txt
+    cursor --list-extensions > $GIT_PROJECTS_WORKDIR/dotfiles/cursor/extensions.txt
+  elif diff -u $GIT_PROJECTS_WORKDIR/dotfiles/vscode/extensions.txt <(code --list-extensions) > /dev/null && diff -u $GIT_PROJECTS_WORKDIR/dotfiles/cursor/extensions.txt <(cursor --list-extensions) > /dev/null; then
     git -C $GIT_PROJECTS_WORKDIR/dotfiles $@
   else
     echo "Installed VS Code or Cursor extensions don't match listed ones. Run 'dot fix'."
@@ -250,7 +253,7 @@ function cd() {
     directory=$(echo "$directories" | fzf)
     builtin cd "$directory"
   else
-    builtin cd "$@" 2>/dev/null || jump "$@"
+    builtin cd "$@"
   fi
   if git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
     local git_root=$(git rev-parse --show-toplevel)
