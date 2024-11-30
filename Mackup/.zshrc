@@ -138,7 +138,6 @@ alias gn="git send"
 alias ga="git add"
 alias gm="git commit"
 alias gr="git pr"
-alias gt="git-town"
 alias gta="git-town append"
 
 # Setup alias-finder https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/alias-finder
