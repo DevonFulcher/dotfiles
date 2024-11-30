@@ -53,6 +53,8 @@ sync-before-ship = false
 # and you want to keep it in sync with the repo it was forked from.
 sync-upstream = true
 
+ship-strategy = "api"
+
 [branches]
 
 # The main branch is the branch from which you cut new feature branches,
