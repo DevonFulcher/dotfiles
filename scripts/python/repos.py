@@ -50,9 +50,11 @@ def current_repo_name() -> str:
     return Path(os.getcwd()).parts[: len(git_projects_workdir.parts) + 1][-1]
 
 
-def current_repo() -> Repo:
+def current_repo() -> Repo | None:
     repo_name = current_repo_name()
     filtered_repos = list(filter(lambda r: r.name() == repo_name, repos))
+    if not filtered_repos:
+        return None
     if len(filtered_repos) != 1:
         raise ValueError("Unexpected result for repo search")
     return filtered_repos[0]

@@ -48,7 +48,9 @@ def git_pr():
     view_pr = subprocess.run(["gh", "pr", "view", "--web"])
     if view_pr.returncode == 0:
         return
-    current_repo().unit()
+    repo = current_repo()
+    if repo:
+        repo.unit()
     subprocess.run(["git-town", "compress"])
     subprocess.run(
         ["git-town", "propose"],
