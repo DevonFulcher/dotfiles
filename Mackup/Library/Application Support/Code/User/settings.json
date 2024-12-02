@@ -87,5 +87,9 @@
   "git.openRepositoryInParentFolders": "never",
   "window.customTitleBarVisibility": "never",
   "window.titleBarStyle": "native",
-  "workbench.statusBar.visible": false
+  "workbench.statusBar.visible": false,
+  "python.analysis.inlayHints.functionReturnTypes": true,
+  "python.analysis.inlayHints.callArgumentNames": "all",
+  "python.analysis.inlayHints.pytestParameters": true,
+  "python.analysis.inlayHints.variableTypes": true
 }

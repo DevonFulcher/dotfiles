@@ -100,5 +100,9 @@
     "**/site-packages/**": true,
     "**/node_modules/*/**": true
   },
-  "workbench.reduceMotion": "on"
+  "workbench.reduceMotion": "on",
+  "python.analysis.inlayHints.functionReturnTypes": true,
+  "python.analysis.inlayHints.callArgumentNames": "all",
+  "python.analysis.inlayHints.pytestParameters": true,
+  "python.analysis.inlayHints.variableTypes": true
 }
