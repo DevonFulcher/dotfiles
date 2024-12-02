@@ -153,9 +153,9 @@ eval "$(delta --generate-completion zsh)" # Delta completions https://dandavison
 source <(git-town completions zsh) # Git Town completions https://www.git-town.com/commands/completions#zsh
 . /opt/homebrew/opt/asdf/libexec/asdf.sh # Setup asdf completions https://asdf-vm.com/guide/getting-started.html
 
+# Setup dotfiles repo
 [[ -r $GIT_PROJECTS_WORKDIR/dotfiles ]] ||
     git clone git@github.com:DevonFulcher/dotfiles.git $DOTFILES
-
 source $DOTFILES/scripts/source_all.sh $DOTFILES/secrets
 source $DOTFILES/scripts/find_and_source.sh $DOTFILES/scripts/work $CURRENT_ORG
 
