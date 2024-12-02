@@ -123,9 +123,9 @@ def create_parser() -> argparse.ArgumentParser:
     # PR command
     subparsers.add_parser("pr", help="Create or view a pull request")
 
-    # Clone command
-    clone_parser = subparsers.add_parser("clone", help="Clone a repository")
-    clone_parser.add_argument("repo_url", help="URL of the repository to clone")
+    # Get command
+    get_parser = subparsers.add_parser("get", help="Get a repository")
+    get_parser.add_argument("repo_url", help="URL of the repository to get")
 
     # Save command
     save_parser = subparsers.add_parser("save", help="Save and push changes")
@@ -169,7 +169,7 @@ def main():
     match args.command:
         case "pr":
             git_pr()
-        case "clone":
+        case "get":
             repo_name = re.sub(r"\..*$", "", os.path.basename(args.repo_url))
             clone_path = os.path.join(git_projects_workdir, repo_name)
             subprocess.run(["git", "clone", args.repo_url, clone_path], check=True)
@@ -184,7 +184,6 @@ def main():
                 git_branches["branches"]["main"] = default_branch
                 with open(os.path.join(clone_path, ".git-branches.toml"), "w") as f:
                     toml.dump(git_branches, f)
-
                 subprocess.run(["cursor", "."], check=True)
         case "save":
             git_save(args)

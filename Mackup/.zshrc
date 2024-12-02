@@ -205,12 +205,8 @@ function git() {
     command git "$@"
     echo "git status:"
     command git status
-  elif [[ $1 == "pr" || $1 == "save" || $1 == "send" ]]; then
+  elif [[ $1 == "pr" || $1 == "save" || $1 == "send" || $1 == "get" ]]; then
     $PYTHON_PATH $PY_SCRIPTS/git.py "$@"
-  elif [ $1 = "clone" ] && [ -n $2 ]; then
-    $PYTHON_PATH $PY_SCRIPTS/git.py "$@"
-    repo_name=$(echo "$2" | awk -F/ '{sub(/\..*/,"",$NF); print $NF}')
-    cd $GIT_PROJECTS_WORKDIR/$repo_name
   elif [ $1 = "branch-clean" ]; then
     git fetch -p
     git branch -vv | grep ': gone]' | awk '{print $1}' | while read branch; do
