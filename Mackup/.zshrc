@@ -200,11 +200,6 @@ function git() {
     command git "$@" -- ':!*Cargo.lock' ':!*poetry.lock' ':!*package-lock.json' ':!*pnpm-lock.yaml' ':!*uv.lock'
   elif [[ $1 == "pr" || $1 == "save" || $1 == "send" || $1 == "get" ]]; then
     $PYTHON_PATH $PY_SCRIPTS/git.py "$@"
-  elif [ $1 = "branch-clean" ]; then
-    git fetch -p
-    git branch -vv | grep ': gone]' | awk '{print $1}' | while read branch; do
-      git branch -D "$branch"
-    done
   else
     command git "$@"
   fi

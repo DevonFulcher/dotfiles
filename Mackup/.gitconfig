@@ -33,6 +33,7 @@
 [alias]
 	browse = "!f() { gh browse --branch $(git branch --show-current) ${1:-.}; }; f"
 	graph = "log --graph --oneline --decorate --branches"
+	branch-clean = "!f() { sh $GIT_PROJECTS_WORKDIR/dotfiles/scripts/git/git_branch_clean.sh; }; f"
 [merge]
 	conflictstyle = diff3
 [interactive]
