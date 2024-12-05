@@ -1,0 +1,23 @@
+exclude: |
+  (?x)^(
+      .mypy_cache/
+  )$
+
+repos:
+  - repo: https://github.com/psf/black
+    rev: 24.10.0
+    hooks:
+      - id: black
+        language: system
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: "v0.7.1"
+    hooks:
+      - id: ruff
+        language: system
+        args: [--fix]
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.13.0
+    hooks:
+      - id: mypy
+        language: system
+        args: [--show-error-codes]

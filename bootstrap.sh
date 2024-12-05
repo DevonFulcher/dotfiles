@@ -14,9 +14,9 @@ brew install \
   borders \
   charmbracelet/tap/mods
 brew install --cask raycast
-asdf plugin add python
 asdf install
 
 # Install Python packages
 pip install toml # Used for git-town configuration setup
 pip install nbdime # Used for jupyter notebook diffs
+pip install pre-commit # Used for git hooks in this repo
