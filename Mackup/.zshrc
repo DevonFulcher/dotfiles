@@ -224,13 +224,6 @@ function cd() {
   else
     builtin cd "$@"
   fi
-  if git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
-    local git_root=$(git rev-parse --show-toplevel)
-    if [ "$git_root" = "$(pwd)" ]; then
-      echo "git status:"
-      command git status
-    fi
-  fi
 }
 
 function edit() {
