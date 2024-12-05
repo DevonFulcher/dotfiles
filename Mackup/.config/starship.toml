@@ -66,5 +66,5 @@ symbol = "-"
 
 [custom.full_git_status]
 command = "git status"
-when = "git rev-parse --is-inside-work-tree > /dev/null 2>&1"
+when = "[[ -n $(git status 2>/dev/null) ]]"
 format = "$output\n"
