@@ -1,13 +1,12 @@
 import os
-from pathlib import Path
 import re
 import sys
 import subprocess
 from typing import Literal
 import toml
-from repos import current_repo, repos, current_repo_name
+from repos import current_repo
 import argparse
-from env_var import get_git_projects_workdir
+from env_var import get_env_var_or_exit, get_git_projects_workdir
 
 
 def get_default_branch() -> Literal["main", "master"]:
@@ -184,7 +183,8 @@ def main():
                 git_branches["branches"]["main"] = default_branch
                 with open(os.path.join(clone_path, ".git-branches.toml"), "w") as f:
                     toml.dump(git_branches, f)
-                subprocess.run(["cursor", "."], check=True)
+                editor = get_env_var_or_exit("EDITOR")
+                subprocess.run([editor, "."], check=True)
         case "save":
             git_save(args)
         case "send":
