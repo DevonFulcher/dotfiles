@@ -266,6 +266,10 @@ function run() {
   $PYTHON_PATH $PY_SCRIPTS/repos.py run
 }
 
+function kill-port() {
+  lsof -t -i:$1 | xargs kill
+}
+
 cd $GIT_PROJECTS_WORKDIR
 
 END=$(perl -MTime::HiRes -e 'printf("%d\n", Time::HiRes::time()*1000)')
