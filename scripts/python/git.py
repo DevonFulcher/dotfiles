@@ -162,9 +162,7 @@ def create_parser() -> argparse.ArgumentParser:
 def main():
     parser = create_parser()
     args = parser.parse_args()
-
     git_projects_workdir = get_git_projects_workdir()
-
     match args.command:
         case "pr":
             git_pr()
