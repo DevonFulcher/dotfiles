@@ -11,6 +11,7 @@ $cmd_duration\
 $container\
 $fill\
 $line_break\
+${custom.full_git_status}\
 $character\
 """
 
@@ -62,3 +63,8 @@ format = "pyvenv: [$virtualenv]($style) "
 
 [fill]
 symbol = "-"
+
+[custom.full_git_status]
+command = "git status"
+when = "git rev-parse --is-inside-work-tree > /dev/null 2>&1"
+format = "$output\n"
