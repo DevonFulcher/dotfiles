@@ -63,8 +63,6 @@ def main():
     match args.task:
         case "unit":
             repo.unit()
-        case "run":
-            repo.run()
         case _:
             raise ValueError("Unrecognized dev task")
 
