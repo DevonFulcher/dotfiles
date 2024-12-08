@@ -8,18 +8,16 @@ from env_var import get_git_projects_workdir
 
 class Repo(ABC):
     @abstractmethod
-    def name() -> str: ...
+    def name(self) -> str:
+        ...
+
     @abstractmethod
-    def unit_cmd() -> list[str]: ...
-    @abstractmethod
-    def run_cmd() -> list[str]: ...
+    def unit_cmd(self) -> list[str]:
+        ...
 
     def _run(self, cmd: list[str]) -> None:
         os.chdir(self.path())
         subprocess.run(cmd, check=True)
-
-    def run(self) -> None:
-        self._run(self.run_cmd())
 
     def unit(self) -> None:
         self._run(self.unit_cmd())
@@ -37,9 +35,6 @@ class AiCodegeApi(Repo):
 
     def unit_cmd(self) -> list[str]:
         return ["make", "test"]
-
-    def run_cmd(self) -> list[str]:
-        return ["make", "dev"]
 
 
 repos = [AiCodegeApi()]

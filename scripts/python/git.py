@@ -96,11 +96,16 @@ def git_save(args: argparse.Namespace) -> None:
     ]
     if args.no_verify:
         git_commit_command.append("--no-verify")
-    commit_result = subprocess.run(git_commit_command, capture_output=True)
+    commit_result = subprocess.run(
+        git_commit_command,
+        capture_output=True,
+        text=True,
+    )
     if commit_result.returncode == 0:
         print("code committed")
     else:
-        print(str(commit_result.stderr), file=sys.stderr)
+        print(commit_result.stderr, file=sys.stderr)
+        sys.exit(1)
 
     if not args.no_push:
         git_push_command = ["git", "push"]

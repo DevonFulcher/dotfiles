@@ -32,12 +32,11 @@
 	ff = only
 [alias]
 	browse = "!f() { gh browse --branch $(git branch --show-current) ${1:-.}; }; f"
-	graph = "log --graph --oneline --decorate --branches"
-	branch-clean = "!f() { sh $GIT_PROJECTS_WORKDIR/dotfiles/scripts/git/git_branch_clean.sh; }; f"
-	pr = "!f() { $PYTHON_PATH $PY_SCRIPTS/git.py pr "$@"; }; f"
-	save = "!f() { $PYTHON_PATH $PY_SCRIPTS/git.py save "$@"; }; f"
-	send = "!f() { $PYTHON_PATH $PY_SCRIPTS/git.py send "$@"; }; f"
-	get = "!f() { $PYTHON_PATH $PY_SCRIPTS/git.py get "$@"; }; f"
+	branch-clean = "!f() { FORCE_COLOR=1 GIT_FORCE_COLOR=1 sh $GIT_PROJECTS_WORKDIR/dotfiles/scripts/git/git_branch_clean.sh; }; f"
+	pr = "!f() { FORCE_COLOR=1 GIT_FORCE_COLOR=1 $PYTHON_PATH $PY_SCRIPTS/git.py pr \"$@\"; }; f"
+	save = "!f() { FORCE_COLOR=1 GIT_FORCE_COLOR=1 $PYTHON_PATH $PY_SCRIPTS/git.py save \"$@\"; }; f"
+	send = "!f() { FORCE_COLOR=1 GIT_FORCE_COLOR=1 $PYTHON_PATH $PY_SCRIPTS/git.py send \"$@\"; }; f"
+	get = "!f() { FORCE_COLOR=1 GIT_FORCE_COLOR=1 $PYTHON_PATH $PY_SCRIPTS/git.py get \"$@\"; }; f"
 [merge]
 	conflictstyle = diff3
 [interactive]

@@ -111,11 +111,11 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # Setup environment variables
 export CURRENT_ORG="dbt_labs"
-export GIT_PROJECTS_WORKDIR="$HOME/git"
 export PYTHON_PATH=$(asdf which python)
 export EDITOR="cursor"
-export PY_SCRIPTS=$GIT_PROJECTS_WORKDIR/dotfiles/scripts/python
+export GIT_PROJECTS_WORKDIR="$HOME/git"
 export DOTFILES=$GIT_PROJECTS_WORKDIR/dotfiles
+export PY_SCRIPTS=$DOTFILES/scripts/python
 
 # Add executables to PATH
 export PATH="$PATH:/usr/local/bin"
@@ -142,6 +142,7 @@ alias gta="git-town append"
 
 # Directory aliases
 alias lab="$GIT_PROJECTS_WORKDIR/TheLaboratory"
+alias dotfiles="$DOTFILES"
 
 # Setup alias-finder https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/alias-finder
 zstyle ':omz:plugins:alias-finder' autoload yes
