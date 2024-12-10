@@ -72,6 +72,16 @@ function devspace() {
   command devspace "${args[@]}"
 }
 
+function nuke-devspace() {
+  devspace use namespace $NAMESPACE
+  devspace purge --force-purge
+  sudo rm -r $HOME/.devspace
+  kubectl delete namespace $NAMESPACE
+  find $GIT_PROJECTS_WORKDIR -maxdepth 2 -name ".devspace" -exec rm -r {} +
+  (cd $GIT_PROJECTS_WORKDIR/helm-charts && git checkout main && git pull) && (cd $GIT_PROJECTS_WORKDIR/helm-releases && git checkout main && git pull)
+  devspace use namespace $NAMESPACE
+}
+
 # nvm
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
