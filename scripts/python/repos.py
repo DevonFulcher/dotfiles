@@ -34,7 +34,7 @@ class AiCodegeApi(Repo):
         return "ai-codegen-api"
 
     def unit_cmd(self) -> list[str]:
-        return ["make", "test"]
+        return ["task", "test"]
 
 
 repos = [AiCodegeApi()]
