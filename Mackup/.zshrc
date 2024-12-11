@@ -242,7 +242,7 @@ function unit() {
 }
 
 function kill-port() {
-  lsof -t -i:$1 | xargs kill
+  lsof -t -i:$1 | xargs kill -9
 }
 
 cd $GIT_PROJECTS_WORKDIR
