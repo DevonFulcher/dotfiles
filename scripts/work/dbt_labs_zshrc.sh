@@ -73,12 +73,25 @@ function devspace() {
 }
 
 function nuke-devspace() {
+  echo "Setting devspace namespace to $NAMESPACE..."
   devspace use namespace $NAMESPACE
+
+  echo "Purging devspace resources..."
   devspace purge --force-purge
+
+  echo "Removing local devspace configuration..."
   sudo rm -r $HOME/.devspace
+
+  echo "Deleting Kubernetes namespace $NAMESPACE..."
   kubectl delete namespace $NAMESPACE
+
+  echo "Cleaning up .devspace directories in $GIT_PROJECTS_WORKDIR..."
   find $GIT_PROJECTS_WORKDIR -maxdepth 2 -name ".devspace" -exec rm -r {} +
+
+  echo "Updating helm-charts and helm-releases to main branch..."
   (cd $GIT_PROJECTS_WORKDIR/helm-charts && git checkout main && git pull) && (cd $GIT_PROJECTS_WORKDIR/helm-releases && git checkout main && git pull)
+
+  echo "Resetting devspace namespace to $NAMESPACE..."
   devspace use namespace $NAMESPACE
 }
 
