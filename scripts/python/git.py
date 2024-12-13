@@ -50,7 +50,6 @@ def git_pr():
     repo = current_repo()
     if repo:
         repo.unit()
-    subprocess.run(["git-town", "compress"])
     subprocess.run(
         ["git-town", "propose"],
     )
