@@ -245,6 +245,10 @@ function kill-port() {
   lsof -t -i:$1 | xargs kill -9
 }
 
+function format-json() {
+  jq . $@ > tmp.json && mv tmp.json $@
+}
+
 cd $GIT_PROJECTS_WORKDIR
 
 END=$(perl -MTime::HiRes -e 'printf("%d\n", Time::HiRes::time()*1000)')
