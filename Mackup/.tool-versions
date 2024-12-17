@@ -1,4 +1,4 @@
-python 3.12.6
+python 3.13.1
 rust 1.81.0
 uv 0.4.28
 terraform 1.9.8
