@@ -13,10 +13,12 @@ github.codespaces
 github.vscode-github-actions
 github.vscode-pull-request-github
 golang.go
+grapecity.gc-excelviewer
 jock.svg
 matangover.mypy
 mathiasfrohlich.kotlin
 mechatroner.rainbow-csv
+medo64.render-crlf
 mk12.better-git-line-blame
 ms-azuretools.vscode-docker
 ms-python.black-formatter
