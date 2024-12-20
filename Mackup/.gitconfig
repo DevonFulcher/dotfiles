@@ -37,6 +37,8 @@
 	save = "!f() { FORCE_COLOR=1 GIT_FORCE_COLOR=1 $PYTHON_PATH $PY_SCRIPTS/git.py save \"$@\"; }; f"
 	send = "!f() { FORCE_COLOR=1 GIT_FORCE_COLOR=1 $PYTHON_PATH $PY_SCRIPTS/git.py send \"$@\"; }; f"
 	get = "!f() { FORCE_COLOR=1 GIT_FORCE_COLOR=1 $PYTHON_PATH $PY_SCRIPTS/git.py get \"$@\"; }; f"
+	change = "!f() { FORCE_COLOR=1 GIT_FORCE_COLOR=1 $PYTHON_PATH $PY_SCRIPTS/git.py change \"$@\"; }; f"
+	combine = "!f() { FORCE_COLOR=1 GIT_FORCE_COLOR=1 $PYTHON_PATH $PY_SCRIPTS/git.py combine \"$@\"; }; f"
 [merge]
 	conflictstyle = diff3
 [interactive]

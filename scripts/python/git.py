@@ -119,6 +119,34 @@ def git_save(args: argparse.Namespace) -> None:
     subprocess.run(["git", "status"], check=True)
 
 
+def get_branch_name(args: argparse.Namespace) -> str:
+    if not args.branch:
+        # Interactive branch selection
+        branches: str = subprocess.run(
+            ["git", "branch"], check=True, capture_output=True, text=True
+        ).stdout
+        fzf = subprocess.Popen(
+            ["fzf"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True
+        )
+        selected_branch, _ = fzf.communicate(input=branches)
+        branch_name = selected_branch.strip()
+    elif args.branch in ["main", "master"]:
+        branch_name = get_default_branch()
+    if args.branch == "-" and args.command == "combine":
+        branch_name = subprocess.run(
+            ["git", "rev-parse", "--abbrev-ref", "@{-1}"],
+            capture_output=True,
+            text=True,
+            check=True,
+        ).stdout.strip()
+    else:
+        branch_name = args.branch
+    if not branch_name:
+        print("No branch name provided.", file=sys.stderr)
+        sys.exit(1)
+    return branch_name
+
+
 def create_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Git workflow helper")
     subparsers = parser.add_subparsers(dest="command", required=True)
@@ -158,6 +186,14 @@ def create_parser() -> argparse.ArgumentParser:
     )
     send_parser.add_argument(
         "pathspec", nargs="*", help="Files to stage (defaults to '-A')"
+    )
+
+    # Add change command
+    change_parser = subparsers.add_parser("change", help="Change git branch")
+    change_parser.add_argument(
+        "branch",
+        nargs="?",
+        help="Branch name to change to. If omitted, will use fzf to select",
     )
 
     return parser
@@ -209,6 +245,13 @@ def main():
                 )
             git_save(args)
             git_pr()
+        case "change":
+            subprocess.run(["git", "checkout", get_branch_name(args)], check=True)
+        case "combine":
+            subprocess.run(["git", "merge", get_branch_name(args)], check=True)
+        case _:
+            print(f"Unknown command: {args.command}")
+            sys.exit(1)
 
 
 if __name__ == "__main__":

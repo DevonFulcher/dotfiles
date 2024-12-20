@@ -130,7 +130,7 @@ alias less=bat
 alias g=git
 alias gv="git save"
 alias gd="git diff"
-alias gc="git checkout"
+alias gc="git change"
 alias gs="git status"
 alias gu="git push"
 alias gl="git pull"
@@ -161,42 +161,7 @@ source $DOTFILES/scripts/source_all.sh $DOTFILES/secrets
 source $DOTFILES/scripts/find_and_source.sh $DOTFILES/scripts/work $CURRENT_ORG
 
 function git() {
-  if [[ $1 == "checkout" || $1 == "merge" ]]; then
-    if [ -z "$2" ]; then
-      # Handle checkout & merge without parameters
-      branch_name=$(echo $(command git branch | fzf ))
-      command git $1 $branch_name
-    # Make commands main/master agnostic
-    elif [ "$2" = "main" ] || [ "$2" = "master" ]; then
-      if git rev-parse --verify main >/dev/null 2>&1; then
-        # If 'main' exists, checkout to 'main'
-        branch_name="main"
-      elif git rev-parse --verify master >/dev/null 2>&1; then
-        # If 'master' exists but 'main' does not, checkout to 'master'
-        branch_name="master"
-      else
-        echo "Neither 'main' nor 'master' branch exists."
-        exit 1
-      fi
-      command git $1 $branch_name
-    elif [ "$2" = "-" ]; then
-      # Handle 'git merge -'
-      if [ "$1" = "merge" ]; then
-        previous_branch=$(git rev-parse --abbrev-ref @{-1})
-        if [ -z "$previous_branch" ]; then
-          echo "Could not determine the previous branch."
-          exit 1
-        fi
-        command git merge "$previous_branch"
-      else
-        # Handle 'git checkout -'
-        command git checkout -
-      fi
-    else
-      # If not 'main', 'master', or '-', pass all arguments to git
-      command git "$@"
-    fi
-  elif [ $1 = "diff" ] && [ "$#" -eq 1 ]; then
+  if [ $1 = "diff" ] && [ "$#" -eq 1 ]; then
     # Exclude files from diff that I rarely care about. Reference: https://stackoverflow.com/a/48259275/8925314
     command git "$@" -- ':!*Cargo.lock' ':!*poetry.lock' ':!*package-lock.json' ':!*pnpm-lock.yaml' ':!*uv.lock'
   else
