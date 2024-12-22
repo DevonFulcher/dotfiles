@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 import re
 import sys
 import subprocess
@@ -227,8 +228,11 @@ def main():
                 os.chdir(clone_path)
                 default_branch = get_default_branch()
                 git_branches["branches"]["main"] = default_branch
-                with open(os.path.join(clone_path, ".git-branches.toml"), "w") as f:
-                    toml.dump(git_branches, f)
+                Path(clone_path, ".git-branches.toml").write_text(
+                    toml.dumps(git_branches)
+                )
+                Path(clone_path, ".env").touch()
+                Path(clone_path, ".envrc").write_text("dotenv\n")
                 editor = get_env_var_or_exit("EDITOR")
                 subprocess.run([editor, "."], check=True)
         case "save":
