@@ -65,6 +65,14 @@ format = "pyvenv: [$virtualenv]($style) "
 symbol = "-"
 
 [custom.full_git_status]
-command = "git status"
+command = """
+git status | (
+  if [ $(git status | wc -l) -gt 10 ]; then
+    (head -n 9; echo "...")
+  else
+    cat
+  fi
+)
+"""
 when = "[[ -n $(git status 2>/dev/null) ]]"
 format = "$output\n"
