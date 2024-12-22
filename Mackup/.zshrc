@@ -144,6 +144,9 @@ alias gta="git-town append"
 alias lab="$GIT_PROJECTS_WORKDIR/TheLaboratory"
 alias dotfiles="$DOTFILES"
 
+# Alias Toolbelt
+alias tt="toolbelt"
+
 # Setup alias-finder https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/alias-finder
 zstyle ':omz:plugins:alias-finder' autoload yes
 zstyle ':omz:plugins:alias-finder' cheaper yes
@@ -191,10 +194,6 @@ function edit() {
     command $EDITOR $@
     $PYTHON_PATH $PY_SCRIPTS/yabai.py "$@"
   fi
-}
-
-function unit() {
-  $PYTHON_PATH $PY_SCRIPTS/repos.py unit
 }
 
 function kill-port() {
