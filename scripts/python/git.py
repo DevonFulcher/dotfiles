@@ -188,12 +188,20 @@ def create_parser() -> argparse.ArgumentParser:
         "pathspec", nargs="*", help="Files to stage (defaults to '-A')"
     )
 
-    # Add change command
+    # Change command
     change_parser = subparsers.add_parser("change", help="Change git branch")
     change_parser.add_argument(
         "branch",
         nargs="?",
         help="Branch name to change to. If omitted, will use fzf to select",
+    )
+
+    # Compare command
+    change_parser = subparsers.add_parser(
+        "compare", help="Compare commits with git diff"
+    )
+    change_parser.add_argument(
+        "compare_args", nargs="*", help="Commands to pass to git diff"
     )
 
     return parser
@@ -249,6 +257,20 @@ def main():
             subprocess.run(["git", "checkout", get_branch_name(args)], check=True)
         case "combine":
             subprocess.run(["git", "merge", get_branch_name(args)], check=True)
+        case "compare":
+            # Exclude files from diff that I rarely care about. Reference: https://stackoverflow.com/a/48259275/8925314
+            subprocess.run(
+                ["git", "diff"]
+                + args.compare_args
+                + [
+                    "--",
+                    ":!*Cargo.lock",
+                    ":!*poetry.lock",
+                    ":!*package-lock.json",
+                    ":!*pnpm-lock.yaml",
+                    ":!*uv.lock",
+                ]
+            )
         case _:
             print(f"Unknown command: {args.command}")
             sys.exit(1)

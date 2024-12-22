@@ -160,15 +160,6 @@ source <(git-town completions zsh) # Git Town completions https://www.git-town.c
 source $DOTFILES/scripts/source_all.sh $DOTFILES/secrets
 source $DOTFILES/scripts/find_and_source.sh $DOTFILES/scripts/work $CURRENT_ORG
 
-function git() {
-  if [ $1 = "diff" ] && [ "$#" -eq 1 ]; then
-    # Exclude files from diff that I rarely care about. Reference: https://stackoverflow.com/a/48259275/8925314
-    command git "$@" -- ':!*Cargo.lock' ':!*poetry.lock' ':!*package-lock.json' ':!*pnpm-lock.yaml' ':!*uv.lock'
-  else
-    command git "$@"
-  fi
-}
-
 function dot() {
   if [ "$1" = "fix" ]; then
     code --list-extensions > $GIT_PROJECTS_WORKDIR/dotfiles/vscode/extensions.txt

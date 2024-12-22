@@ -39,6 +39,7 @@
 	get = "!f() { FORCE_COLOR=1 GIT_FORCE_COLOR=1 $PYTHON_PATH $PY_SCRIPTS/git.py get \"$@\"; }; f"
 	change = "!f() { FORCE_COLOR=1 GIT_FORCE_COLOR=1 $PYTHON_PATH $PY_SCRIPTS/git.py change \"$@\"; }; f"
 	combine = "!f() { FORCE_COLOR=1 GIT_FORCE_COLOR=1 $PYTHON_PATH $PY_SCRIPTS/git.py combine \"$@\"; }; f"
+	compare = "!f() { FORCE_COLOR=1 GIT_FORCE_COLOR=1 $PYTHON_PATH $PY_SCRIPTS/git.py compare \"$@\"; }; f"
 [merge]
 	conflictstyle = diff3
 [interactive]
