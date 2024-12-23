@@ -142,9 +142,11 @@ alias gta="git-town append"
 
 # Directory aliases
 alias lab="$GIT_PROJECTS_WORKDIR/TheLaboratory"
-alias dotfiles="$DOTFILES"
 
-# Alias Toolbelt
+# Setup Toolbelt
+function toolbelt() {
+  uvx --from $GIT_PROJECTS_WORKDIR/toolbelt/toolbelt toolbelt $@
+}
 alias tt="toolbelt"
 
 cdpath=($GIT_PROJECTS_WORKDIR $cdpath)

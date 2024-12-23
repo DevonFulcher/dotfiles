@@ -18,5 +18,4 @@ asdf install
 
 # Install Python packages
 pip install nbdime # Used for jupyter notebook diffs
-pip install -e $GIT_PROJECTS_WORKDIR/toolbelt/toolbelt
 pip install pre-commit
