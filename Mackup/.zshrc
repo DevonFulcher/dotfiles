@@ -129,7 +129,7 @@ alias less=bat
 # git aliases
 alias g=git
 alias gv="git save"
-alias gd="git diff"
+alias gd="git compare"
 alias gc="git change"
 alias gs="git status"
 alias gu="git push"
@@ -146,6 +146,8 @@ alias dotfiles="$DOTFILES"
 
 # Alias Toolbelt
 alias tt="toolbelt"
+
+cdpath=($GIT_PROJECTS_WORKDIR $cdpath)
 
 # Setup alias-finder https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/alias-finder
 zstyle ':omz:plugins:alias-finder' autoload yes
@@ -174,7 +176,7 @@ function dot() {
   fi
 }
 
-function cd() {
+function goto() {
   if [ "$#" -eq 0 ]; then
     directories=$(find $GIT_PROJECTS_WORKDIR -mindepth 1 -maxdepth 1 -not -path '*/\.*' -print)
     directory=$(echo "$directories" | fzf)
@@ -189,8 +191,17 @@ function edit() {
     directories=$(echo "$(find $GIT_PROJECTS_WORKDIR/dotfiles/workspaces -mindepth 1 -maxdepth 1 -not -path '*/\.*' -print)\n$(find $GIT_PROJECTS_WORKDIR -mindepth 1 -maxdepth 1 -not -path '*/\.*' -print)")
     directory=$(echo "$directories" | fzf)
     command $EDITOR "$directory"
+    cd "$directory"
     $PYTHON_PATH $PY_SCRIPTS/yabai.py "$@"
   else
+    for dir in $cdpath; do
+      if [ -d "$dir/$1" ]; then
+        command $EDITOR "$dir/$1"
+        cd "$dir/$1"
+        $PYTHON_PATH $PY_SCRIPTS/yabai.py "$@"
+        return
+      fi
+    done
     command $EDITOR $@
     $PYTHON_PATH $PY_SCRIPTS/yabai.py "$@"
   fi
