@@ -204,7 +204,21 @@ function edit() {
         return
       fi
     done
-    command $EDITOR $@
+    local target_path=$(alias "$1" 2>/dev/null | cut -d= -f2- | tr -d "'\"" || echo "$1")
+    if [ -e "$target_path" ]; then
+      command $EDITOR "$target_path"
+      cd "$target_path"
+      return
+    fi
+    if [ "$1" = "." ]; then
+      command $EDITOR "$(pwd)"
+      return
+    fi
+    if [ -d "$@" ]; then
+      command $EDITOR "$@" && cd "$@"
+    else
+      command $EDITOR "$@"
+    fi
     $PYTHON_PATH $PY_SCRIPTS/yabai.py "$@"
   fi
 }
