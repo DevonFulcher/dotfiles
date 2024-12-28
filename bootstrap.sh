@@ -12,6 +12,7 @@ brew install \
   koekeishiya/formulae/yabai \
   koekeishiya/formulae/skhd \
   borders \
+  rip2 \
   charmbracelet/tap/mods
 brew install --cask raycast
 asdf install
