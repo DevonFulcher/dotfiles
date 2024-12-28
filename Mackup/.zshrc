@@ -197,10 +197,10 @@ function edit() {
     cd "$directory"
     $PYTHON_PATH $PY_SCRIPTS/yabai.py "$@"
   else
-    for dir in $cdpath; do
-      if [ -d "$dir/$1" ]; then
-        command $EDITOR "$dir/$1"
-        cd "$dir/$1"
+    for dir in $(find $GIT_PROJECTS_WORKDIR -mindepth 1 -maxdepth 1 -type d); do
+      if [ "$(basename $dir)" = "$1" ]; then
+        command $EDITOR "$dir"
+        cd "$dir"
         $PYTHON_PATH $PY_SCRIPTS/yabai.py "$@"
         return
       fi
@@ -209,10 +209,6 @@ function edit() {
     if [ -e "$target_path" ]; then
       command $EDITOR "$target_path"
       cd "$target_path"
-      return
-    fi
-    if [ "$1" = "." ]; then
-      command $EDITOR "$(pwd)"
       return
     fi
     if [ -d "$@" ]; then
