@@ -14,7 +14,10 @@ brew install \
   borders \
   rip2 \
   charmbracelet/tap/mods
-brew install --cask raycast
+# Install UI applications with --cask
+brew install --cask \
+  raycast \
+  alacritty
 asdf install
 
 # Install Python packages

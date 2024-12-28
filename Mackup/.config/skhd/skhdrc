@@ -7,7 +7,7 @@ cmd - o : yabai -m window --grid 1:1:0:0:1:1
 
 # activate applications
 cmd - 1 : osascript -e 'tell application "Cursor" to activate'
-cmd - 2 : osascript -e 'tell application "iTerm" to activate'
+cmd - 2 : osascript -e 'tell application "Ghostty" to activate'
 cmd - 3 : osascript -e 'tell application "Chrome" to activate'
 cmd - 4 : osascript -e 'tell application "Slack" to activate'
 cmd - 5 : osascript -e 'tell application "zoom.us" to activate'
