@@ -11,4 +11,4 @@ Config files are managed with [mackup](https://github.com/lra/mackup).
 1. Run `./bootstrap.sh`
 2. Manually install
   - [Oh My Zsh](https://ohmyz.sh/)
-3. Install [pre-commit](https://pre-commit.com/) for this repo
+3. Install `MonaspaceNeon-Regular.otf` from [here](https://github.com/githubnext/monaspace)

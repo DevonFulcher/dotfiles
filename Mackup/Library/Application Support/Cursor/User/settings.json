@@ -5,7 +5,8 @@
   "workbench.startupEditor": "none",
   "go.formatTool": "gofmt",
   "window.zoomLevel": 1.5,
-  "editor.fontSize": 15,
+  "editor.fontSize": 18,
+  "editor.fontFamily": "'Monaspace Neon', Menlo, Monaco, 'Courier New', monospace",
   "notebook.cellToolbarLocation": {
     "default": "right",
     "jupyter-notebook": "left"
