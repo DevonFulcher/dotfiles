@@ -62,7 +62,8 @@ up_to_date = "up_to_date"
 format = "pyvenv: [$virtualenv]($style) "
 
 [fill]
-symbol = "-"
+symbol = "—"
+style = 'bold white'
 
 [custom.full_git_status]
 command = """
