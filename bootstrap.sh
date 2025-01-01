@@ -20,6 +20,4 @@ brew install --cask \
   alacritty
 asdf install
 
-# Install Python packages
 pip install nbdime # Used for jupyter notebook diffs
-pip install pre-commit
