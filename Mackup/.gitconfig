@@ -40,6 +40,7 @@
 	change = "!f() { FORCE_COLOR=1 GIT_FORCE_COLOR=1 toolbelt git change \"$@\"; }; f"
 	combine = "!f() { FORCE_COLOR=1 GIT_FORCE_COLOR=1 toolbelt git combine \"$@\"; }; f"
 	compare = "!f() { FORCE_COLOR=1 GIT_FORCE_COLOR=1 toolbelt git compare \"$@\"; }; f"
+	setup = "!f() { FORCE_COLOR=1 GIT_FORCE_COLOR=1 toolbelt git setup \"$@\"; }; f"
 [merge]
 	conflictstyle = diff3
 [interactive]
