@@ -23,10 +23,6 @@ export GITHUB_TOKEN="$HOMEBREW_GITHUB_API_TOKEN"
 # Hatch: https://hatch.pypa.io/1.12/cli/about/#tab-completion
 . ~/.hatch-complete.zsh
 
-# Go
-export GOPATH=/usr/local/go/bin
-export PATH="$PATH:${GOPATH}/bin"
-
 # Java
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/amazon-corretto-17.jdk/Contents/Home
 
