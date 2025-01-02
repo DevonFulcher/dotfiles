@@ -4,3 +4,4 @@ uv 0.4.28
 terraform 1.9.8
 grpcurl 1.9.2
 pre-commit 4.0.1
+golang 1.23.4
