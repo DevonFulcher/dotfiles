@@ -4,6 +4,7 @@
   },
   "workbench.startupEditor": "none",
   "go.formatTool": "gofmt",
+  "go.toolsManagement.autoUpdate": true,
   "window.zoomLevel": 1.5,
   "editor.fontSize": 18,
   "editor.fontFamily": "'Monaspace Neon', Menlo, Monaco, 'Courier New', monospace",
@@ -16,7 +17,6 @@
   "files.exclude": {
     "**/.git": false
   },
-  "go.toolsManagement.autoUpdate": true,
   "redhat.telemetry.enabled": false,
   "[python]": {
     "editor.tabSize": 4,
@@ -64,12 +64,6 @@
   },
   "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
-  "github.copilot.enable": {
-    "*": false,
-    "plaintext": false,
-    "markdown": false,
-    "scminput": false
-  },
   "githubPullRequests.pullBranch": "never",
   "debug.allowBreakpointsEverywhere": true,
   "terminal.integrated.defaultProfile.linux": "zsh",
@@ -79,7 +73,6 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "remote.autoForwardPortsSource": "hybrid",
-  "github.copilot.editor.enableAutoCompletions": true,
   "workbench.trustedDomains.promptInTrustedWorkspace": false,
   "typescript.updateImportsOnFileMove.enabled": "always",
   "javascript.updateImportsOnFileMove.enabled": "always",
