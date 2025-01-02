@@ -188,10 +188,10 @@ function goto() {
 
 function edit() {
   if [ "$#" -eq 0 ]; then
-    directories=$(echo "$(find $GIT_PROJECTS_WORKDIR/dotfiles/workspaces -mindepth 1 -maxdepth 1 -not -path '*/\.*' -print)\n$(find $GIT_PROJECTS_WORKDIR -mindepth 1 -maxdepth 1 -not -path '*/\.*' -print)")
-    directory=$(echo "$directories" | fzf)
-    command $EDITOR "$directory"
-    cd "$directory"
+    projects=$(echo "$(find $GIT_PROJECTS_WORKDIR/dotfiles/workspaces -mindepth 1 -maxdepth 1 -not -path '*/\.*' -print)\n$(find $GIT_PROJECTS_WORKDIR -mindepth 1 -maxdepth 1 -not -path '*/\.*' -print)")
+    project=$(echo "$projects" | fzf)
+    command $EDITOR "$project"
+    [ -d "$project" ] && cd "$project"
     $PYTHON_PATH $PY_SCRIPTS/yabai.py "$@"
   else
     for dir in $(find $GIT_PROJECTS_WORKDIR -mindepth 1 -maxdepth 1 -type d); do
