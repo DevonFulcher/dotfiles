@@ -69,39 +69,49 @@ function devspace() {
 }
 
 function nuke-devspace() {
-  echo "╔════════════════════════════════════════════════╗"
-  echo "║ Setting devspace namespace to $NAMESPACE..."
-  echo "╚════════════════════════════════════════════════╝"
+  if [[ ! -f "devspace.yaml" && ! -f "devspace.yml" ]]; then
+    echo "Error: No devspace.yaml or devspace.yml found in current directory"
+    return 1
+  fi
+
+  echo "==============================================="
+  echo "aws sso login"
+  echo "==============================================="
+  aws sso login
+
+  echo "==============================================="
+  echo "devspace use namespace $NAMESPACE"
+  echo "==============================================="
   devspace use namespace $NAMESPACE
 
-  echo "╔════════════════════════════════════════════════╗"
-  echo "║ Purging devspace resources..."
-  echo "╚════════════════════════════════════════════════╝"
+  echo "==============================================="
+  echo "devspace purge --force-purge"
+  echo "==============================================="
   devspace purge --force-purge
 
-  echo "╔════════════════════════════════════════════════╗"
-  echo "║ Removing local devspace configuration..."
-  echo "╚════════════════════════════════════════════════╝"
-  rm -r $HOME/.devspace
+  echo "==============================================="
+  echo "rip $HOME/.devspace"
+  echo "==============================================="
+  rip $HOME/.devspace
 
-  echo "╔════════════════════════════════════════════════╗"
-  echo "║ Deleting Kubernetes namespace $NAMESPACE..."
-  echo "╚════════════════════════════════════════════════╝"
+  echo "==============================================="
+  echo "kubectl delete namespace $NAMESPACE"
+  echo "==============================================="
   kubectl delete namespace $NAMESPACE
 
-  echo "╔════════════════════════════════════════════════╗"
-  echo "║ Cleaning up .devspace directories..."
-  echo "╚════════════════════════════════════════════════╝"
-  find $GIT_PROJECTS_WORKDIR -maxdepth 2 -name ".devspace" -exec rm -r {} +
+  echo "==============================================="
+  echo "find $GIT_PROJECTS_WORKDIR -maxdepth 2 -name '.devspace' -exec rip {} +"
+  echo "==============================================="
+  find $GIT_PROJECTS_WORKDIR -maxdepth 2 -name ".devspace" -exec rip {} +
 
-  echo "╔════════════════════════════════════════════════╗"
-  echo "║ Updating helm-charts and helm-releases..."
-  echo "╚════════════════════════════════════════════════╝"
+  echo "==============================================="
+  echo "(cd helm-charts && git checkout main && git pull) && (cd helm-releases && git checkout main && git pull)"
+  echo "==============================================="
   (cd $GIT_PROJECTS_WORKDIR/helm-charts && git checkout main && git pull) && (cd $GIT_PROJECTS_WORKDIR/helm-releases && git checkout main && git pull)
 
-  echo "╔════════════════════════════════════════════════╗"
-  echo "║ Resetting devspace namespace to $NAMESPACE..."
-  echo "╚════════════════════════════════════════════════╝"
+  echo "==============================================="
+  echo "devspace use namespace $NAMESPACE"
+  echo "==============================================="
   devspace use namespace $NAMESPACE
 }
 
