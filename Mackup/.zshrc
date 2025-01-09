@@ -222,7 +222,7 @@ function kill-port() {
 }
 
 function format-json() {
-  jq . $@ > tmp.json && mv tmp.json $@
+  jq -S . $@ > tmp.json && mv tmp.json $@
 }
 
 cd $GIT_PROJECTS_WORKDIR
