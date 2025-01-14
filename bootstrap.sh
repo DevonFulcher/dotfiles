@@ -22,7 +22,8 @@ brew install \
 # Install UI applications with --cask
 brew install --cask \
   raycast \
-  alacritty
+  alacritty \
+  warp
 
 echo "Restoring configurations with Mackup"
 mackup restore
