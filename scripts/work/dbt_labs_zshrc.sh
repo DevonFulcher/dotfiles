@@ -80,9 +80,19 @@ function nuke-devspace() {
   aws sso login
 
   echo "==============================================="
-  echo "(cd helm-charts && git checkout main && git pull) && (cd helm-releases && git checkout main && git pull)"
+  echo "(cd helm-charts && git checkout main && git pull)"
   echo "==============================================="
-  (cd $GIT_PROJECTS_WORKDIR/helm-charts && git checkout main && git pull) && (cd $GIT_PROJECTS_WORKDIR/helm-releases && git checkout main && git pull)
+  (cd $GIT_PROJECTS_WORKDIR/helm-charts && git checkout main && git pull)
+
+  echo "==============================================="
+  echo "(cd helm-releases && git checkout main && git pull)"
+  echo "==============================================="
+  (cd $GIT_PROJECTS_WORKDIR/helm-releases && git checkout main && git pull)
+
+  echo "==============================================="
+  echo "(cd devspace-tools && git checkout main && git pull)"
+  echo "==============================================="
+  (cd $GIT_PROJECTS_WORKDIR/devspace-tools && git checkout main && git pull)
 
   echo "==============================================="
   echo "devspace use namespace $NAMESPACE"
