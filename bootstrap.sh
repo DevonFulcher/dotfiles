@@ -37,6 +37,8 @@ asdf plugin add grpcurl
 asdf plugin add golang
 asdf plugin add uv
 asdf plugin add pre-commit
+asdf plugin add helm
+asdf plugin add task
 asdf install
 
 echo "Installing Python software with uv"
