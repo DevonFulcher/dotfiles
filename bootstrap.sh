@@ -12,7 +12,6 @@ brew install \
   git-delta \
   direnv \
   git-town \
-  asdf \
   koekeishiya/formulae/yabai \
   koekeishiya/formulae/skhd \
   borders \
@@ -25,10 +24,19 @@ brew install --cask \
   alacritty \
   warp
 
+git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.15.0
+
 echo "Restoring configurations with Mackup"
 mackup restore
 
 echo "Installing versioned software with asdf"
+asdf plugin add python
+asdf plugin add rust
+asdf plugin add terraform
+asdf plugin add grpcurl
+asdf plugin add golang
+asdf plugin add uv
+asdf plugin add pre-commit
 asdf install
 
 echo "Installing Python software with uv"

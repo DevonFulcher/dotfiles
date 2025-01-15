@@ -78,6 +78,7 @@ plugins=(
   docker-compose
   kubectl
   alias-finder
+  asdf
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -157,7 +158,7 @@ zstyle ':omz:plugins:alias-finder' cheaper yes
 eval "$(direnv hook zsh)" # Setup direnv https://direnv.net/
 eval "$(delta --generate-completion zsh)" # Delta completions https://dandavison.github.io/delta/tips-and-tricks/shell-completion.html
 source <(git-town completions zsh) # Git Town completions https://www.git-town.com/commands/completions#zsh
-. /opt/homebrew/opt/asdf/libexec/asdf.sh # Setup asdf completions https://asdf-vm.com/guide/getting-started.html
+
 
 # Setup dotfiles repo
 [[ -r $GIT_PROJECTS_WORKDIR/dotfiles ]] ||
