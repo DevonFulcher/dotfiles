@@ -13,6 +13,11 @@
     "jupyter-notebook": "left"
   },
   "notebook.lineNumbers": "on",
+  "notebook.formatOnSave.enabled": true,
+  "notebook.codeActionsOnSave": {
+    "notebook.source.fixAll": "explicit",
+    "notebook.source.organizeImports": "explicit"
+  },
   "security.workspace.trust.untrustedFiles": "open",
   "files.exclude": {
     "**/.git": false
@@ -22,12 +27,16 @@
     "editor.tabSize": 4,
     "editor.formatOnSaveMode": "file",
     "editor.formatOnPaste": false,
-    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.defaultFormatter": "charliermarsh.ruff",
     "editor.formatOnSave": true,
     "formatting.provider": "none",
     "testing.pytestEnabled": true,
     "analysis.autoImportCompletions": true,
-    "analysis.typeCheckingMode": "basic"
+    "analysis.typeCheckingMode": "basic",
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit",
+      "source.organizeImports": "explicit"
+    }
   },
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
