@@ -1,45 +1,24 @@
 {
-  "workbench.editorAssociations": {
-    "*.ipynb": "jupyter-notebook"
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "workbench.startupEditor": "none",
-  "go.formatTool": "gofmt",
-  "go.toolsManagement.autoUpdate": true,
-  "window.zoomLevel": 1.5,
-  "editor.fontSize": 18,
-  "editor.fontFamily": "'Monaspace Neon', Menlo, Monaco, 'Courier New', monospace",
-  "notebook.cellToolbarLocation": {
-    "default": "right",
-    "jupyter-notebook": "left"
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "notebook.lineNumbers": "on",
-  "notebook.formatOnSave.enabled": true,
-  "notebook.codeActionsOnSave": {
-    "notebook.source.fixAll": "explicit",
-    "notebook.source.organizeImports": "explicit"
-  },
-  "security.workspace.trust.untrustedFiles": "open",
-  "files.exclude": {
-    "**/.git": false
-  },
-  "redhat.telemetry.enabled": false,
   "[python]": {
-    "editor.tabSize": 4,
-    "editor.formatOnSaveMode": "file",
-    "editor.formatOnPaste": false,
-    "editor.defaultFormatter": "charliermarsh.ruff",
-    "editor.formatOnSave": true,
-    "formatting.provider": "none",
-    "testing.pytestEnabled": true,
     "analysis.autoImportCompletions": true,
     "analysis.typeCheckingMode": "basic",
     "editor.codeActionsOnSave": {
       "source.fixAll": "explicit",
       "source.organizeImports": "explicit"
-    }
-  },
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.formatOnPaste": false,
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file",
+    "editor.tabSize": 4,
+    "formatting.provider": "none",
+    "testing.pytestEnabled": true
   },
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
@@ -49,70 +28,95 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "updateImportsOnFileMove.enabled": "always"
   },
-  "files.autoSave": "afterDelay",
-  "editor.wordWrap": "on",
-  "workbench.editor.enablePreview": false,
-  "workbench.editor.empty.hint": "hidden",
+  "breadcrumbs.enabled": true,
+  "cursor.cpp.disabledLanguages": [
+    "plaintext",
+    "markdown",
+    "scminput"
+  ],
+  "debug.allowBreakpointsEverywhere": true,
+  "editor.accessibilitySupport": "off",
   "editor.autoClosingBrackets": "never",
   "editor.autoClosingDelete": "never",
   "editor.autoClosingOvertype": "never",
   "editor.autoClosingQuotes": "never",
   "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
-  "editor.stickyScroll.enabled": true,
-  "editor.inlineSuggest.enabled": true,
-  "editor.formatOnSave": true,
+  "editor.fontFamily": "'Monaspace Neon', Menlo, Monaco, 'Courier New', monospace",
+  "editor.fontSize": 18,
   "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
   "editor.formatOnType": true,
-  "editor.tabSize": 2,
+  "editor.inlineSuggest.enabled": true,
   "editor.renderWhitespace": "all",
-  "search.useGlobalIgnoreFiles": true,
-  "search.exclude": {
-    "**/.git": true,
-    "**/site-packages/**": true,
-    "**/node_modules/*/**": true
-  },
+  "editor.stickyScroll.enabled": true,
+  "editor.tabSize": 2,
+  "editor.wordWrap": "on",
   "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
-  "githubPullRequests.pullBranch": "never",
-  "debug.allowBreakpointsEverywhere": true,
-  "terminal.integrated.defaultProfile.linux": "zsh",
-  "terminal.integrated.inheritEnv": false,
-  "security.promptForLocalFileProtocolHandling": false,
-  "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "files.autoSave": "afterDelay",
+  "files.exclude": {
+    "**/.git": false
   },
-  "remote.autoForwardPortsSource": "hybrid",
-  "workbench.trustedDomains.promptInTrustedWorkspace": false,
-  "typescript.updateImportsOnFileMove.enabled": "always",
-  "javascript.updateImportsOnFileMove.enabled": "always",
-  "cursor.cpp.disabledLanguages": ["plaintext", "markdown", "scminput"],
-  "editor.accessibilitySupport": "off",
-  "git.openRepositoryInParentFolders": "never",
-  "makefile.configureOnOpen": false,
-  "git.autofetch": true,
-  "window.customTitleBarVisibility": "never",
-  "window.titleBarStyle": "native",
-  "workbench.statusBar.visible": false,
-  "breadcrumbs.enabled": true,
-  "window.title": "${dirty}${separator}${activeEditorShort}${separator}${activeRepositoryBranchName}${separator}${rootName}${separator}${profileName}",
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
   "files.watcherExclude": {
-    "**/.git/subtree-cache/**": true,
     "**/.git/objects/**": true,
-    "**/site-packages/**": true,
-    "**/node_modules/*/**": true
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/*/**": true,
+    "**/site-packages/**": true
   },
-  "workbench.reduceMotion": "on",
-  "python.analysis.inlayHints.functionReturnTypes": true,
-  "python.analysis.inlayHints.callArgumentNames": "all",
-  "python.analysis.inlayHints.pytestParameters": true,
-  "python.analysis.inlayHints.variableTypes": true,
-  "workbench.colorTheme": "Default High Contrast",
+  "git.autofetch": true,
+  "git.openRepositoryInParentFolders": "never",
+  "githubPullRequests.pullBranch": "never",
+  "go.formatTool": "gofmt",
+  "go.toolsManagement.autoUpdate": true,
   "indentRainbow.colors": [
     "rgba(255,255,64,0.15)",
     "rgba(127,255,127,0.15)",
     "rgba(255,127,255,0.15)",
     "rgba(79,236,236,0.15)"
-  ]
+  ],
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "makefile.configureOnOpen": false,
+  "notebook.cellToolbarLocation": {
+    "default": "right",
+    "jupyter-notebook": "left"
+  },
+  "notebook.codeActionsOnSave": {
+    "notebook.source.fixAll": "explicit",
+    "notebook.source.organizeImports": "explicit"
+  },
+  "notebook.formatOnSave.enabled": true,
+  "notebook.lineNumbers": "on",
+  "python.analysis.inlayHints.callArgumentNames": "all",
+  "python.analysis.inlayHints.functionReturnTypes": true,
+  "python.analysis.inlayHints.pytestParameters": true,
+  "python.analysis.inlayHints.variableTypes": true,
+  "redhat.telemetry.enabled": false,
+  "remote.autoForwardPortsSource": "hybrid",
+  "search.exclude": {
+    "**/.git": true,
+    "**/node_modules/*/**": true,
+    "**/site-packages/**": true
+  },
+  "search.useGlobalIgnoreFiles": true,
+  "security.promptForLocalFileProtocolHandling": false,
+  "security.workspace.trust.untrustedFiles": "open",
+  "terminal.integrated.defaultProfile.linux": "zsh",
+  "terminal.integrated.inheritEnv": false,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "window.customTitleBarVisibility": "never",
+  "window.title": "${dirty}${separator}${activeEditorShort}${separator}${activeRepositoryBranchName}${separator}${rootName}${separator}${profileName}",
+  "window.titleBarStyle": "native",
+  "window.zoomLevel": 1.5,
+  "workbench.colorTheme": "Default High Contrast",
+  "workbench.editor.empty.hint": "hidden",
+  "workbench.editor.enablePreview": false,
+  "workbench.editorAssociations": {
+    "*.ipynb": "jupyter-notebook"
+  },
+  "workbench.reduceMotion": "on",
+  "workbench.startupEditor": "none",
+  "workbench.statusBar.visible": false,
+  "workbench.trustedDomains.promptInTrustedWorkspace": false
 }
