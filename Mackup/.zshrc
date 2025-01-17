@@ -145,8 +145,9 @@ alias gta="git-town append"
 # Directory aliases
 alias lab="$GIT_PROJECTS_WORKDIR/TheLaboratory"
 
-# Alias Toolbelt
+# Command aliases
 alias tt="toolbelt"
+alias e=edit # alias edit function below
 
 cdpath=($GIT_PROJECTS_WORKDIR $cdpath)
 
