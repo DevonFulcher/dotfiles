@@ -117,7 +117,6 @@ export EDITOR="cursor"
 export GIT_PROJECTS_WORKDIR="$HOME/git"
 export DOTFILES=$GIT_PROJECTS_WORKDIR/dotfiles
 export PY_SCRIPTS=$DOTFILES/scripts/python
-export K9S_CONFIG_PATH="$HOME/.config/k9s/config.yml" # Set k9s config path to match Mackup
 
 # Add executables to PATH
 export PATH="$PATH:/usr/local/bin"

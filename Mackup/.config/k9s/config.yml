@@ -1,6 +1,0 @@
-k9s:
-  ui:
-    enableMouse: true
-    logoless: true
-  logger:
-    fullScreen: true
