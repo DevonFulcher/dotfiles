@@ -126,6 +126,10 @@ function nuke-devspace() {
   devspace use namespace $NAMESPACE
 }
 
+function connect-devspace-codex-database() {
+  kubectl exec -it $(kubectl get pods --no-headers -o custom-columns=":metadata.name" | grep ^codex-database) -- psql -U root -d codex
+}
+
 # nvm
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
