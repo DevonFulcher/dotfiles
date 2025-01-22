@@ -13,6 +13,10 @@ layout_poetry() {
         VIRTUAL_ENV=$(poetry env info --path)
     fi
 
+    # Create symlink from .venv to the Poetry virtual environment
+    ln -sf "$VIRTUAL_ENV" "$(pwd)/.venv"
+    VIRTUAL_ENV="$(pwd)/.venv"
+
     PATH_add "$VIRTUAL_ENV/bin"
     export POETRY_ACTIVE=1  # or VENV_ACTIVE=1
     export VIRTUAL_ENV
@@ -31,7 +35,12 @@ layout_poetry() {
 #     if [[ ! -d $VIRTUAL_ENV ]]; then
 #         log_status "No virtual environment exists. Executing \`hatch env create\` to create one."
 #         hatch env create $HATCH_ENV
+#         VIRTUAL_ENV=$(hatch env find $HATCH_ENV)
 #     fi
+
+#     # Create symlink from .venv to the Hatch virtual environment
+#     ln -sf "$VIRTUAL_ENV" "$(pwd)/.venv"
+#     VIRTUAL_ENV="$(pwd)/.venv"
 
 #     PATH_add "$VIRTUAL_ENV/bin"
 #     export HATCH_ENV_ACTIVE=$HATCH_ENV  # or VENV_ACTIVE=1
