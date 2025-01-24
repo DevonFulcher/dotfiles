@@ -40,6 +40,8 @@ export AFS_JDBC_DRIVER=/Users/devonfulcher/drivers/flight-sql-jdbc-driver-12.0.0
 alias tableau="/Applications/Tableau\ Desktop\ 2023.2.app/Contents/MacOS/Tableau -DDisableVerifyConnectorPluginSignature=true -DConnectPluginsPath=$GIT_PROJECTS_WORKDIR/semantic-layer-gateway/integrations/tableau"
 export NAMESPACE="dev-devonfulcher"
 
+kubectl config set-context --current --namespace=$NAMESPACE > /dev/null 2>&1
+
 source ~/.devspace-completion
 
 function devspace() {
