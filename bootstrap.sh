@@ -21,8 +21,7 @@ brew install \
 # Install UI applications with --cask
 brew install --cask \
   raycast \
-  alacritty \
-  warp
+  alacritty
 
 git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.15.0
 
