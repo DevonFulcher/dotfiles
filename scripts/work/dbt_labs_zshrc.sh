@@ -38,15 +38,15 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 export AWS_USER="devon.fulcher"
 export AFS_JDBC_DRIVER=/Users/devonfulcher/drivers/flight-sql-jdbc-driver-12.0.0.jar
 alias tableau="/Applications/Tableau\ Desktop\ 2023.2.app/Contents/MacOS/Tableau -DDisableVerifyConnectorPluginSignature=true -DConnectPluginsPath=$GIT_PROJECTS_WORKDIR/semantic-layer-gateway/integrations/tableau"
-export NAMESPACE="dev-devonfulcher"
+export DEVSPACE_NAMESPACE="dev-devonfulcher"
 
-kubectl config set-context --current --namespace=$NAMESPACE > /dev/null 2>&1
+kubectl config set-context --current --namespace=$DEVSPACE_NAMESPACE > /dev/null 2>&1
 
 source ~/.devspace-completion
 
 function ensure-k8s-context() {
     local expected_context="dbt-labs-devspace"
-    local expected_namespace="$NAMESPACE"
+    local expected_namespace="$DEVSPACE_NAMESPACE"
     local current_context=$(kubectl config current-context)
 
     if [ "$current_context" != "$expected_context" ]; then
@@ -78,7 +78,7 @@ function ds() {
   done
 
   if ! $force; then
-    ensure-k8s-context
+    ensure-k8s-context || return 1
 
     if [ "$(git -C "$GIT_PROJECTS_WORKDIR/helm-releases" rev-parse --abbrev-ref HEAD)" != "main" ]; then
       echo "helm-releases is not on the 'main' branch. Use --force to run anyway."
@@ -125,8 +125,8 @@ function refresh-devspace() {
 }
 
 function nuke-devspace() {
-  refresh-devspace
-  ensure-k8s-context
+  refresh-devspace || return 1
+  ensure-k8s-context || return 1
 
   if [[ ! -f "devspace.yaml" && ! -f "devspace.yml" ]]; then
     echo "Error: No devspace.yaml or devspace.yml found in current directory"
@@ -139,9 +139,9 @@ function nuke-devspace() {
   aws sso login
 
   echo "==============================================="
-  echo "devspace use namespace $NAMESPACE"
+  echo "devspace use namespace $DEVSPACE_NAMESPACE"
   echo "==============================================="
-  devspace use namespace $NAMESPACE
+  devspace use namespace $DEVSPACE_NAMESPACE
 
   echo "==============================================="
   echo "devspace purge --force-purge"
@@ -149,14 +149,14 @@ function nuke-devspace() {
   devspace purge --force-purge
 
   echo "==============================================="
-  echo "kubectl delete namespace $NAMESPACE"
+  echo "kubectl delete namespace $DEVSPACE_NAMESPACE"
   echo "==============================================="
-  kubectl delete namespace $NAMESPACE
+  kubectl delete namespace $DEVSPACE_NAMESPACE
 
   echo "==============================================="
-  echo "devspace use namespace $NAMESPACE"
+  echo "devspace use namespace $DEVSPACE_NAMESPACE"
   echo "==============================================="
-  devspace use namespace $NAMESPACE
+  devspace use namespace $DEVSPACE_NAMESPACE
 }
 
 function connect-devspace-codex-database() {

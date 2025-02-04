@@ -1,9 +1,9 @@
 # move current window left
-cmd - e : yabai -m window --grid 1:2:0:0:1:1
+alt + shift + ctrl + cmd - e : yabai -m window --grid 1:2:0:0:1:1
 # move current window right
-cmd - r : yabai -m window --grid 1:2:1:0:1:1
+alt + shift + ctrl + cmd - r : yabai -m window --grid 1:2:1:0:1:1
 # make current window full screen
-cmd - g : yabai -m window --grid 1:1:0:0:1:1
+alt + shift + ctrl + cmd - t : yabai -m window --grid 1:1:0:0:1:1
 
 # activate applications
 alt + shift + ctrl + cmd - a : osascript -e 'tell application "Cursor" to activate'
