@@ -44,7 +44,27 @@ kubectl config set-context --current --namespace=$NAMESPACE > /dev/null 2>&1
 
 source ~/.devspace-completion
 
-function devspace() {
+function ensure-k8s-context() {
+    local expected_context="dbt-labs-devspace"
+    local expected_namespace="$NAMESPACE"
+    local current_context=$(kubectl config current-context)
+
+    if [ "$current_context" != "$expected_context" ]; then
+        echo "Error: Wrong kubectl context. Expected '$expected_context' but got '$current_context'"
+        return 1
+    fi
+
+    local current_namespace=$(kubectl config view --minify -o jsonpath='{..namespace}')
+    if [ "$current_namespace" != "$expected_namespace" ]; then
+        echo "Error: Wrong kubectl namespace. Expected '$expected_namespace' but got '$current_namespace'"
+        return 1
+    fi
+
+    echo "Using context: $expected_context"
+    echo "Using namespace: $expected_namespace"
+}
+
+function ds() {
   local force=false
   local args=()
 
@@ -58,6 +78,8 @@ function devspace() {
   done
 
   if ! $force; then
+    ensure-k8s-context
+
     if [ "$(git -C "$GIT_PROJECTS_WORKDIR/helm-releases" rev-parse --abbrev-ref HEAD)" != "main" ]; then
       echo "helm-releases is not on the 'main' branch. Use --force to run anyway."
       return 1
@@ -70,17 +92,7 @@ function devspace() {
   command devspace "${args[@]}"
 }
 
-function nuke-devspace() {
-  if [[ ! -f "devspace.yaml" && ! -f "devspace.yml" ]]; then
-    echo "Error: No devspace.yaml or devspace.yml found in current directory"
-    return 1
-  fi
-
-  echo "==============================================="
-  echo "aws sso login"
-  echo "==============================================="
-  aws sso login
-
+function refresh-devspace() {
   echo "==============================================="
   echo "(cd helm-charts && git checkout main && git pull)"
   echo "==============================================="
@@ -97,6 +109,36 @@ function nuke-devspace() {
   (cd $GIT_PROJECTS_WORKDIR/devspace-tools && git checkout main && git pull)
 
   echo "==============================================="
+  echo "(cd dbt-cloud && git checkout master && git pull)"
+  echo "==============================================="
+  (cd $GIT_PROJECTS_WORKDIR/dbt-cloud && git checkout master && git pull)
+
+  echo "==============================================="
+  echo "rip $HOME/.devspace"
+  echo "==============================================="
+  rip $HOME/.devspace
+
+  echo "==============================================="
+  echo "find $GIT_PROJECTS_WORKDIR -maxdepth 2 -name '.devspace' -exec rip {} +"
+  echo "==============================================="
+  find $GIT_PROJECTS_WORKDIR -maxdepth 2 -name ".devspace" -exec rip {} +
+}
+
+function nuke-devspace() {
+  refresh-devspace
+  ensure-k8s-context
+
+  if [[ ! -f "devspace.yaml" && ! -f "devspace.yml" ]]; then
+    echo "Error: No devspace.yaml or devspace.yml found in current directory"
+    return 1
+  fi
+
+  echo "==============================================="
+  echo "aws sso login"
+  echo "==============================================="
+  aws sso login
+
+  echo "==============================================="
   echo "devspace use namespace $NAMESPACE"
   echo "==============================================="
   devspace use namespace $NAMESPACE
@@ -107,20 +149,9 @@ function nuke-devspace() {
   devspace purge --force-purge
 
   echo "==============================================="
-  echo "rip $HOME/.devspace"
-  echo "==============================================="
-  rip $HOME/.devspace
-
-  echo "==============================================="
   echo "kubectl delete namespace $NAMESPACE"
   echo "==============================================="
   kubectl delete namespace $NAMESPACE
-
-  echo "==============================================="
-  echo "find $GIT_PROJECTS_WORKDIR -maxdepth 2 -name '.devspace' -exec rip {} +"
-  echo "==============================================="
-  find $GIT_PROJECTS_WORKDIR -maxdepth 2 -name ".devspace" -exec rip {} +
-
 
   echo "==============================================="
   echo "devspace use namespace $NAMESPACE"
