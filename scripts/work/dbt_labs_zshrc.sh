@@ -50,14 +50,14 @@ function ensure-k8s-context() {
     local current_context=$(kubectl config current-context)
 
     if [ "$current_context" != "$expected_context" ]; then
-        echo "Error: Wrong kubectl context. Expected '$expected_context' but got '$current_context'"
-        return 1
+        echo "Switching kubectl context from '$current_context' to '$expected_context'..."
+        kubectl config use-context "$expected_context" || return 1
     fi
 
     local current_namespace=$(kubectl config view --minify -o jsonpath='{..namespace}')
     if [ "$current_namespace" != "$expected_namespace" ]; then
-        echo "Error: Wrong kubectl namespace. Expected '$expected_namespace' but got '$current_namespace'"
-        return 1
+        echo "Switching kubectl namespace from '$current_namespace' to '$expected_namespace'..."
+        kubectl config set-context --current --namespace="$expected_namespace" || return 1
     fi
 
     echo "Using context: $expected_context"
