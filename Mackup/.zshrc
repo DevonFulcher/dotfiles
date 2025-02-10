@@ -194,13 +194,13 @@ function edit() {
     project=$(echo "$projects" | fzf)
     command $EDITOR "$project"
     [ -d "$project" ] && cd "$project"
-    $PYTHON_PATH $PY_SCRIPTS/yabai.py "$@"
+    # TODO this is broken: $PYTHON_PATH $PY_SCRIPTS/yabai.py "$@"
   else
     for dir in $(find $GIT_PROJECTS_WORKDIR -mindepth 1 -maxdepth 1 -type d); do
       if [ "$(basename $dir)" = "$1" ]; then
         command $EDITOR "$dir"
         cd "$dir"
-        $PYTHON_PATH $PY_SCRIPTS/yabai.py "$@"
+        # TODO this is broken: $PYTHON_PATH $PY_SCRIPTS/yabai.py "$@"
         return
       fi
     done
@@ -215,7 +215,7 @@ function edit() {
     else
       command $EDITOR "$@"
     fi
-    $PYTHON_PATH $PY_SCRIPTS/yabai.py "$@"
+    # TODO this is broken: $PYTHON_PATH $PY_SCRIPTS/yabai.py "$@"
   fi
 }
 
