@@ -224,7 +224,8 @@ function kill-port() {
 }
 
 function format-json() {
-  jq -S . $@ > tmp.json && mv tmp.json $@
+  # Using prettier instead of jq because it supports comments in JSON
+  prettier --parser json5 --write $@
 }
 
 cd $GIT_PROJECTS_WORKDIR

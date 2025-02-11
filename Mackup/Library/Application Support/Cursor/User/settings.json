@@ -1,16 +1,16 @@
 {
   "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "[python]": {
     "analysis.autoImportCompletions": true,
     "analysis.typeCheckingMode": "basic",
     "editor.codeActionsOnSave": {
       "source.fixAll": "explicit",
-      "source.organizeImports": "explicit"
+      "source.organizeImports": "explicit",
     },
     "editor.defaultFormatter": "charliermarsh.ruff",
     "editor.formatOnPaste": false,
@@ -18,15 +18,15 @@
     "editor.formatOnSaveMode": "file",
     "editor.tabSize": 4,
     "formatting.provider": "none",
-    "testing.pytestEnabled": true
+    "testing.pytestEnabled": true,
   },
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "updateImportsOnFileMove.enabled": "always"
+    "updateImportsOnFileMove.enabled": "always",
   },
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "updateImportsOnFileMove.enabled": "always"
+    "updateImportsOnFileMove.enabled": "always",
   },
   "breadcrumbs.enabled": true,
   "cursor.cpp.disabledLanguages": ["plaintext", "markdown", "scminput"],
@@ -51,7 +51,7 @@
   "explorer.confirmDragAndDrop": false,
   "files.autoSave": "afterDelay",
   "files.exclude": {
-    "**/.git": false
+    "**/.git": false,
   },
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
@@ -59,7 +59,7 @@
     "**/.git/objects/**": true,
     "**/.git/subtree-cache/**": true,
     "**/node_modules/*/**": true,
-    "**/site-packages/**": true
+    "**/site-packages/**": true,
   },
   "git.autofetch": true,
   "git.openRepositoryInParentFolders": "never",
@@ -70,17 +70,17 @@
     "rgba(255,255,64,0.15)",
     "rgba(127,255,127,0.15)",
     "rgba(255,127,255,0.15)",
-    "rgba(79,236,236,0.15)"
+    "rgba(79,236,236,0.15)",
   ],
   "javascript.updateImportsOnFileMove.enabled": "always",
   "makefile.configureOnOpen": false,
   "notebook.cellToolbarLocation": {
-    "default": "right",
-    "jupyter-notebook": "left"
+    default: "right",
+    "jupyter-notebook": "left",
   },
   "notebook.codeActionsOnSave": {
     "notebook.source.fixAll": "explicit",
-    "notebook.source.organizeImports": "explicit"
+    "notebook.source.organizeImports": "explicit",
   },
   "notebook.formatOnSave.enabled": true,
   "notebook.lineNumbers": "on",
@@ -92,10 +92,23 @@
   "python.venvPath": "${workspaceFolder}/.venv",
   "redhat.telemetry.enabled": false,
   "remote.autoForwardPortsSource": "hybrid",
+  "ruff.configurationPreference": "filesystemFirst",
+  "ruff.lint.extendSelect": [
+    // A superset of the recommended rules here: https://docs.astral.sh/ruff/linter/#rule-selection
+    "RUF", // Ruff-specific rules
+    "E", // pycodestyle
+    "F", // Pyflakes
+    "PL", // Pylint
+    "UP", // pyupgrade
+    "B", // flake8-bugbear
+    "SIM", // flake8-simplify
+    "I", // isort
+  ],
+  "ruff.interpreter": ["${workspaceFolder}/.venv/bin/python"],
   "search.exclude": {
     "**/.git": true,
     "**/node_modules/*/**": true,
-    "**/site-packages/**": true
+    "**/site-packages/**": true,
   },
   "search.useGlobalIgnoreFiles": true,
   "security.promptForLocalFileProtocolHandling": false,
@@ -111,10 +124,10 @@
   "workbench.editor.empty.hint": "hidden",
   "workbench.editor.enablePreview": false,
   "workbench.editorAssociations": {
-    "*.ipynb": "jupyter-notebook"
+    "*.ipynb": "jupyter-notebook",
   },
   "workbench.reduceMotion": "on",
   "workbench.startupEditor": "none",
   "workbench.statusBar.visible": false,
-  "workbench.trustedDomains.promptInTrustedWorkspace": false
+  "workbench.trustedDomains.promptInTrustedWorkspace": false,
 }
