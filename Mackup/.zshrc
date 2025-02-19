@@ -115,8 +115,8 @@ export CURRENT_ORG="dbt_labs"
 export PYTHON_PATH=$(asdf which python)
 export EDITOR="cursor"
 export GIT_PROJECTS_WORKDIR="$HOME/git"
-export DOTFILES=$GIT_PROJECTS_WORKDIR/dotfiles
-export PY_SCRIPTS=$DOTFILES/scripts/python
+export DOTFILES="$GIT_PROJECTS_WORKDIR/dotfiles"
+export PY_SCRIPTS="$DOTFILES/scripts/python"
 
 # Add executables to PATH
 export PATH="$PATH:/usr/local/bin"
@@ -199,7 +199,7 @@ function edit() {
     for dir in $(find $GIT_PROJECTS_WORKDIR -mindepth 1 -maxdepth 1 -type d); do
       if [ "$(basename $dir)" = "$1" ]; then
         command $EDITOR "$dir"
-        cd "$dir"
+        [ -d "$dir" ] && cd "$dir"
         # TODO this is broken: $PYTHON_PATH $PY_SCRIPTS/yabai.py "$@"
         return
       fi
@@ -207,7 +207,7 @@ function edit() {
     local target_path=$(alias "$1" 2>/dev/null | cut -d= -f2- | tr -d "'\"" || echo "$1")
     if [ -e "$target_path" ]; then
       command $EDITOR "$target_path"
-      cd "$target_path"
+      [ -d "$target_path" ] && cd "$target_path"
       return
     fi
     if [ -d "$@" ]; then

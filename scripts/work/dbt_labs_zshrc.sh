@@ -16,6 +16,7 @@ alias releases="$GIT_PROJECTS_WORKDIR/helm-releases"
 alias sheet="$GIT_PROJECTS_WORKDIR/semantic-layer-spreadsheet-integrations"
 alias slg="$GIT_PROJECTS_WORKDIR/semantic-layer-gateway"
 alias ui="$GIT_PROJECTS_WORKDIR/cloud-ui"
+alias infra="$DOTFILES/workspaces/infra.code-workspace"
 
 export APPLE_SSH_ADD_BEHAVIOR="macos"
 export GITHUB_TOKEN="$HOMEBREW_GITHUB_API_TOKEN"
