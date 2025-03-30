@@ -103,3 +103,5 @@
 	autoSquash = true
 [fetch]
 	prune = true
+[help]
+	autocorrect = prompt
