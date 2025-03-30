@@ -161,7 +161,6 @@ eval "$(direnv hook zsh)" # Setup direnv https://direnv.net/
 eval "$(delta --generate-completion zsh)" # Delta completions https://dandavison.github.io/delta/tips-and-tricks/shell-completion.html
 source <(git-town completions zsh) # Git Town completions https://www.git-town.com/commands/completions#zsh
 
-
 # Setup dotfiles repo
 [[ -r $GIT_PROJECTS_WORKDIR/dotfiles ]] ||
     git clone git@github.com:DevonFulcher/dotfiles.git $DOTFILES
@@ -194,29 +193,26 @@ function edit() {
     projects=$(echo "$(find $GIT_PROJECTS_WORKDIR/dotfiles/workspaces -mindepth 1 -maxdepth 1 -not -path '*/\.*' -print)\n$(find $GIT_PROJECTS_WORKDIR -mindepth 1 -maxdepth 1 -not -path '*/\.*' -print)")
     project=$(echo "$projects" | fzf)
     command $EDITOR "$project"
-    [ -d "$project" ] && cd "$project"
-    # TODO this is broken: $PYTHON_PATH $PY_SCRIPTS/yabai.py "$@"
+    [ -d "$project" ] && cd "$project" && git safe-pull
   else
     for dir in $(find $GIT_PROJECTS_WORKDIR -mindepth 1 -maxdepth 1 -type d); do
       if [ "$(basename $dir)" = "$1" ]; then
         command $EDITOR "$dir"
-        [ -d "$dir" ] && cd "$dir"
-        # TODO this is broken: $PYTHON_PATH $PY_SCRIPTS/yabai.py "$@"
+        [ -d "$dir" ] && cd "$dir" && git safe-pull
         return
       fi
     done
     local target_path=$(alias "$1" 2>/dev/null | cut -d= -f2- | tr -d "'\"" || echo "$1")
     if [ -e "$target_path" ]; then
       command $EDITOR "$target_path"
-      [ -d "$target_path" ] && cd "$target_path"
+      [ -d "$target_path" ] && cd "$target_path" && git safe-pull
       return
     fi
     if [ -d "$@" ]; then
-      command $EDITOR "$@" && cd "$@"
+      command $EDITOR "$@" && cd "$@" && git safe-pull
     else
       command $EDITOR "$@"
     fi
-    # TODO this is broken: $PYTHON_PATH $PY_SCRIPTS/yabai.py "$@"
   fi
 }
 
