@@ -14,8 +14,9 @@ github.vscode-github-actions
 github.vscode-pull-request-github
 golang.go
 grapecity.gc-excelviewer
+graphql.vscode-graphql
+graphql.vscode-graphql-syntax
 jock.svg
-matangover.mypy
 mathiasfrohlich.kotlin
 mechatroner.rainbow-csv
 medo64.render-crlf
@@ -23,6 +24,7 @@ mk12.better-git-line-blame
 ms-azuretools.vscode-docker
 ms-python.black-formatter
 ms-python.debugpy
+ms-python.mypy-type-checker
 ms-python.python
 ms-python.vscode-pylance
 ms-toolsai.jupyter
@@ -35,7 +37,6 @@ ms-vscode.makefile-tools
 ms-vscode.remote-server
 ms-vscode.vscode-typescript-next
 oderwat.indent-rainbow
-orsenkucher.vscode-graphql
 redhat.java
 redhat.vscode-yaml
 rust-lang.rust-analyzer

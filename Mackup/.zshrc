@@ -144,6 +144,7 @@ alias gta="git-town append"
 
 # Directory aliases
 alias lab="$GIT_PROJECTS_WORKDIR/TheLaboratory"
+alias devex="$DOTFILES/workspaces/devex.code-workspace"
 
 # Command aliases
 alias tt="toolbelt"
