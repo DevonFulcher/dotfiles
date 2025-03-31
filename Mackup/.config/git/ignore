@@ -8,3 +8,6 @@
 
 # for Git Town https://www.git-town.com
 .git-branches.toml
+
+# Python virtual environment
+.venv/

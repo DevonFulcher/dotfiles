@@ -22,5 +22,9 @@
     "key": "ctrl+alt+;",
     "command": "editor.action.showDefinitionPreviewHover",
     "when": "editorTextFocus"
+  },
+  {
+    "key": "cmd+i",
+    "command": "composerMode.agent"
   }
 ]
