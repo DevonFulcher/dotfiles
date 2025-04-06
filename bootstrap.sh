@@ -17,13 +17,12 @@ brew install \
   borders \
   rip2 \
   1password-cli \
-  charmbracelet/tap/mods
+  charmbracelet/tap/mods \
+  asdf
 # Install UI applications with --cask
 brew install --cask \
   raycast \
   alacritty
-
-git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.15.0
 
 echo "Restoring configurations with Mackup"
 mackup restore
