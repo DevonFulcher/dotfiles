@@ -180,3 +180,12 @@ esac
 
 fpath+=~/.zfunc
 autoload -Uz compinit && compinit
+
+# From fsh setup
+export GOPATH=$HOME/go
+export GOROOT="$(brew --prefix golang)/libexec"
+export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+export ASDF_HASHICORP_OVERWRITE_ARCH=amd64
+export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+export AWS_PROFILE=staging-admin

@@ -13,8 +13,10 @@ layout_poetry() {
         VIRTUAL_ENV=$(poetry env info --path)
     fi
 
-    # Create symlink from .venv to the Poetry virtual environment
-    ln -sf "$VIRTUAL_ENV" "$(pwd)/.venv"
+    # Create symlink if .venv doesn't exist
+    if [[ ! -e ".venv" ]]; then
+        ln -sf "$VIRTUAL_ENV" "$(pwd)/.venv"
+    fi
 
     PATH_add "$VIRTUAL_ENV/bin"
     export POETRY_ACTIVE=1  # or VENV_ACTIVE=1
@@ -37,9 +39,11 @@ layout_poetry() {
 #         VIRTUAL_ENV=$(hatch env find $HATCH_ENV)
 #     fi
 
-#     # Create symlink from .venv to the Hatch virtual environment
-#     ln -sf "$VIRTUAL_ENV" "$(pwd)/.venv"
-
+#     # Create symlink if .venv doesn't exist
+#     if [[ ! -e ".venv" ]]; then
+#         ln -sf "$VIRTUAL_ENV" "$(pwd)/.venv"
+#     fi
+#
 #     PATH_add "$VIRTUAL_ENV/bin"
 #     export HATCH_ENV_ACTIVE=$HATCH_ENV  # or VENV_ACTIVE=1
 #     export VIRTUAL_ENV
