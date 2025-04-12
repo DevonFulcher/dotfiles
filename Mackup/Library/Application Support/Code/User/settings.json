@@ -1,6 +1,6 @@
 {
   "workbench.editorAssociations": {
-    "*.ipynb": "jupyter-notebook",
+    "*.ipynb": "jupyter-notebook"
   },
   "workbench.startupEditor": "none",
   "workbench.colorTheme": "Default Dark+",
@@ -8,13 +8,13 @@
   "window.zoomLevel": 1.5,
   "editor.fontSize": 15,
   "notebook.cellToolbarLocation": {
-    default: "right",
-    "jupyter-notebook": "left",
+    "default": "right",
+    "jupyter-notebook": "left"
   },
   "notebook.lineNumbers": "on",
   "security.workspace.trust.untrustedFiles": "open",
   "files.exclude": {
-    "**/.git": false,
+    "**/.git": false
   },
   "go.toolsManagement.autoUpdate": true,
   "redhat.telemetry.enabled": false,
@@ -28,18 +28,18 @@
     "formatting.provider": "none", // recommended by the Black extension
     "testing.pytestEnabled": true,
     "analysis.autoImportCompletions": true,
-    "analysis.typeCheckingMode": "basic",
+    "analysis.typeCheckingMode": "basic"
   },
   "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "updateImportsOnFileMove.enabled": "always",
+    "updateImportsOnFileMove.enabled": "always"
   },
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "updateImportsOnFileMove.enabled": "always",
+    "updateImportsOnFileMove.enabled": "always"
   },
   "files.autoSave": "afterDelay",
   "editor.wordWrap": "on",
@@ -61,15 +61,15 @@
   "search.exclude": {
     "**/.git": true,
     "**/site-packages/*/**": true,
-    "**/node_modules/*/**": true,
+    "**/node_modules/*/**": true
   },
   "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
   "github.copilot.enable": {
     "*": false,
-    plaintext: false,
-    markdown: false,
-    scminput: false,
+    "plaintext": false,
+    "markdown": false,
+    "scminput": false
   },
   "githubPullRequests.pullBranch": "never",
   "debug.allowBreakpointsEverywhere": true,
@@ -77,7 +77,7 @@
   "terminal.integrated.inheritEnv": false,
   "security.promptForLocalFileProtocolHandling": false,
   "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "remote.autoForwardPortsSource": "hybrid",
   "github.copilot.editor.enableAutoCompletions": true,
@@ -92,4 +92,12 @@
   "python.analysis.inlayHints.callArgumentNames": "all",
   "python.analysis.inlayHints.pytestParameters": true,
   "python.analysis.inlayHints.variableTypes": true,
+  "mcp": {
+    "servers": {
+      "dbt": {
+        "command": "/Users/devonfulcher/git/dbt-mcp/.venv/bin/mcp",
+        "args": ["run", "/Users/devonfulcher/git/dbt-mcp/dbt_mcp/main.py"]
+      }
+    }
+  }
 }

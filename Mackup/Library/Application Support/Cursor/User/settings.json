@@ -130,5 +130,6 @@
   "workbench.startupEditor": "none",
   "workbench.statusBar.visible": false,
   "workbench.trustedDomains.promptInTrustedWorkspace": false,
-  "update.releaseTrack": "prerelease"
+  "update.releaseTrack": "prerelease",
+  "cursor.general.gitGraphIndexing": "enabled"
 }

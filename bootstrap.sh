@@ -18,7 +18,8 @@ brew install \
   rip2 \
   1password-cli \
   charmbracelet/tap/mods \
-  asdf
+  asdf \
+  tmux
 # Install UI applications with --cask
 brew install --cask \
   raycast \
