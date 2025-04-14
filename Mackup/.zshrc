@@ -126,7 +126,6 @@ export PATH="$HOME/.local/bin:$PATH"
 alias ls="eza --classify --all --group-directories-first --long --git --git-repos --no-permissions --no-user --no-time" # lsd https://github.com/lsd-rs/lsd is an alternative to eza worth exploring one day
 alias cat=bat
 alias less=bat
-alias rm="echo Use 'rip' instead of rm."
 
 # git aliases
 alias g=git

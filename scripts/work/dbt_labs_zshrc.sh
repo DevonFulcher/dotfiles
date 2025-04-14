@@ -115,14 +115,14 @@ function refresh-devspace() {
   (cd $GIT_PROJECTS_WORKDIR/dbt-cloud && git checkout master && git pull)
 
   echo "==============================================="
-  echo "rip $HOME/.devspace"
+  echo "rm -rf $HOME/.devspace"
   echo "==============================================="
-  rip $HOME/.devspace
+  rm -rf $HOME/.devspace
 
   echo "==============================================="
-  echo "find $GIT_PROJECTS_WORKDIR -maxdepth 2 -name '.devspace' -exec rip {} +"
+  echo "find $GIT_PROJECTS_WORKDIR -maxdepth 2 -name '.devspace' -exec rm -rf {} +"
   echo "==============================================="
-  find $GIT_PROJECTS_WORKDIR -maxdepth 2 -name ".devspace" -exec rip {} +
+  find $GIT_PROJECTS_WORKDIR -maxdepth 2 -name ".devspace" -exec rm -rf {} +
 }
 
 function nuke-devspace() {
