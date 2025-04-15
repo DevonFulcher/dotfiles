@@ -1,5 +1,5 @@
 python 3.13.1
-rust 1.81.0
+rust 1.86.0
 uv 0.5.24
 terraform 1.9.8
 grpcurl 1.9.2
