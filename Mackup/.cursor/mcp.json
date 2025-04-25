@@ -10,6 +10,13 @@
         "GITHUB_PERSONAL_ACCESS_TOKEN",
         "ghcr.io/github/github-mcp-server"
       ]
+    },
+    "dbt": {
+      "command": "/Users/devonfulcher/git/dbt-mcp/.venv/bin/mcp",
+      "args": [
+        "run",
+        "/Users/devonfulcher/git/dbt-mcp/src/dbt_mcp/main.py"
+      ]
     }
   }
 }
