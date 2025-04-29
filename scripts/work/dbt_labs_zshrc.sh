@@ -94,7 +94,7 @@ function ds() {
   command devspace "${args[@]}"
 }
 
-function refresh-devspace() {
+function update-repos-clean-caches() {
   echo "==============================================="
   echo "(cd helm-charts && git checkout main && git pull)"
   echo "==============================================="
@@ -127,7 +127,7 @@ function refresh-devspace() {
 }
 
 function nuke-devspace() {
-  refresh-devspace || return 1
+  update-repos-clean-caches || return 1
   ensure-k8s-context || return 1
 
   if [[ ! -f "devspace.yaml" && ! -f "devspace.yml" ]]; then
@@ -144,6 +144,11 @@ function nuke-devspace() {
   echo "devspace use namespace $DEVSPACE_NAMESPACE"
   echo "==============================================="
   devspace use namespace $DEVSPACE_NAMESPACE
+
+  echo "==============================================="
+  echo "sh $GIT_PROJECTS_WORKDIR/dbt-cloud/scripts/dev/reseed-database.sh"
+  echo "==============================================="
+  sh $GIT_PROJECTS_WORKDIR/dbt-cloud/scripts/dev/reseed-database.sh
 
   echo "==============================================="
   echo "devspace purge --force-purge"
