@@ -43,6 +43,7 @@
 	setup = "!f() { FORCE_COLOR=1 GIT_FORCE_COLOR=1 toolbelt git setup \"$@\"; }; f"
 	safe-pull = "!f() { FORCE_COLOR=1 GIT_FORCE_COLOR=1 toolbelt git safe-pull \"$@\"; }; f"
 	fix = "!f() { FORCE_COLOR=1 GIT_FORCE_COLOR=1 toolbelt git fix \"$@\"; }; f"
+	list = "!f() { FORCE_COLOR=1 GIT_FORCE_COLOR=1 toolbelt git list \"$@\"; }; f"
 [merge]
 	conflictstyle = diff3
 [interactive]
