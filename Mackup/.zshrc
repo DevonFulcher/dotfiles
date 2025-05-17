@@ -136,6 +136,7 @@ alias gs="git status"
 alias gn="git send"
 alias ga="git add"
 alias gf="git fix"
+alias gt="git-town"
 
 # Directory aliases
 alias lab="$GIT_PROJECTS_WORKDIR/TheLaboratory"
