@@ -52,6 +52,7 @@
 	short = true
 [rerere]
 	enabled = true
+	autoupdate = true
 [delta]
 	navigate = true # use n and N to move between diff sections
 	light = false
