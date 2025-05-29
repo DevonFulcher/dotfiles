@@ -128,7 +128,7 @@
   },
   "workbench.reduceMotion": "on",
   "workbench.startupEditor": "none",
-  "workbench.statusBar.visible": false,
+  "workbench.statusBar.visible": true,
   "workbench.trustedDomains.promptInTrustedWorkspace": false,
   "update.releaseTrack": "prerelease",
   "cursor.general.gitGraphIndexing": "enabled"
