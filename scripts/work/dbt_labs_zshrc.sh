@@ -170,6 +170,32 @@ function connect-devspace-codex-database() {
   kubectl exec -it $(kubectl get pods --no-headers -o custom-columns=":metadata.name" | grep ^codex-database) -- psql -U root -d codex
 }
 
+function run-sql-file-codex() {
+  if [ -z "$1" ]; then
+    echo "Usage: run-sql-file-codex <sql_file_path>"
+    echo "Example: run-sql-file-codex ./my_query.sql"
+    return 1
+  fi
+
+  local sql_file="$1"
+  local output_file="${sql_file%.*}.out"
+
+  if [ ! -f "$sql_file" ]; then
+    echo "Error: SQL file '$sql_file' not found"
+    return 1
+  fi
+
+  echo "Executing $sql_file and saving results to $output_file..."
+  kubectl exec -it $(kubectl get pods --no-headers -o custom-columns=":metadata.name" | grep ^codex-database) -- psql -U root -d codex -f - < "$sql_file" > "$output_file"
+
+  if [ $? -eq 0 ]; then
+    echo "Query results have been saved to $output_file"
+  else
+    echo "Error executing SQL file"
+    return 1
+  fi
+}
+
 # nvm
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
