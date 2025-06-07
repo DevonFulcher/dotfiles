@@ -17,6 +17,9 @@
         "run",
         "/Users/devonfulcher/git/dbt-mcp/src/dbt_mcp/main.py"
       ]
+    },
+    "Notion": {
+      "url": "https://mcp.notion.com/mcp"
     }
   }
 }

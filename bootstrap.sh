@@ -25,7 +25,7 @@ brew install --cask \
   raycast \
   alacritty
 
-echo "Restoring configurations with Mackup"
+echo "Restoring configurations with Mackup" # TODO: need to clone dotfiles repo first
 mackup restore
 
 echo "Installing versioned software with asdf"
@@ -50,3 +50,6 @@ uv tool install dbt-core
 
 echo "Installing software distributed via npm"
 npm install -g prettier
+
+echo "Loading startup applications"
+launchctl load ~/Library/LaunchAgents/com.user.docker.desktop.plist
