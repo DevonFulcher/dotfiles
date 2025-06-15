@@ -8,6 +8,6 @@ alt + shift + ctrl + cmd - t : yabai -m window --grid 1:1:0:0:1:1
 # activate applications
 alt + shift + ctrl + cmd - a : osascript -e 'tell application "Cursor" to activate'
 alt + shift + ctrl + cmd - s : osascript -e 'tell application "Alacritty" to activate'
-alt + shift + ctrl + cmd - d : osascript -e 'tell application "Chrome" to activate'
+alt + shift + ctrl + cmd - d : osascript -e 'tell application "Brave Browser" to activate'
 alt + shift + ctrl + cmd - f : osascript -e 'tell application "Slack" to activate'
 alt + shift + ctrl + cmd - g : osascript -e 'tell application "zoom.us" to activate'
