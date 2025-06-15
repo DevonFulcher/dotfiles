@@ -11,3 +11,6 @@
 
 # Python virtual environment
 .venv/
+
+# Cursor rules
+mcp-tools.mdc
