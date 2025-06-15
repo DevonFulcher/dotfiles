@@ -44,7 +44,7 @@ asdf install
 echo "Installing software distributed via pip with uv"
 uv tool install nbdime # Used for jupyter notebook diffs
 # TODO: this relies on dotfiles and toolbelt being cloned
-uv tool install $GIT_PROJECTS_WORKDIR/toolbelt/toolbelt
+uv tool install $GIT_PROJECTS_WORKDIR/toolbelt
 uv tool install datadog # For the dog CLI (used for monitoring by dbt Labs)
 uv tool install dbt-core
 
