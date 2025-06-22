@@ -135,5 +135,6 @@
   "cursorpyright.analysis.inlayHints.callArgumentNames": "all",
   "cursorpyright.analysis.inlayHints.functionReturnTypes": true,
   "cursorpyright.analysis.inlayHints.variableTypes": true,
-  "cursor.composer.shouldAllowCustomModes": true
+  "cursor.composer.shouldAllowCustomModes": true,
+  "cursor-retrieval.canAttemptGithubLogin": false
 }
