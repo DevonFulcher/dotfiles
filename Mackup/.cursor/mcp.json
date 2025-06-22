@@ -9,6 +9,15 @@
     },
     "Notion": {
       "url": "https://mcp.notion.com/mcp"
+    },
+    "toolbelt": {
+      "command": "/Users/devonfulcher/.asdf/shims/uv",
+      "args": [
+        "run",
+        "/Users/devonfulcher/git/toolbelt/src/toolbelt/cli.py",
+        "mcp",
+        "run"
+      ]
     }
   }
 }
