@@ -19,7 +19,8 @@ brew install \
   1password-cli \
   charmbracelet/tap/mods \
   asdf \
-  tmux
+  tmux \
+  block-goose-cli
 # Install UI applications with --cask
 brew install --cask \
   raycast \
