@@ -24,7 +24,8 @@ brew install \
 # Install UI applications with --cask
 brew install --cask \
   raycast \
-  alacritty
+  alacritty \
+  block-goose
 
 echo "Restoring configurations with Mackup" # TODO: need to clone dotfiles repo first
 mackup restore
