@@ -20,6 +20,9 @@
     },
     {
       "path": "../../terraform-datadog"
+    },
+    {
+      "path": "../../dbt-cloud-api-gateway"
     }
   ],
   "settings": {}

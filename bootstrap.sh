@@ -52,6 +52,7 @@ uv tool install dbt-core
 
 echo "Installing software distributed via npm"
 npm install -g prettier
+npm install -g @anthropic-ai/claude-code
 
 echo "Loading startup applications"
 launchctl load ~/Library/LaunchAgents/com.user.docker.desktop.plist
