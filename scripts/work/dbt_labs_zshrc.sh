@@ -146,11 +146,6 @@ function nuke-devspace() {
   devspace use namespace $DEVSPACE_NAMESPACE
 
   echo "==============================================="
-  echo "sh $GIT_PROJECTS_WORKDIR/dbt-cloud/scripts/dev/reseed-database.sh"
-  echo "==============================================="
-  sh $GIT_PROJECTS_WORKDIR/dbt-cloud/scripts/dev/reseed-database.sh
-
-  echo "==============================================="
   echo "devspace purge --force-purge"
   echo "==============================================="
   devspace purge --force-purge
