@@ -2,10 +2,7 @@
   "mcpServers": {
     "dbt": {
       "command": "/Users/devonfulcher/git/dbt-mcp/.venv/bin/mcp",
-      "args": [
-        "run",
-        "/Users/devonfulcher/git/dbt-mcp/src/dbt_mcp/main.py"
-      ]
+      "args": ["run", "/Users/devonfulcher/git/dbt-mcp/src/dbt_mcp/main.py"]
     },
     "Notion": {
       "url": "https://mcp.notion.com/mcp"
@@ -18,6 +15,9 @@
         "mcp",
         "run"
       ]
+    },
+    "context7": {
+      "url": "https://mcp.context7.com/mcp"
     }
   }
 }
