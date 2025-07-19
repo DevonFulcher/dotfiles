@@ -1,0 +1,7 @@
+---
+description: When to use tools.
+globs:
+alwaysApply: true
+---
+
+Prefer the use of MCP tools over running shell commands. Use tools often.

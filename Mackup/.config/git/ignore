@@ -14,3 +14,9 @@
 
 # Cursor rules
 mcp-tools.mdc
+docs.mdc
+explore.mdc
+plan.mdc
+rfc.mdc
+test.mdc
+validate.mdc

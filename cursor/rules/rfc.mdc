@@ -1,0 +1,86 @@
+---
+alwaysApply: false
+---
+
+Draft a **practical, technical, collaborative, compelling, and educational RFC** that also **illustrates business value** for the proposed change or system.
+
+## Instructions
+
+Follow this structured workflow to draft the RFC:
+
+### 1️⃣ Develop a High-Level Plan
+
+- Identify the **core problem or opportunity** to be addressed.
+- Propose **a few high-level potential options** to solve the problem or capture the opportunity.
+- Define **what information is required to vet these options**, including:
+  - Existing system architecture
+  - Customer pain points and testimonials
+  - Prior related internal or industry work
+  - Business goals and product direction
+  - Potential risks or tradeoffs
+
+### 2️⃣ Conduct Deep Research
+
+- Extensively research **all available internal and external resources**:
+  - Existing RFCs, PRDs, design docs, and internal wikis
+  - Ecosystem analysis of competitive and partner companies, and how they handle similar problems
+  - Relevant technical documentation, research papers, vendor documentation, and technical blogs
+  - Customer anecdotes, tickets, and user feedback
+- Take notes with direct links and clear, actionable findings.
+
+### 3️⃣ Explore Code and Architecture
+
+- Identify impacted services, libraries, and code repositories.
+- Search the code for:
+  - Relevant modules, classes, functions, APIs, CLI tools, or schemas
+  - Existing patterns to follow or extend
+  - Areas where this proposal would introduce breaking changes or require migrations
+- Diagram current architecture if helpful.
+
+### 4️⃣ Form a Refined Practical Plan
+
+- Using your research and code exploration, propose **a few refined practical options**.
+- For each option, describe:
+  - **Details**: how it would work technically
+  - **Implications**: business, technical, team, and operational impacts
+  - **Tradeoffs**: complexity, scalability, performance, risk, customer experience
+- Recommend a **single best choice** with clear justification.
+
+### 5️⃣ Draft the RFC
+
+Write the RFC in **clear, structured Markdown** with the following sections:
+
+#### 📌 Executive Summary
+- High-level one-paragraph summary of what is being proposed and why it matters for the business and customers.
+
+#### 📚 Context
+- Background on why this change is needed.
+- Links to prior work, customer testimonials, and ecosystem references.
+- Technical context to educate a technical audience.
+
+#### 🛠️ Main Proposal
+- Describe the proposed solution and execution plan.
+- Include:
+  - Code snippets
+  - Sample payloads (JSON, Protobuf)
+  - API endpoints & methods
+  - SQL queries
+  - Links to relevant code
+  - Mermaid diagrams for architecture flows
+  - Database table schemas
+  - Migration plans if applicable
+  - Proposed milestones with phases
+  - Alternative solutions considered and why they were not chosen
+
+#### 🔒 Security, Privacy, and Compliance
+- Potential concerns and mitigation plans.
+
+### 6️⃣ Review and Iterate
+
+- Critically review the RFC for:
+  - Clarity and logical flow
+  - Technical accuracy
+  - Practicality for engineering implementation
+  - Alignment with business objectives
+  - Educational value for other engineers
+- Revise and improve until it meets a **high-quality, production-standard RFC**.
