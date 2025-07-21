@@ -18,6 +18,7 @@ alias slg="$GIT_PROJECTS_WORKDIR/semantic-layer-gateway"
 alias ui="$GIT_PROJECTS_WORKDIR/cloud-ui"
 alias infra="$DOTFILES/workspaces/infra.code-workspace"
 alias dbt-mcp-cli="$HOME/.dbt-mcp/dbt-mcp"
+alias aca="$GIT_PROJECTS_WORKDIR/ai-codegen-api"
 
 export APPLE_SSH_ADD_BEHAVIOR="macos"
 export GITHUB_TOKEN="$HOMEBREW_GITHUB_API_TOKEN"
