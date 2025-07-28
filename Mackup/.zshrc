@@ -111,6 +111,7 @@ source $ZSH/oh-my-zsh.sh
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # Setup environment variables
+export GITHUB_USERNAME="DevonFulcher"
 export CURRENT_ORG="dbt_labs"
 export PYTHON_PATH=$(asdf which python)
 export EDITOR="cursor"
