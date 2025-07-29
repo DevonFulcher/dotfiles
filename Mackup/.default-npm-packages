@@ -1,4 +1,2 @@
 # https://github.com/asdf-vm/asdf-nodejs?tab=readme-ov-file#default-npm-packages
-@anthropic-ai/claude-code
-backlog.md
 prettier

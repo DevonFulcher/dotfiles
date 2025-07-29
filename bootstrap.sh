@@ -25,7 +25,8 @@ brew install \
 brew install --cask \
   raycast \
   alacritty \
-  block-goose
+  block-goose \
+  claude-code
 
 echo "Restoring configurations with Mackup" # TODO: need to clone dotfiles repo first
 mackup restore
@@ -52,7 +53,6 @@ uv tool install dbt-core
 
 echo "Installing software distributed via npm"
 npm install -g prettier
-npm install -g @anthropic-ai/claude-code
 
 echo "Loading startup applications"
 launchctl load ~/Library/LaunchAgents/com.user.docker.desktop.plist
