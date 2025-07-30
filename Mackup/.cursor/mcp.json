@@ -1,8 +1,8 @@
 {
   "mcpServers": {
     "dbt": {
-      "command": "/Users/devonfulcher/git/dbt-mcp/.venv/bin/mcp",
-      "args": ["run", "/Users/devonfulcher/git/dbt-mcp/src/dbt_mcp/main.py"]
+      "command": "/Users/devonfulcher/.asdf/shims/uvx",
+      "args": ["--env-file", "/Users/devonfulcher/git/dbt-mcp/.env", "dbt-mcp"]
     },
     "Notion": {
       "url": "https://mcp.notion.com/mcp"
