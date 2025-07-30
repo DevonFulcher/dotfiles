@@ -7,4 +7,4 @@ pre-commit 4.0.1
 golang 1.23.4
 helm 3.18.4
 task 3.40.1
-nodejs 20.17.0
+nodejs 22.14.0
