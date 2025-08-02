@@ -16,6 +16,7 @@ Plan a coding solution for a task without writing the implementation yet. Follow
 ## 3. Detailed Step-by-Step Plan
 Using the chosen approach:
 - Break the problem into clear, sequential steps for implementation.
+- Determine areas which require refactoring to implement the plan.
 - Identify key data structures, modules, functions, classes, infrastructure or libraries you would use.
 - Describe how components will interact at a high level.
 
@@ -26,4 +27,4 @@ Using the chosen approach:
 ## 5. Report
 - Optionally, list any questions or clarifications needed before proceeding.
 - Communicate and summarize findings.
-- Form a list next steps including potential implementation details.
+- Form a list of next steps including potential implementation details.

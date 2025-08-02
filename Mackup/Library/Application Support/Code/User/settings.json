@@ -92,12 +92,6 @@
   "python.analysis.inlayHints.callArgumentNames": "all",
   "python.analysis.inlayHints.pytestParameters": true,
   "python.analysis.inlayHints.variableTypes": true,
-  "mcp": {
-    "servers": {
-      "dbt": {
-        "command": "/Users/devonfulcher/git/dbt-mcp/.venv/bin/mcp",
-        "args": ["run", "/Users/devonfulcher/git/dbt-mcp/dbt_mcp/main.py"]
-      }
-    }
-  }
+  "github.copilot.nextEditSuggestions.enabled": true,
+  "debug.onTaskErrors": "debugAnyway"
 }

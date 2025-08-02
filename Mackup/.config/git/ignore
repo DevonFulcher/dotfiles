@@ -20,3 +20,5 @@ plan.mdc
 rfc.mdc
 test.mdc
 validate.mdc
+
+**/.claude/settings.local.json
