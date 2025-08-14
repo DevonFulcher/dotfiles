@@ -14,11 +14,10 @@ Identify classes and methods in the codebase that need better documentation or h
   - Contain outdated or inaccurate documentation
 - Write or update docstrings that cover:
   - The overall purpose of the class/method
-  - Important attributes, parameters, or return values
   - Key behaviors or responsibilities
   - Brief usage notes or examples if helpful
   - Any important side effects or exceptions
-- Follow the existing style and formatting conventions used in the project (e.g., Google style, NumPy style)
+- Follow the existing style and formatting conventions used in the project
 - Focus on functional intent and practical usage rather than low-level implementation details
 - Keep the documentation clear, maintainable, and accurate
 
@@ -30,4 +29,3 @@ Identify classes and methods in the codebase that need better documentation or h
   - Remove outdated or incorrect details
   - Add missing context or new functionality
 - Keep documentation consistent and aligned with project conventions
-- Consider documenting parameter types and return types if not obvious
