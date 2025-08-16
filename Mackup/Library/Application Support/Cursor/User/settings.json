@@ -120,7 +120,7 @@
   "window.title": "${dirty}${separator}${activeEditorShort}${separator}${activeRepositoryBranchName}${separator}${rootName}${separator}${profileName}",
   "window.titleBarStyle": "native",
   "window.zoomLevel": 1.5,
-  "workbench.colorTheme": "Default High Contrast",
+  "workbench.colorTheme": "Cursor Dark High Contrast",
   "workbench.editor.empty.hint": "hidden",
   "workbench.editor.enablePreview": false,
   "workbench.editorAssociations": {
