@@ -17,15 +17,12 @@ brew install \
   borders \
   rip2 \
   1password-cli \
-  charmbracelet/tap/mods \
   asdf \
-  tmux \
-  block-goose-cli
+  tmux
 # Install UI applications with --cask
 brew install --cask \
   raycast \
   alacritty \
-  block-goose \
   claude-code
 
 echo "Restoring configurations with Mackup" # TODO: need to clone dotfiles repo first
@@ -46,9 +43,6 @@ asdf install
 
 echo "Installing software distributed via pip with uv"
 uv tool install nbdime # Used for jupyter notebook diffs
-# TODO: this relies on dotfiles and toolbelt being cloned
-uv tool install $GIT_PROJECTS_WORKDIR/toolbelt
-uv tool install datadog # For the dog CLI (used for monitoring by dbt Labs)
 uv tool install dbt-core
 
 echo "Installing software distributed via npm"
