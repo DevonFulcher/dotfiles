@@ -24,7 +24,9 @@ export APPLE_SSH_ADD_BEHAVIOR="macos"
 export GITHUB_TOKEN="$HOMEBREW_GITHUB_API_TOKEN"
 
 # Hatch: https://hatch.pypa.io/1.12/cli/about/#tab-completion
-. ~/.hatch-complete.zsh
+if [ -f ~/.hatch-complete.zsh ]; then
+    . ~/.hatch-complete.zsh
+fi
 
 # Java
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/amazon-corretto-17.jdk/Contents/Home
@@ -36,7 +38,9 @@ export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
 # Rust & Cargo
-. "$HOME/.cargo/env"
+if [ -f "$HOME/.cargo/env" ]; then
+    . "$HOME/.cargo/env"
+fi
 
 export AWS_USER="devon.fulcher"
 export AFS_JDBC_DRIVER=/Users/devonfulcher/drivers/flight-sql-jdbc-driver-12.0.0.jar
@@ -45,7 +49,9 @@ export DEVSPACE_NAMESPACE="dev-devonfulcher"
 
 kubectl config set-context --current --namespace=$DEVSPACE_NAMESPACE > /dev/null 2>&1
 
-source ~/.devspace-completion
+if [ -f ~/.devspace-completion ]; then
+    source ~/.devspace-completion
+fi
 
 function ensure-k8s-context() {
     local expected_context="dbt-labs-devspace"

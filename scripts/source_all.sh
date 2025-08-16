@@ -7,6 +7,14 @@ fi
 # Define the directory containing the files to source
 DIRECTORY="$1"
 
+# Check if the directory exists
+if [ ! -d "$DIRECTORY" ]; then
+  return 0
+fi
+
+# Enable nullglob to handle empty directories gracefully
+shopt -s nullglob 2>/dev/null || setopt null_glob 2>/dev/null
+
 # Loop through each file in the directory
 for FILE in "$DIRECTORY"/*
 do
