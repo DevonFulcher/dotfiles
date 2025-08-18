@@ -20,6 +20,7 @@ brew install \
   1password-cli \
   asdf \
   starship \
+  sst/tap/opencode \
   tmux
 # Install UI applications with --cask
 brew install --cask \
