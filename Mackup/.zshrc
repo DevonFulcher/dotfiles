@@ -161,7 +161,9 @@ source <(git-town completions zsh) # Git Town completions https://www.git-town.c
 [[ -r $GIT_PROJECTS_WORKDIR/dotfiles ]] ||
     git clone git@github.com:DevonFulcher/dotfiles.git $DOTFILES
 source $DOTFILES/scripts/source_all.sh $DOTFILES/secrets
-source $DOTFILES/scripts/find_and_source.sh $DOTFILES/scripts/work $CURRENT_ORG
+if [ -z "$IS_PERSONAL" ] || [ "$IS_PERSONAL" != "true" ]; then
+  source $DOTFILES/scripts/find_and_source.sh $DOTFILES/scripts/work $CURRENT_ORG
+fi
 
 function dot() {
   if [ "$1" = "fix" ]; then
