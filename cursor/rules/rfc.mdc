@@ -23,7 +23,7 @@ Follow this structured workflow to draft the RFC:
 
 - Extensively research **all available internal and external resources**:
   - Existing RFCs, PRDs, design docs, and internal wikis
-  - Ecosystem analysis of competitive and partner companies, and how they handle similar problems
+  - Analyze the ecosystem of competitive and partner companies, and how they handle similar problems or may be integrate to solve this problem
   - Relevant technical documentation, research papers, vendor documentation, and technical blogs
   - Customer anecdotes, tickets, and user feedback
 - Take notes with direct links and clear, actionable findings.
@@ -37,7 +37,7 @@ Follow this structured workflow to draft the RFC:
   - Areas where this proposal would introduce breaking changes or require migrations
 - Diagram current architecture if helpful.
 
-### 4️⃣ Form a Refined Practical Plan
+### 4️⃣ Form a Refined Solution
 
 - Using your research and code exploration, propose **a few refined practical options**.
 - For each option, describe:

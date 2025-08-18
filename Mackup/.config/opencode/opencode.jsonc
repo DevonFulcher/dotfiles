@@ -2,5 +2,37 @@
   "$schema": "https://opencode.ai/config.json",
   "theme": "opencode",
   "model": "anthropic/claude-sonnet-4-20250514",
-  "autoupdate": true
+  "autoupdate": true,
+  "mcp": {
+    "context7": {
+      "type": "remote",
+      "url": "https://mcp.context7.com/mcp",
+      "enabled": true
+    },
+    "notion": {
+      "type": "remote",
+      "url": "https://mcp.notion.com/mcp",
+      "enabled": true
+    },
+    "github": {
+      "type": "remote",
+      "url": "https://api.githubcopilot.com/mcp/",
+      "enabled": true
+    },
+    "arxiv-mcp-server": {
+      "type": "local",
+      "command": ["uvx", "arxiv-mcp-server", "--storage-path", "/Users/devon/data/arxiv-mcp-server"],
+      "enabled": true
+    }
+  },
+  "agent": {
+    "docs": {
+      "description": "Write documentation across a codebase.",
+      "prompt": "{file:./prompts/docs.md}"
+    },
+    "research": {
+      "description": "Research a topic and provide a summary of the findings.",
+      "prompt": "{file:./prompts/research.md}"
+    }
+  }
 }

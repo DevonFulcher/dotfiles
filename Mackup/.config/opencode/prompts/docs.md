@@ -1,7 +1,3 @@
----
-alwaysApply: false
----
-
 Identify classes and methods in the codebase that need better documentation or have outdated/unclear documentation. Add or improve docstrings to help developers understand the purpose, usage, and key aspects of each class and method.
 
 ## What to Do
