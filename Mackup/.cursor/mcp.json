@@ -21,6 +21,9 @@
     },
     "datadog": {
       "url": "https://mcp.datadoghq.com/api/unstable/mcp-server/mcp"
+    },
+    "github": {
+      "url": "https://api.githubcopilot.com/mcp/"
     }
   }
 }
