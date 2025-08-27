@@ -21,7 +21,12 @@
     },
     "arxiv-mcp-server": {
       "type": "local",
-      "command": ["uvx", "arxiv-mcp-server", "--storage-path", "/Users/devon/data/arxiv-mcp-server"],
+      "command": [
+        "uvx",
+        "arxiv-mcp-server",
+        "--storage-path",
+        "/Users/devon/data/arxiv-mcp-server"
+      ],
       "enabled": true
     }
   },
@@ -31,7 +36,7 @@
       "prompt": "{file:./prompts/docs.md}"
     },
     "research": {
-      "description": "Research a topic and provide a summary of the findings.",
+      "description": "Research code and provide a summary of the findings.",
       "prompt": "{file:./prompts/research.md}"
     }
   }

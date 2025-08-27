@@ -18,6 +18,9 @@
     },
     "context7": {
       "url": "https://mcp.context7.com/mcp"
+    },
+    "datadog": {
+      "url": "https://mcp.datadoghq.com/api/unstable/mcp-server/mcp"
     }
   }
 }
