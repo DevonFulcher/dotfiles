@@ -23,3 +23,6 @@ validate.mdc
 prompt.mdc
 
 **/.claude/settings.local.json
+
+# for toolbelt https://github.com/DevonFulcher/toolbelt
+worktrees
