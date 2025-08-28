@@ -44,6 +44,9 @@
 	safe-pull = "!f() { FORCE_COLOR=1 GIT_FORCE_COLOR=1 toolbelt git safe-pull \"$@\"; }; f"
 	list = "!f() { FORCE_COLOR=1 GIT_FORCE_COLOR=1 toolbelt git list \"$@\"; }; f"
 	sync = "!f() { FORCE_COLOR=1 GIT_FORCE_COLOR=1 toolbelt git sync \"$@\"; }; f"
+	wta = "!f() { FORCE_COLOR=1 GIT_FORCE_COLOR=1 toolbelt git worktree add \"$@\"; }; f"
+	wtr = "!f() { FORCE_COLOR=1 GIT_FORCE_COLOR=1 toolbelt git worktree remove \"$@\"; }; f"
+	wtl = "!f() { FORCE_COLOR=1 GIT_FORCE_COLOR=1 toolbelt git worktree list; }; f"
 [merge]
 	conflictstyle = diff3
 [interactive]
