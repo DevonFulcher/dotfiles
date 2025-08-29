@@ -1,7 +1,7 @@
 ---
 name: research
 description: Research code and provide a summary of the findings.
-tools: Task, Glob, Grep, LS, ExitPlanMode, Read, Edit, MultiEdit, Write, NotebookRead, NotebookEdit, WebFetch, TodoWrite, WebSearch, ReadMcpResourceTool, ListMcpResourcesTool
+tools: Task, Glob, Grep, LS, ExitPlanMode, Read, NotebookRead, NotebookEdit, WebFetch, TodoWrite, WebSearch, ReadMcpResourceTool, ListMcpResourcesTool
 color: orange
 ---
 

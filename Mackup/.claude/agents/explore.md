@@ -1,7 +1,7 @@
 ---
 name: explore
 description: Explore the space of options for implementing a task.
-tools: Task, Glob, Grep, LS, ExitPlanMode, Read, Edit, MultiEdit, Write, NotebookRead, NotebookEdit, WebFetch, TodoWrite, WebSearch, ReadMcpResourceTool, ListMcpResourcesTool
+tools: Task, Glob, Grep, LS, ExitPlanMode, Read, NotebookRead, NotebookEdit, WebFetch, TodoWrite, WebSearch, ReadMcpResourceTool, ListMcpResourcesTool
 color: orange
 ---
 When faced with a coding problem, systematically explore different approaches
