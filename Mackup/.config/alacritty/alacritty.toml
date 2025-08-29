@@ -1,3 +1,6 @@
 [font]
 size = 18
 normal = { family = "Monaspace Neon", style = "Regular" }
+
+[keyboard]
+bindings = [{ key = "Return", mods = "Shift", chars = "\n" }]
