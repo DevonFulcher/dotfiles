@@ -4,7 +4,7 @@
       "command": "/Users/devonfulcher/.asdf/shims/uvx",
       "args": ["--env-file", "/Users/devonfulcher/git/dbt-mcp/.env", "dbt-mcp"]
     },
-    "Notion": {
+    "notion": {
       "url": "https://mcp.notion.com/mcp"
     },
     "toolbelt": {

@@ -3,20 +3,40 @@
   "theme": "opencode",
   "model": "anthropic/claude-sonnet-4-20250514",
   "autoupdate": true,
+  "provider": {
+    "ollama": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Ollama (local)",
+      "options": {
+        "baseURL": "http://localhost:11434/v1"
+      },
+      "models": {
+        "gpt-oss": {
+          "name": "gpt-oss"
+        }
+      }
+    }
+  },
   "mcp": {
+    // Using mcp-remote proxy until this is resolved: https://github.com/sst/opencode/issues/988
     "context7": {
-      "type": "remote",
-      "url": "https://mcp.context7.com/mcp",
+      "type": "local",
+      "command": ["npx", "-y", "mcp-remote", "https://mcp.context7.com/mcp"],
       "enabled": true
     },
     "notion": {
-      "type": "remote",
-      "url": "https://mcp.notion.com/mcp",
+      "type": "local",
+      "command": ["npx", "-y", "mcp-remote", "https://mcp.notion.com/mcp"],
       "enabled": true
     },
     "github": {
-      "type": "remote",
-      "url": "https://api.githubcopilot.com/mcp/",
+      "type": "local",
+      "command": ["npx", "-y", "mcp-remote", "https://api.githubcopilot.com/mcp/"],
+      "enabled": true
+    },
+    "datadog": {
+      "type": "local",
+      "command": ["npx", "-y", "mcp-remote", "https://mcp.datadoghq.com/api/unstable/mcp-server/mcp"],
       "enabled": true
     },
     "arxiv-mcp-server": {
