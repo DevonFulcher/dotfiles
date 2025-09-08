@@ -57,7 +57,46 @@
     },
     "research": {
       "description": "Research code and provide a summary of the findings.",
-      "prompt": "{file:./prompts/research.md}"
+      "prompt": "{file:./prompts/research.md}",
+      "tools": {
+        "write": false,
+        "edit": false,
+        "bash": false,
+        "patch": false,
+        "datadog*": false
+      }
+    },
+    "plan": {
+      "description": "Propose a plan for implementing a task.",
+      "prompt": "{file:./prompts/plan.md}",
+      "tools": {
+        "write": false,
+        "edit": false,
+        "bash": false,
+        "patch": false,
+        "datadog*": false,
+        "arxiv*": false
+      }
+    },
+    "validate": {
+      "description": "Propose a plan for implementing a task.",
+      "prompt": "{file:./prompts/validate.md}",
+      "tools": {
+        "write": false,
+        "edit": false,
+        "bash": false,
+        "patch": false,
+        "datadog*": false,
+        "arxiv*": false
+      }
+    },
+    "rfc": {
+      "description": "Create a high-level description of a large project.",
+      "prompt": "{file:./prompts/rfc.md}",
+      "tools": {
+        "bash": false,
+        "datadog*": false
+      }
     }
   }
 }
