@@ -1,0 +1,7 @@
+#compdef toolbelt
+
+_toolbelt_completion() {
+  eval $(env _TYPER_COMPLETE_ARGS="${words[1,$CURRENT]}" _TOOLBELT_COMPLETE=complete_zsh toolbelt)
+}
+
+compdef _toolbelt_completion toolbelt
