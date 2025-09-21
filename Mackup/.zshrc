@@ -224,13 +224,13 @@ function format-json() {
 }
 
 function wtc() {
-  local target_dir
-  target_dir=$(toolbelt git worktree change "$@" 2>&1)
+  local command
+  command=$(toolbelt git worktree change "$@" 2>&1)
   local exit_code=$?
   if [ $exit_code -eq 0 ]; then
-    cd "$target_dir"
+    eval "$command"
   else
-    echo "$target_dir" >&2
+    echo "$command" >&2
   fi
 }
 
