@@ -223,6 +223,17 @@ function format-json() {
   prettier --parser json5 --write $@
 }
 
+function wtc() {
+  local target_dir
+  target_dir=$(toolbelt git worktree change "$@" 2>&1)
+  local exit_code=$?
+  if [ $exit_code -eq 0 ]; then
+    cd "$target_dir"
+  else
+    echo "$target_dir" >&2
+  fi
+}
+
 cd $GIT_PROJECTS_WORKDIR
 
 END=$(perl -MTime::HiRes -e 'printf("%d\n", Time::HiRes::time()*1000)')
