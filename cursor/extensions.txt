@@ -1,8 +1,10 @@
 4ops.terraform
-anysphere.pyright
+anysphere.cursorpyright
+augustocdias.tasks-shell-input
 charliermarsh.ruff
 christian-kohler.npm-intellisense
 christian-kohler.path-intellisense
+datadog.datadog-vscode
 dbaeumer.vscode-eslint
 dnicolson.binary-plist
 editorconfig.editorconfig
@@ -26,7 +28,6 @@ ms-python.black-formatter
 ms-python.debugpy
 ms-python.mypy-type-checker
 ms-python.python
-ms-python.vscode-pylance
 ms-toolsai.jupyter
 ms-toolsai.jupyter-keymap
 ms-toolsai.jupyter-renderers
@@ -44,8 +45,6 @@ samuelcolvin.jinjahtml
 tamasfe.even-better-toml
 tim-koehler.helm-intellisense
 uniquevision.vscode-plpgsql-lsp
-visualstudioexptteam.intellicode-api-usage-examples
-visualstudioexptteam.vscodeintellicode
 waderyan.gitblame
 yoavbls.pretty-ts-errors
 yzhang.markdown-all-in-one
