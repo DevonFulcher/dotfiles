@@ -146,5 +146,6 @@
   },
   "[github-actions-workflow]": {
     "editor.defaultFormatter": "redhat.vscode-yaml"
-  }
+  },
+  "datadog.staticAnalysis.notification.suppressOnboarding": true
 }
