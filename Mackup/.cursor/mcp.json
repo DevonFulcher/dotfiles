@@ -1,8 +1,20 @@
 {
   "mcpServers": {
     "dbt": {
-      "command": "/Users/devonfulcher/.asdf/shims/uvx",
-      "args": ["--env-file", "/Users/devonfulcher/git/dbt-mcp/.env", "dbt-mcp"]
+      "command": "/Users/devonfulcher/.asdf/shims/uv",
+      "args": [
+        "run",
+        "/Users/devonfulcher/git/dbt-mcp/.venv/bin/mcp",
+        "run",
+        "/Users/devonfulcher/git/dbt-mcp/src/dbt_mcp/main.py"
+      ],
+      "env": {
+        "DBT_HOST": "rr558.us.staging.dbt.com",
+        "ENABLE_EXPERIMENAL_SECURE_OAUTH": "true",
+        "DISABLE_TOOLS": "execute_sql",
+        "DISABLE_DBT_CLI": "true",
+        "FILE_LOGGING": true
+      }
     },
     "notion": {
       "url": "https://mcp.notion.com/mcp"
