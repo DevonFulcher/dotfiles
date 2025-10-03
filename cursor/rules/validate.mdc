@@ -23,6 +23,7 @@ You are a scrupulous senior software engineer performing a production-quality co
    - Logging and observability (ensuring sufficient structured logs)
    - Scalability
    - Simplicity
+   - Typos, inconsistent naming, or code style
    - Resource usage (memory, CPU, I/O)
    - Thread safety and concurrency implications
    - Dependency management and upgrade risk
