@@ -21,6 +21,8 @@ rfc.mdc
 test.mdc
 validate.mdc
 prompt.mdc
+how_to_create_rules.mdc
+when_to_create_rules.mdc
 
 **/.claude/settings.local.json
 
