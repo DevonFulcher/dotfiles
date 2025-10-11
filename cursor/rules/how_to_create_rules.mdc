@@ -10,6 +10,37 @@ alwaysApply: false
 
 This rule provides the complete process for creating and maintaining rules to document patterns, standards, and best practices discovered during development.
 
+## Rule Format
+
+Rules start with YAML frontmatter containing these fields:
+
+```yaml
+---
+description: Brief description of what this rule addresses and why it's important
+alwaysApply: false
+---
+```
+
+### Frontmatter Fields
+
+- **`description`**: A concise summary of the rule's purpose and scope. This helps with rule discovery and understanding.
+- **`alwaysApply`**: Set to `false`. Rules are applied contextually based on relevance to the current task or codebase area.
+
+**Alternative Pattern**: You can also use comma-separated glob patterns instead of `description` to specify which files the rule applies to:
+
+```yaml
+---
+globs: *.tsx, src/config/**/*.json, *Test.cpp
+alwaysApply: false
+---
+```
+
+**Choosing between description and globs:**
+- **Description approach**: More flexible, applied contextually based on relevance
+- **Glob pattern approach**: More deterministic, applied based on file path matching
+
+Choose based on whether you want contextual application (description) or file-specific application (globs).
+
 ## When to Create Rules
 
 > **Note**: For a comprehensive list of when to create rules, see `when_to_create_rules.mdc`
@@ -54,8 +85,23 @@ Create a new rule when you discover:
 
 When creating a new rule, use this structure:
 
+**With description (contextual application)**
 ```markdown
+---
+description: Brief description of what this rule addresses and why it's important
+alwaysApply: false
+---
 # [Rule Name]
+```
+
+**With file globs (deterministic application)**
+```markdown
+---
+globs: *.tsx, src/config/**/*.json, *Test.cpp
+alwaysApply: false
+---
+# [Rule Name]
+```
 
 ## Purpose
 Brief description of what this rule addresses and why it's important.
@@ -220,8 +266,23 @@ Create a new rule when you discover:
 
 When creating a new rule, use this structure:
 
+**With description (contextual application)**
 ```markdown
+---
+description: Brief description of what this rule addresses and why it's important
+alwaysApply: false
+---
 # [Rule Name]
+```
+
+**With file globs (deterministic application)**
+```markdown
+---
+globs: *.tsx, src/config/**/*.json, *Test.cpp
+alwaysApply: false
+---
+# [Rule Name]
+```
 
 ## Purpose
 Brief description of what this rule addresses and why it's important.
