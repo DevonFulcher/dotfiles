@@ -1,0 +1,337 @@
+---
+description: This rule provides comprehensive guidance for creating, structuring, and maintaining development rules that document patterns, standards, and best practices. It's essential when you've identified a pattern that needs documentation and need step-by-step instructions on how to create effective rules. This includes the complete lifecycle from initial rule creation using proper templates and naming conventions, through ongoing maintenance and updates as patterns evolve. It's particularly valuable for teams looking to standardize code practices, preserve institutional knowledge, onboard new developers, and establish consistent development workflows across code standards, architecture decisions, domain knowledge, and development processes.
+alwaysApply: false
+---
+# How to Create Rules
+
+> **Purpose**: Comprehensive guide for creating, maintaining, and managing rules
+> **Usage**: Reference when you've decided to create a rule and need guidance on how
+> **For pattern identification**: See `when_to_create_rules.mdc`
+
+This rule provides the complete process for creating and maintaining rules to document patterns, standards, and best practices discovered during development.
+
+## When to Create Rules
+
+> **Note**: For a comprehensive list of when to create rules, see `when_to_create_rules.mdc`
+
+Create a new rule when you discover:
+
+1. **Recurring patterns** that could benefit from documentation
+2. **Best practices** that should be consistently applied
+3. **Common pitfalls** that team members should avoid
+4. **Architectural decisions** that need to be preserved
+5. **Code standards** that ensure consistency
+6. **Domain-specific knowledge** that helps future developers
+
+## Rule Categories
+
+### Code Standards
+- Error handling patterns
+- Naming conventions
+- Code organization
+- Testing patterns
+- Performance guidelines
+
+### Architecture & Design
+- Design patterns used
+- Architectural decisions
+- Integration patterns
+- Data flow patterns
+
+### Domain Knowledge
+- Business logic explanations
+- Domain-specific concepts
+- Workflow documentation
+- Configuration patterns
+
+### Development Workflow
+- Git practices
+- Review guidelines
+- Deployment procedures
+- Debugging techniques
+
+## Rule Template
+
+When creating a new rule, use this structure:
+
+```markdown
+# [Rule Name]
+
+## Purpose
+Brief description of what this rule addresses and why it's important.
+
+## Standards/Patterns
+- Specific patterns to follow
+- Examples of good practices
+- Anti-patterns to avoid
+
+## Implementation Guidelines
+- Step-by-step instructions
+- Decision criteria
+- Common scenarios
+
+## Related Rules
+- Links to related rules
+- Dependencies
+- Complementary practices
+```
+
+## Rule Maintenance
+
+### When to Update Rules
+- When patterns evolve
+- When new best practices are discovered
+- When anti-patterns are identified
+
+### Rule Review Process
+1. **Regular reviews**: Review rules during code reviews
+2. **Update triggers**: Update when implementing new features
+3. **Feedback loop**: Encourage team to suggest rule improvements
+4. **Version control**: Track rule changes in git history
+
+## Encouraging Rule Creation
+
+### During Development
+- **Document as you go**: Create rules when you notice patterns
+- **Share discoveries**: When you find a better way, document it
+- **Question existing patterns**: If something seems inconsistent, create a rule
+
+### During Code Reviews
+- **Look for patterns**: Identify recurring code that could be standardized
+- **Suggest rules**: Propose rules for complex logic or new patterns
+- **Reference existing rules**: Link to relevant rules in review comments
+
+### During Refactoring
+- **Extract patterns**: When refactoring, identify patterns worth documenting
+- **Update rules**: Modify existing rules based on new learnings
+- **Create new rules**: Document new patterns discovered during refactoring
+
+## Rule Discovery
+
+### Finding Existing Rules
+- Check `.cursor/rules/` directory
+- Search for rule references in code comments
+- Look for `@rule` or `@see` annotations
+- Review pull request discussions for rule mentions
+
+### Rule Naming Convention
+- Use descriptive names: `error_handling.mdc`, `testing_patterns.mdc`
+- Use snake_case for file names
+- Include category prefixes if needed: `arch_`, `dev_`, `code_`
+
+## Benefits of Rule Creation
+
+### For the Team
+- **Consistency**: Ensures all team members follow the same patterns
+- **Knowledge sharing**: Preserves institutional knowledge
+- **Onboarding**: Helps new team members understand the codebase
+- **Quality**: Reduces bugs and improves code quality
+
+### For the Project
+- **Maintainability**: Easier to maintain consistent code
+- **Scalability**: Patterns scale with the project
+- **Documentation**: Self-documenting codebase
+- **Evolution**: Rules evolve with the project
+
+## Examples of Good Rules
+
+### Code Standards
+- `error_handling.mdc` - Standardized error handling patterns
+- `naming_conventions.mdc` - Consistent naming across the codebase
+- `testing_patterns.mdc` - How to write effective tests
+
+### Architecture
+- `service_layer.mdc` - How services should be structured
+- `data_flow.mdc` - How data flows through the application
+- `integration_patterns.mdc` - How to integrate with external services
+
+### Domain Knowledge
+- `business_logic.mdc` - Core business rules and logic
+- `workflow_patterns.mdc` - How workflows are implemented
+- `configuration_management.mdc` - How configuration is handled
+
+## Getting Started
+
+1. **Start small**: Begin with one rule for a pattern you notice
+2. **Iterate**: Improve rules based on usage and feedback
+3. **Share**: Discuss rules with the team
+4. **Maintain**: Keep rules up to date as the codebase evolves
+
+## Rule Creation Checklist
+
+- [ ] Rule addresses a real need
+- [ ] Rule is specific and actionable
+- [ ] Rule includes examples (good and bad)
+- [ ] Rule is easy to find and reference
+- [ ] Rule is kept up to date
+- [ ] Rule is referenced in relevant code
+- [ ] Rule is reviewed by the team
+
+Remember: **Good rules make good code, and good code makes good rules.**
+# Rule Creation and Maintenance
+
+> **Purpose**: Comprehensive guide for creating, maintaining, and managing rules
+> **Usage**: Reference when you've decided to create a rule and need guidance on how
+> **For pattern identification**: See `when_to_create_rules.mdc`
+
+This rule provides the complete process for creating and maintaining rules to document patterns, standards, and best practices discovered during development.
+
+## When to Create Rules
+
+> **Note**: For a comprehensive list of when to create rules, see `when_to_create_rules.mdc`
+
+Create a new rule when you discover:
+
+1. **Recurring patterns** that could benefit from documentation
+2. **Best practices** that should be consistently applied
+3. **Common pitfalls** that team members should avoid
+4. **Architectural decisions** that need to be preserved
+5. **Code standards** that ensure consistency
+6. **Domain-specific knowledge** that helps future developers
+
+## Rule Categories
+
+### Code Standards
+- Error handling patterns
+- Naming conventions
+- Code organization
+- Testing patterns
+- Performance guidelines
+
+### Architecture & Design
+- Design patterns used
+- Architectural decisions
+- Integration patterns
+- Data flow patterns
+
+### Domain Knowledge
+- Business logic explanations
+- Domain-specific concepts
+- Workflow documentation
+- Configuration patterns
+
+### Development Workflow
+- Git practices
+- Review guidelines
+- Deployment procedures
+- Debugging techniques
+
+## Rule Template
+
+When creating a new rule, use this structure:
+
+```markdown
+# [Rule Name]
+
+## Purpose
+Brief description of what this rule addresses and why it's important.
+
+## Standards/Patterns
+- Specific patterns to follow
+- Examples of good practices
+- Anti-patterns to avoid
+
+## Implementation Guidelines
+- Step-by-step instructions
+- Decision criteria
+- Common scenarios
+
+## Related Rules
+- Links to related rules
+- Dependencies
+- Complementary practices
+```
+
+## Rule Maintenance
+
+### When to Update Rules
+- When patterns evolve
+- When new best practices are discovered
+- When anti-patterns are identified
+- When team feedback suggests improvements
+
+### Rule Review Process
+1. **Regular reviews**: Review rules during code reviews
+2. **Update triggers**: Update when implementing new features
+3. **Feedback loop**: Encourage team to suggest rule improvements
+4. **Version control**: Track rule changes in git history
+
+## Encouraging Rule Creation
+
+### During Development
+- **Document as you go**: Create rules when you notice patterns
+- **Share discoveries**: When you find a better way, document it
+- **Question existing patterns**: If something seems inconsistent, create a rule
+
+### During Code Reviews
+- **Look for patterns**: Identify recurring code that could be standardized
+- **Suggest rules**: Propose rules for complex logic or new patterns
+- **Reference existing rules**: Link to relevant rules in review comments
+
+### During Refactoring
+- **Extract patterns**: When refactoring, identify patterns worth documenting
+- **Update rules**: Modify existing rules based on new learnings
+- **Create new rules**: Document new patterns discovered during refactoring
+
+## Rule Discovery
+
+### Finding Existing Rules
+- Check `.cursor/rules/` directory
+- Search for rule references in code comments
+- Look for `@rule` or `@see` annotations
+- Review pull request discussions for rule mentions
+
+### Rule Naming Convention
+- Use descriptive names: `error_handling.mdc`, `testing_patterns.mdc`
+- Use snake_case for file names
+- Include category prefixes if needed: `arch_`, `dev_`, `code_`
+
+## Benefits of Rule Creation
+
+### For the Team
+- **Consistency**: Ensures all team members follow the same patterns
+- **Knowledge sharing**: Preserves institutional knowledge
+- **Onboarding**: Helps new team members understand the codebase
+- **Quality**: Reduces bugs and improves code quality
+
+### For the Project
+- **Maintainability**: Easier to maintain consistent code
+- **Scalability**: Patterns scale with the project
+- **Documentation**: Self-documenting codebase
+- **Evolution**: Rules evolve with the project
+
+## Examples of Good Rules
+
+### Code Standards
+- `error_handling.mdc` - Standardized error handling patterns
+- `naming_conventions.mdc` - Consistent naming across the codebase
+- `testing_patterns.mdc` - How to write effective tests
+
+### Architecture
+- `service_layer.mdc` - How services should be structured
+- `data_flow.mdc` - How data flows through the application
+- `integration_patterns.mdc` - How to integrate with external services
+
+### Domain Knowledge
+- `business_logic.mdc` - Core business rules and logic
+- `workflow_patterns.mdc` - How workflows are implemented
+- `configuration_management.mdc` - How configuration is handled
+
+## Getting Started
+
+1. **Start small**: Begin with one rule for a pattern you notice
+2. **Iterate**: Improve rules based on usage and feedback
+3. **Share**: Discuss rules with the team
+4. **Maintain**: Keep rules up to date as the codebase evolves
+
+## Rule Creation Checklist
+
+- [ ] Rule addresses a real need
+- [ ] Rule is specific and actionable
+- [ ] Rule includes examples (good and bad)
+- [ ] Rule is easy to find and reference
+- [ ] Rule is kept up to date
+- [ ] Rule is referenced in relevant code
+- [ ] Rule is reviewed by the team
+
+Remember: **Good rules make good code, and good code makes good rules.**
