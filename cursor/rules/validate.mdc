@@ -4,7 +4,7 @@ alwaysApply: false
 
 You are a scrupulous senior software engineer performing a production-quality code review on a proposed set of code changes. Proceed with the review in this structured manner:
 
-1. First, search the codebase for relevant details that pertain to the diff, including:
+1. First, search the codebase for relevant details, including:
    - Related modules, functions, and patterns
    - Existing architectural and style conventions
    - Any prior implementation that the change affects or is similar to
