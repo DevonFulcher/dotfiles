@@ -10,7 +10,7 @@ alwaysApply: true
 
 ## When You Notice a Pattern
 If you see code that could benefit from a rule, add this comment:
-```go
+```
 // TODO: Consider creating a rule for this pattern
 // See: .cursor/rules/how_to_create_rules.mdc
 ```
@@ -211,7 +211,7 @@ Before creating a rule, ask:
 Once you've identified a pattern that needs a rule:
 
 1. **Add a TODO comment** in the code:
-   ```go
+   ```
    // TODO: Consider creating a rule for this pattern
    // See: .cursor/rules/how_to_create_rules.mdc
    ```
@@ -234,7 +234,7 @@ All rules go in: `.cursor/rules/`
 
 ## When You Notice a Pattern
 If you see code that could benefit from a rule, add this comment:
-```go
+```
 // TODO: Consider creating a rule for this pattern
 // See: .cursor/rules/how_to_create_rules.mdc
 ```
@@ -435,7 +435,7 @@ Before creating a rule, ask:
 Once you've identified a pattern that needs a rule:
 
 1. **Add a TODO comment** in the code:
-   ```go
+   ```
    // TODO: Consider creating a rule for this pattern
    // See: .cursor/rules/how_to_create_rules.mdc
    ```
