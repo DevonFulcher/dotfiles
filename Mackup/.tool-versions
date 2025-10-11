@@ -4,7 +4,7 @@ uv 0.7.8
 terraform 1.9.8
 grpcurl 1.9.2
 pre-commit 4.0.1
-golang 1.23.4
+golang 1.25.1
 helm 3.18.4
 task 3.40.1
 nodejs 22.14.0
