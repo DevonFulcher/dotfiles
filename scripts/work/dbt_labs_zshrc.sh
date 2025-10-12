@@ -1,6 +1,3 @@
-export AFS_DATASOURCES_PATH="$GIT_PROJECTS_WORKDIR/afs-cli/datasources.yaml"
-alias afs='python3.12 $GIT_PROJECTS_WORKDIR/afs-cli/afs.py $@'
-
 alias core="$GIT_PROJECTS_WORKDIR/dbt-core/env/bin/dbt"
 
 alias charts="$GIT_PROJECTS_WORKDIR/helm-charts"
@@ -19,6 +16,9 @@ alias ui="$GIT_PROJECTS_WORKDIR/cloud-ui"
 alias infra="$DOTFILES/workspaces/infra.code-workspace"
 alias dbt-mcp-cli="$HOME/.dbt-mcp/dbt-mcp"
 alias aca="$GIT_PROJECTS_WORKDIR/ai-codegen-api"
+
+# dbt aliases
+alias dbtf=/Users/devonfulcher/.local/bin/dbt
 
 export APPLE_SSH_ADD_BEHAVIOR="macos"
 export GITHUB_TOKEN="$HOMEBREW_GITHUB_API_TOKEN"
