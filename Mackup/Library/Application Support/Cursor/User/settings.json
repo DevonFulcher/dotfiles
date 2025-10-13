@@ -129,7 +129,6 @@
   "workbench.startupEditor": "none",
   "workbench.statusBar.visible": true,
   "workbench.trustedDomains.promptInTrustedWorkspace": false,
-  "update.releaseTrack": "prerelease",
   "cursor.general.gitGraphIndexing": "enabled",
   "cursorpyright.analysis.inlayHints.callArgumentNames": "all",
   "cursorpyright.analysis.inlayHints.functionReturnTypes": true,
@@ -147,5 +146,26 @@
   "[github-actions-workflow]": {
     "editor.defaultFormatter": "redhat.vscode-yaml"
   },
-  "datadog.staticAnalysis.notification.suppressOnboarding": true
+  "datadog.staticAnalysis.notification.suppressOnboarding": true,
+  "cursor.enable_git_worktrees_setting": true,
+  "cursor.general.globalCursorIgnoreList": [
+    "**/.env",
+    "**/.env.*",
+    "**/credentials.json",
+    "**/credentials.*.json",
+    "**/secret.json",
+    "**/secrets.json",
+    "**/*.key",
+    "**/*.pem",
+    "**/*.pfx",
+    "**/*.p12",
+    "**/*.crt",
+    "**/*.cer",
+    "**/id_rsa",
+    "**/id_dsa",
+    "**/.ssh/id_*",
+    "**/.envrc"
+  ],
+  "cursor.semanticSearch.includeCommitsWithFiles": true,
+  "update.releaseTrack": "prerelease"
 }
