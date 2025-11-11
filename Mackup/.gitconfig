@@ -32,7 +32,7 @@
 	ff = only
 [alias]
 	browse = "!f() { gh browse --branch $(git branch --show-current) ${1:-.}; }; f"
-	branch-clean = "!f() { FORCE_COLOR=1 GIT_FORCE_COLOR=1 sh $GIT_PROJECTS_WORKDIR/dotfiles/scripts/git/git_branch_clean.sh; }; f"
+	branch-clean = "!f() { FORCE_COLOR=1 GIT_FORCE_COLOR=1 toolbelt git branch-clean \"$@\"; }; f"
 	pr = "!f() { FORCE_COLOR=1 GIT_FORCE_COLOR=1 toolbelt git pr \"$@\"; }; f"
 	save = "!f() { FORCE_COLOR=1 GIT_FORCE_COLOR=1 toolbelt git save \"$@\"; }; f"
 	send = "!f() { FORCE_COLOR=1 GIT_FORCE_COLOR=1 toolbelt git send \"$@\"; }; f"
