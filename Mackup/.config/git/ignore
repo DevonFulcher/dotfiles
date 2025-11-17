@@ -23,7 +23,9 @@ validate.mdc
 prompt.mdc
 create_rules.mdc
 
+# Claude Code
 **/.claude/settings.local.json
 
 # for toolbelt https://github.com/DevonFulcher/toolbelt
 worktrees
+.techdocs
