@@ -1,0 +1,5 @@
+---
+alwaysApply: false
+---
+- Prefer composition over inheritance.
+- Avoid overly broad or ambiguous file and directory names like `utils` or `types`.
