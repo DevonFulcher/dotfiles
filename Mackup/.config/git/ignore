@@ -31,3 +31,4 @@ style.mdc
 # for toolbelt https://github.com/DevonFulcher/toolbelt
 worktrees
 .techdocs
+.setup.sh
