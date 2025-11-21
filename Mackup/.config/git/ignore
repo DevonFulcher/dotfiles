@@ -22,7 +22,7 @@ test.mdc
 validate.mdc
 prompt.mdc
 create_rules.mdc
-python.mdc
+my_python.mdc
 style.mdc
 
 # Claude Code

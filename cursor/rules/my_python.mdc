@@ -8,3 +8,4 @@ alwaysApply: false
 - Avoid `while True`. While-loops should have a termination condition in the `while` statement, not just in the loop body.
 - Always use `*`, in function parameter lists when there are adjacent parameters with the same type.
 - Avoid putting code in `__init__.py` files.
+- Always include type annotations for function inputs and outputs.
