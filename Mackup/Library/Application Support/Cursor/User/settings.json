@@ -51,7 +51,8 @@
   "explorer.confirmDragAndDrop": false,
   "files.autoSave": "afterDelay",
   "files.exclude": {
-    "**/.git": false
+    "**/.git": false,
+    "**/.DS_Store": false
   },
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
