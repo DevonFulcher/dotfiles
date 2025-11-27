@@ -50,6 +50,9 @@
         "--context",
         "ide-assistant"
       ]
+    },
+    "deepwiki": {
+      "url": "https://mcp.deepwiki.com/sse"
     }
   }
 }
