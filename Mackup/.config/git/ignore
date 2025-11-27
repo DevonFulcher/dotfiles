@@ -32,3 +32,6 @@ style.mdc
 worktrees
 .techdocs
 .setup.sh
+
+# for Serena https://github.com/oraios/serena
+.serena

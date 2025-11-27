@@ -12,8 +12,7 @@
         "DBT_HOST": "rr558.us.staging.dbt.com",
         "ENABLE_EXPERIMENAL_SECURE_OAUTH": "true",
         "DISABLE_TOOLS": "execute_sql",
-        "DISABLE_DBT_CLI": "true",
-        "FILE_LOGGING": true
+        "DISABLE_DBT_CLI": "true"
       }
     },
     "notion": {
@@ -36,6 +35,21 @@
     },
     "github": {
       "url": "https://api.githubcopilot.com/mcp/"
+    },
+    "arxiv": {
+      "command": "uvx",
+      "args": ["arxiv-mcp-server"]
+    },
+    "serena": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "git+https://github.com/oraios/serena",
+        "serena",
+        "start-mcp-server",
+        "--context",
+        "ide-assistant"
+      ]
     }
   }
 }
