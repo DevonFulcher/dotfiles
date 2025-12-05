@@ -9,3 +9,4 @@ alwaysApply: false
 - Always use `*`, in function parameter lists when there are adjacent parameters with the same type.
 - Avoid putting code in `__init__.py` files.
 - Always include type annotations for function inputs and outputs.
+- Always prefer Pydantic models or dataclasses to dictionaries.
