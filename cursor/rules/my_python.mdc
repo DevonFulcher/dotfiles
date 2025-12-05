@@ -10,3 +10,7 @@ alwaysApply: false
 - Avoid putting code in `__init__.py` files.
 - Always include type annotations for function inputs and outputs.
 - Always prefer Pydantic models or dataclasses to dictionaries.
+- The preferred libraries are:
+  - FastAPI for APIs
+  - Typer for CLI parsing
+  - Pydantic for data parsing and modeling
