@@ -168,6 +168,5 @@
     "**/.envrc"
   ],
   "cursor.semanticSearch.includeCommitsWithFiles": true,
-  "update.releaseTrack": "prerelease",
-  "datadog.connection.notification.suppressSignInNotification": true
+  "update.releaseTrack": "prerelease"
 }

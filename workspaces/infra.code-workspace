@@ -23,6 +23,9 @@
     },
     {
       "path": "../../dbt-cloud-api-gateway"
+    },
+    {
+      "path": "../../internal-actions"
     }
   ],
   "settings": {}
