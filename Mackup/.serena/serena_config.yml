@@ -48,14 +48,6 @@ excluded_tools: []
 # list of tools to be globally excluded
 
 included_optional_tools: []
-# list of optional tools (which are disabled by default) to be included
-
-jetbrains: false
-# whether to enable JetBrains mode and use tools based on the Serena JetBrains IDE plugin
-# instead of language server-based tools
-# NOTE: The plugin is yet unreleased. This is for Serena developers only.
-
-
 default_max_tool_answer_chars: 150000
 # Used as default for tools where the apply method has a default maximal answer length.
 # Even though the value of the max_answer_chars can be changed when calling the tool, it may make sense to adjust this default
@@ -81,3 +73,4 @@ token_count_estimator: CHAR_COUNT
 # instruct Serena to activate the project by its path for first-time activation.
 # NOTE: Make sure there are no name collisions in the names of registered projects.
 projects: []
+language_backend: LSP
