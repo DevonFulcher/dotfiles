@@ -17,3 +17,4 @@ alwaysApply: false
 - Prefer the use of match-case statements instead of if-else.
 - Use `assert_never(*)` in `case _:` statements to ensure type safety.
 - Avoid `from __future__ import annotations`
+- Prefer absolute imports over relative imports
