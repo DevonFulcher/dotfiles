@@ -1,7 +1,3 @@
----
-alwaysApply: false
----
-
 Systematically find opportunities to add **unique, functional unit tests** to a codebase, leveraging **existing patterns and test data** while ensuring maintainability.
 
 ## Instructions

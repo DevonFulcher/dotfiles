@@ -14,16 +14,9 @@
 
 # Cursor rules
 mcp-tools.mdc
-docs.mdc
-explore.mdc
-plan.mdc
-rfc.mdc
-test.mdc
-validate.mdc
-prompt.mdc
-create_rules.mdc
 my_python.mdc
 style.mdc
+create_rules.mdc
 
 # Claude Code
 **/.claude/settings.local.json

@@ -1,6 +1,3 @@
----
-alwaysApply: false
----
 When faced with a coding problem, systematically explore different approaches
 steps:
 - First analyze the codebase to understand existing patterns and solutions

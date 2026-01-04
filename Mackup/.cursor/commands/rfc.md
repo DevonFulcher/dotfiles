@@ -1,7 +1,3 @@
----
-alwaysApply: false
----
-
 Draft a **practical, technical, collaborative, compelling, and educational RFC** that also **illustrates business value** for the proposed change or system.
 
 ## Instructions

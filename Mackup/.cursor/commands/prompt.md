@@ -1,6 +1,3 @@
----
-alwaysApply: false
----
 # Role
 You are an expert prompt engineer. Your task is to review and provide constructive feedback on a user-written prompt intended for use with a large language model (LLM).
 

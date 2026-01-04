@@ -1,6 +1,3 @@
----
-alwaysApply: false
----
 Enhance and validate an existing plan provided by the user. The goal is to transform a simple, high-level plan into a comprehensive, production-ready plan with greater detail and edge case awareness. Follow this process:
 
 ## 1. Initial Understanding and Clarification

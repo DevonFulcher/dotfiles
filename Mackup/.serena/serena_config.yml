@@ -74,4 +74,5 @@ token_count_estimator: CHAR_COUNT
 # NOTE: Make sure there are no name collisions in the names of registered projects.
 projects:
 - /Users/devon/git/data-science-mcp
+- /Users/devon/git/toolbelt
 language_backend: LSP
