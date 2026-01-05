@@ -1,6 +1,7 @@
 echo "Installing software with shell scripts"
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+curl https://cursor.com/install -fsS | bash
 
 echo "Installing software with Homebrew"
 brew tap FelixKratz/formulae # used for borders
@@ -25,8 +26,7 @@ brew install \
 # Install UI applications with --cask
 brew install --cask \
   raycast \
-  alacritty \
-  claude-code
+  alacritty
 
 echo "Restoring configurations with Mackup"
 cd $GIT_PROJECTS_WORKDIR/dotfiles/Mackup/.mackup.cfg $HOME/.mackup.cfg
