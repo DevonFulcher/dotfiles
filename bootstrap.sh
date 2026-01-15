@@ -2,6 +2,7 @@ echo "Installing software with shell scripts"
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 curl https://cursor.com/install -fsS | bash
+curl -fsSL https://claude.ai/install.sh | bash
 
 echo "Installing software with Homebrew"
 brew tap FelixKratz/formulae # used for borders
