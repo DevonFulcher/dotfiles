@@ -76,3 +76,6 @@ projects:
 - /Users/devon/git/data-science-mcp
 - /Users/devon/git/toolbelt
 language_backend: LSP
+fixed_tools: []
+web_dashboard_listen_address: 127.0.0.1
+jetbrains_plugin_server_address: 127.0.0.1
