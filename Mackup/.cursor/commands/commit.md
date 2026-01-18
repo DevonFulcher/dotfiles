@@ -1,7 +1,5 @@
-## Goals
-Create a git commit after reviewing local changes, using a concise, high-signal message focused on **why** the change was made.
-
-## Procedure
 1. Run `git status` to understand the current state.
-2. Read relevant files to determine a good commit message.
-4. Add, commit, and push all changes with the custom git command: `git save --message "<message>" --yes`
+2. Use the `git status` output to identify the relevant changed files, then read those files directly.
+  - Do **not** run `git diff` unless explicitly requested.
+3. Determine a concise, high-signal commit message focused on **why** the change was made.
+4. Stage, commit, and push with the custom git command: `git save --message "<message>" --yes`
