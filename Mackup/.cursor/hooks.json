@@ -1,6 +1,7 @@
 {
   "version": 1,
   "hooks": {
-    "afterFileEdit": [{ "command": "./hooks/afterFileEdit.sh" }]
+    "afterFileEdit": [{ "command": "./hooks/afterFileEdit.sh" }],
+    "beforeShellExecution": [{ "command": "./hooks/beforeShellExecution.sh" }]
   }
 }
