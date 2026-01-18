@@ -12,21 +12,19 @@
 # More info at https://www.git-town.com/preferences/push-hook.
 push-hook = true
 
-# Should Git Town push the new branches it creates
-# immediately to origin even if they are empty?
+# Should Git Town share newly created branches immediately?
 #
-# When enabled, you can run "git push" right away
-# but creating new branches is slower and
-# it triggers an unnecessary CI run on the empty branch.
+# Valid values:
+# - "no": keep new branches local until you sync/share them
+# - "push": push new branches to the development remote
+# - "propose": create a pull request for each new branch
 #
-# When disabled, many Git Town commands execute faster
-# and Git Town will create the missing tracking branch
-# on the first run of "git sync".
-push-new-branches = true
+# More info at https://www.git-town.com/preferences/share-new-branches.
+share-new-branches = "push"
 
 # Should "git ship" delete the tracking branch?
 # You want to disable this if your code hosting platform
-# (GitHub, GitLab, etc) deletes head branches when
+# (GitHub, GitLab, etc) deletes head branches
 # merging pull requests through its UI.
 ship-delete-tracking-branch = false
 
