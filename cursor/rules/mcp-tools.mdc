@@ -1,6 +1,5 @@
 ---
 description: When to use tools.
-globs:
 alwaysApply: true
 ---
 
