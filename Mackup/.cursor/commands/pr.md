@@ -16,13 +16,27 @@ git status --porcelain
 ```
 
 If there is any output, run the commit process:
-1. Run `git status` to understand the current state.
-2. Use `git diff` (and open files only as needed) to understand the change(s).
-  - Do **not** run `git log` unless explicitly requested.
-3. Determine a concise, plain commit message (no prefixes like `docs(...)`) focused on **why** the change was made.
-4. Run `git save --message "<message>" --yes` which will add all changes, commit, and push.
+  1. Run `git status` to understand the current state.
+  2. Use `git diff` (and open files only as needed) to understand the change(s).
+    - Do **not** run `git log` unless explicitly requested.
+  3. Determine a concise, plain commit message (no prefixes like `docs(...)`) focused on **why** the change was made.
+  4. Run `git save --message "<message>" --yes` which will add all changes, commit, and push.
 
-5. Craft a thorough title & description. Use `git diff` when necessary. Create a PR using `gh`:
+5. Craft a thorough title & description. Use `git diff` when necessary. The description should include:
+  - Summary: 1-3 bullets describing the change and why it matters.
+  - Test plan (if applicable): checklist of what you ran or "not run (reason)". Only include test validations that were done by the agent.
+
+  Example description:
+  ```
+  ## Summary
+  - <what changed and why>
+  - <impact or behavior change>
+
+  ## Test plan
+  - <command ran and what it validates>
+  ```
+
+Create a PR using `gh`:
 
 ```shell
 gh pr create --title "<pr title>" --body "<description>" --base "<base branch>"
