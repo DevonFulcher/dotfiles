@@ -1,0 +1,5 @@
+---
+globs: **/.gitignore
+alwaysApply: false
+---
+Don't polute .gitignore with unnecessary values. Only include values are are specifically required for this project.
