@@ -1,0 +1,5 @@
+---
+globs: **/tests/**/*.py
+alwaysApply: false
+---
+Avoid mocks and patching functions. Prefer dependency injection and fakes.
