@@ -17,6 +17,8 @@ mcp-tools.mdc
 my_python.mdc
 style.mdc
 create_rules.mdc
+gitignore.mdc
+python_tests.mdc
 
 # Claude Code
 **/.claude/settings.local.json
