@@ -1,0 +1,5 @@
+---
+globs: **/pyproject.toml,**/uv.lock
+alwaysApply: false
+---
+Avoid modifying `pyproject.toml` or `uv.lock` manually. Prefer executing `uv` commands when the project is set up with `uv`. You can confirm that a project uses `uv` by finding the `uv.lock` file.

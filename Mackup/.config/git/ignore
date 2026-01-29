@@ -19,6 +19,7 @@ style.mdc
 create_rules.mdc
 gitignore.mdc
 python_tests.mdc
+my_uv.mdc
 
 # Claude Code
 **/.claude/settings.local.json
