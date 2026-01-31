@@ -49,6 +49,9 @@ def to_label(kind: Kind) -> str:
   - FastAPI for APIs
   - Typer for CLI parsing
   - Pydantic for data parsing and modeling
+  - httpx for http client
+  - pytest for testing
+  - hypothesis for property based testing
 - Prefer `pathlib` over `str` and `os` for path and filesystem operations.
 
 ## Patterns to avoid
