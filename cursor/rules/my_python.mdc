@@ -2,20 +2,69 @@
 globs: *.py
 alwaysApply: false
 ---
-- Don't import modules in the middle of code unless there is a good reason to, which is rare. Have a very strong preference toward importing modules at the top of Python files.
-- Never add unused parameters to a function, even if the parameter has a default value.
-- Only use default arguments when there is a reason to do so.
-- Avoid `while True`. While-loops should have a termination condition in the `while` statement, not just in the loop body.
-- Always use `*`, in function parameter lists when there are adjacent parameters with the same type.
+## Imports and layout
+- Prefer imports at the top of files. Don't import modules mid-file unless there is a strong, explicit reason.
+- Prefer absolute imports over relative imports.
+- Avoid `from __future__ import annotations`.
 - Avoid putting code in `__init__.py` files.
+
+## Functions and typing
 - Always include type annotations for function inputs and outputs.
-- Always prefer Pydantic models or dataclasses to dictionaries.
+- Never add parameters that are unused by callers to a function, even if the parameters have a default value.
+- Only use default arguments when there is a reason to do so.
+- When adjacent parameters share the same type, use `*` to avoid callers mixing up parameter order.
+
+Example:
+```python
+def build(project_id: int, *, name: str, owner: str) -> str:
+  return f"{project_id}:{name}:{owner}"
+```
+
+## Data modeling
+- Prefer Pydantic models or dataclasses to dictionaries.
+- Prefer distinct types over strings, including for IDs.
+- Prefer discriminated unions for variants with different shapes; include a literal tag field and exhaustively match on it.
+
+## Control flow
+- Avoid `while True`. While-loops should have a termination condition in the `while` statement, not just in the loop body.
+- Prefer match-case statements instead of if-else.
+- Use `assert_never(*)` in `case _:` statements to ensure type safety.
+
+Example:
+```python
+from typing import assert_never
+
+def to_label(kind: Kind) -> str:
+  match kind:
+    case Kind.FOO:
+      return "foo"
+    case Kind.BAR:
+      return "bar"
+    case _:
+      assert_never(kind)
+```
+
+## Libraries
 - The preferred libraries are:
   - FastAPI for APIs
   - Typer for CLI parsing
   - Pydantic for data parsing and modeling
-- Prefer the use of match-case statements instead of if-else.
-- Use `assert_never(*)` in `case _:` statements to ensure type safety.
-- Avoid `from __future__ import annotations`
-- Prefer absolute imports over relative imports
-- Avoid `getattr` and `hasattr`
+- Prefer `pathlib` over `str` and `os` for path and filesystem operations.
+
+## Patterns to avoid
+- Avoid `getattr` and `hasattr`. Prefer explicit attributes, protocol/ABC interfaces, or `match` with concrete types.
+- Avoid parameter-driven branching for core behavior selection. Prefer explicit composition.
+
+Bad (core behavior selection by flag):
+```python
+def do_thing(with_another_thing: bool):
+  doing_the_thing()
+  if with_another_thing:
+    another_thing()
+```
+
+Good (explicit composition):
+```python
+do_thing()
+another_thing()
+```
