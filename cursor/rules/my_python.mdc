@@ -52,6 +52,7 @@ def to_label(kind: Kind) -> str:
   - httpx for http client
   - pytest for testing
   - hypothesis for property based testing
+  - tenacity for retries
 - Prefer `pathlib` over `str` and `os` for path and filesystem operations.
 
 ## Patterns to avoid
