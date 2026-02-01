@@ -44,6 +44,34 @@ def to_label(kind: Kind) -> str:
       assert_never(kind)
 ```
 
+## Async and concurrency
+- Prefer concurrent execution over sequential calls when awaiting multiple independent async functions.
+
+Bad (sequential):
+```python
+result_a = await fetch_a()
+result_b = await fetch_b()
+```
+
+Good (concurrent):
+```python
+result_a, result_b = await asyncio.gather(fetch_a(), fetch_b())
+```
+
+- Avoid awaiting inside loops; gather coroutines and await them concurrently.
+
+Bad (sequential in loop):
+```python
+results = []
+for item in items:
+    results.append(await fetch(item))
+```
+
+Good (concurrent):
+```python
+results = await asyncio.gather(*[fetch(item) for item in items])
+```
+
 ## Libraries
 - The preferred libraries are:
   - FastAPI for APIs
