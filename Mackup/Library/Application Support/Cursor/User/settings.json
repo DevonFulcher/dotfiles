@@ -95,17 +95,7 @@
   "redhat.telemetry.enabled": false,
   "remote.autoForwardPortsSource": "hybrid",
   "ruff.configurationPreference": "filesystemFirst",
-  "ruff.lint.extendSelect": [
-    // A superset of the recommended rules here: https://docs.astral.sh/ruff/linter/#rule-selection
-    "RUF", // Ruff-specific rules
-    "E", // pycodestyle
-    "F", // Pyflakes
-    "PL", // Pylint
-    "UP", // pyupgrade
-    "B", // flake8-bugbear
-    "SIM", // flake8-simplify
-    "I" // isort
-  ],
+  "ruff.lint.extendSelect": [],
   "ruff.interpreter": ["${workspaceFolder}/.venv/bin/python"],
   "search.exclude": {
     "**/.git": true,
