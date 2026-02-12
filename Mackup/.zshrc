@@ -150,6 +150,7 @@ alias devex="$DOTFILES/workspaces/devex.code-workspace"
 # Command aliases
 alias tt="toolbelt"
 alias e=edit # alias edit function below
+alias cl='claude --add-dir "$GIT_PROJECTS_WORKDIR"'
 
 cdpath=($GIT_PROJECTS_WORKDIR $cdpath)
 
