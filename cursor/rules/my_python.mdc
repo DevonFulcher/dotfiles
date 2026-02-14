@@ -23,7 +23,10 @@ def build(project_id: int, *, name: str, owner: str) -> str:
 ## Data modeling
 - Prefer Pydantic models or dataclasses to dictionaries.
 - Prefer distinct types over strings, including for IDs.
+- Use enums for categorical data rather than strings.
 - Prefer discriminated unions for variants with different shapes; include a literal tag field and exhaustively match on it.
+- Be pedantic with modeling types.
+- Avoid use of `| None`.
 
 ## Control flow
 - Avoid `while True`. While-loops should have a termination condition in the `while` statement, not just in the loop body.
@@ -85,6 +88,7 @@ results = await asyncio.gather(*[fetch(item) for item in items])
 
 ## Patterns to avoid
 - Avoid `getattr` and `hasattr`. Prefer explicit attributes, protocol/ABC interfaces, or `match` with concrete types.
+- Avoid `args` and `kwargs` parameters. Use specific types.
 - Avoid parameter-driven branching for core behavior selection. Prefer explicit composition.
 
 Bad (core behavior selection by flag):
