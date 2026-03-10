@@ -1,11 +1,17 @@
 {
-  "fetchedAt": "2026-03-10T17:09:55.657Z",
+  "fetchedAt": "2026-03-10T19:28:13.507Z",
   "plugins": [
     {
       "plugin": "code-review@claude-plugins-official",
       "added_at": "2026-02-11T03:16:31.424Z",
       "reason": "just-a-test",
       "text": "This is a test #5"
+    },
+    {
+      "plugin": "fizz@testmkt-marketplace",
+      "added_at": "2026-02-12T00:00:00.000Z",
+      "reason": "security",
+      "text": "this is a security test"
     }
   ]
 }

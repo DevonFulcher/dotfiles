@@ -12,6 +12,41 @@ Give a report of what I have been up to the last few days:
    - **Comment**: For each Jira task, add a comment summarizing the current status based on what was found in Slack, GitHub, and Notion.
    - **Status sync**: Based on the gathered evidence (e.g., merged PRs, open review requests, recent activity), verify each ticket has the correct status. If a ticket should be transitioned (e.g., a PR is merged but the ticket is still "In Progress"), transition it to the appropriate status.
    - **Missing tickets**: If there is work found in GitHub/Slack/Notion that doesn't correspond to any Jira ticket, flag it in the report and suggest creating a ticket.
-4. **Write the report**: For each Jira task, compile a summary of progress, blockers, and next steps based on the gathered information.
-5. **Create a Notion page** in this database: `31abb38ebda780fd8017f7b47ca366a6` with today's date as the title and the standup report as the content.
-6. **Open the page**: Run `open <notion_page_url>` to open the newly created page in the browser.
+4. **Write the report**: Use the bullet point format below. For each Jira task, list concrete accomplishments, current state, and next steps as bullets. Add an "Other activity" section at the end for untracked work.
+
+**Output format** (use this exact structure):
+
+```
+### <TICKET-KEY> — <summary>
+- <concrete accomplishment or status update>
+- <concrete accomplishment or status update>
+- Next: <what's coming next>
+
+### <TICKET-KEY> — <summary>
+- ...
+
+### Other activity
+- <item not tied to a Jira ticket>
+- <item not tied to a Jira ticket>
+```
+
+Rules for the bullets:
+- Lead with what was done, not what the ticket is about — the reader already knows the ticket context
+- Reference specific artifacts: PR numbers, Notion doc names, Slack channels, deploy targets
+- Keep each bullet to one line
+- Use "Next:" prefix for forward-looking items
+- Flag stale tickets (no activity in 30+ days) and suggest closing or reassigning
+
+5. **Report what changed**: After all Jira updates are complete, output a "Changes made" section summarizing the before/after state of everything that was modified. Use this format:
+
+```
+## Changes made
+- **AI-427**: In Progress → Cancelled (stale since Sep 2025, superseded by DI-3398)
+- **DI-3522**: Created & set to In Progress — "dbt-mcp v1.10.0 release"
+- **DI-3362**: Added standup comment (no status change)
+```
+
+Include: ticket transitions, new tickets created, comments added, and any other Jira mutations. Always show the before → after status for transitions.
+
+6. **Create a Notion page** in this database: `31abb38ebda780fd8017f7b47ca366a6` with today's date as the title and the standup report as the content.
+7. **Open the page**: Run `open <notion_page_url>` to open the newly created page in the browser.
