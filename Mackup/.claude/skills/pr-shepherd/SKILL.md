@@ -17,7 +17,13 @@
   - Fix merge conflicts.
   - Always run linters, type checkers, formatters, and unit tests before pushing up changes.
   - For CI failures that are likely transient, re-run jobs.
-  - For unresolved review comments (human or bot): evaluate whether the concern is valid, fix code if warranted (avoid scope creep), reply to the thread indicating the reply is from AI, and resolve the discussion.
+  - For unresolved review comments (human or bot): evaluate whether the concern is valid, fix code if warranted (avoid scope creep), and reply to the thread indicating the reply is from AI.
+  - **All unresolved comment threads must receive a reply** before being resolved — never resolve silently.
+  - **Do not reply to substantive human review comments** (non-nit feedback, design concerns, architecture questions, requests for explanation). Leave those open for the user to respond to. Only reply to: bot comments (cursor[bot], Copilot, etc.) and human nit-level comments (typos, minor style, formatting).
+  - **Only resolve a thread if one of the following is true:**
+    - You pushed a code fix addressing the concern, OR
+    - The concern is clearly invalid/not applicable and your reply explains why
+    - Do NOT resolve threads with vague "will fix later" or "acknowledged" replies — leave them open
   - When replying to PR review comments, use the review comment reply endpoint (NOT the issue comments endpoint):
     ```bash
     # Reply to a specific review comment thread
