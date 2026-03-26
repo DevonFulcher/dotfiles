@@ -7,7 +7,6 @@
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
   },
   "permissions": {
-    "defaultMode": "acceptEdits",
     "allow": [
       "Bash(* --help*)",
       "Bash(* --version*)",
@@ -202,13 +201,8 @@
       "mcp__github__search_code",
       "mcp__github__search_pull_requests",
       "mcp__github__update_pull_request"
-    ]
-  },
-  "model": "opus[1m]",
-  "sandbox": {
-    "enabled": true,
-    "autoAllowBashIfSandboxed": true,
-    "allowUnsandboxedCommands": true
+    ],
+    "defaultMode": "acceptEdits"
   },
   "extraKnownMarketplaces": {
     "claude-plugins-official": {
@@ -217,5 +211,15 @@
         "repo": "anthropics/claude-plugins-official"
       }
     }
+  },
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true,
+    "allowUnsandboxedCommands": true
+  },
+  "effortLevel": "medium",
+  "attribution": {
+    "commit": "Co-Authored-By: AI Assistant <noreply@ai>",
+    "pr": "🤖 Generated with AI assistance"
   }
 }
