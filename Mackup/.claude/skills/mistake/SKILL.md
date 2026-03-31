@@ -21,7 +21,7 @@ Choose the right location based on scope:
 | Applies to all projects for this user | `~/.claude/CLAUDE.md` (user-level) |
 | Skill-specific behavior | The relevant `.claude/skills/<skill>/SKILL.md` |
 
-When in doubt, prefer the most specific scope. A rule about a specific repo's test runner belongs in that repo's `AGENTS.md`, not the global user config.
+When in doubt, prefer the most specific scope. A rule about a specific repo's test runner belongs in that repo's `AGENTS.md`, not the global user config. **Ask yourself: would this lesson apply in a completely different repo?** If not, it belongs in the repo-specific file — not `ai-workflows/AGENTS.md` or `~/.claude/CLAUDE.md`.
 
 ## Step 3: Write the fix
 
