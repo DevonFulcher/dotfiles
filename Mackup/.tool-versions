@@ -1,6 +1,6 @@
 python 3.14.0
 rust 1.86.0
-uv 0.7.8
+uv 0.11.6
 terraform 1.9.8
 grpcurl 1.9.2
 pre-commit 4.0.1
