@@ -34,3 +34,9 @@ Behavior:
 - Require that the teammate(s) deliver one or more plans before executing on a task.
 - Consider create a ticket in our tracking system (Jira) to track progress.
 - Consider creating a doc in Notion to communicate progress, findings, and open questions.
+
+## Agent lifecycle
+
+- **Prefer async agent teams over synchronous `Agent()` subagents.** Use `TeamCreate` to spin up named teammates that stay alive, can receive `SendMessage` follow-ups, and coordinate via a shared task list. Reserve synchronous subagents for quick one-shot tasks (e.g., a single file read or search) where a persistent teammate would be wasteful.
+- **Synchronous `Agent()` calls exit after returning — do not SendMessage to them.** Async team members (spawned via `Agent` with `team_name`) go idle between turns but stay alive and respond to `SendMessage`. Synchronous agents do not.
+

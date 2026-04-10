@@ -54,7 +54,7 @@ if [ -f ~/.devspace-completion ]; then
 fi
 
 function ensure-k8s-context() {
-    local expected_context="dbt-labs-devspace"
+    local expected_context="dbtlabs.teleport.sh-dbt-cloud-mc-aws-dev"
     local expected_namespace="$DEVSPACE_NAMESPACE"
     local current_context=$(kubectl config current-context)
 
@@ -87,6 +87,9 @@ function ds() {
   done
 
   if ! $force; then
+    aws sso login || return 1
+    tsh login --proxy dbtlabs.teleport.sh || return 1
+    tsh kube login dbt-cloud-mc-aws-dev || return 1
     ensure-k8s-context || return 1
 
     if [ "$(git -C "$GIT_PROJECTS_WORKDIR/helm-releases" rev-parse --abbrev-ref HEAD)" != "main" ]; then
