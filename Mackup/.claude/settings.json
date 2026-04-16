@@ -1,10 +1,10 @@
 {
-  "statusLine": {
-    "type": "command",
-    "command": "bash ~/.claude/statusline-command.sh"
-  },
   "env": {
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  },
+  "attribution": {
+    "commit": "Co-Authored-By: AI Assistant <noreply@ai>",
+    "pr": "🤖 Generated with AI assistance"
   },
   "permissions": {
     "allow": [
@@ -204,6 +204,10 @@
     ],
     "defaultMode": "acceptEdits"
   },
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.claude/statusline-command.sh"
+  },
   "extraKnownMarketplaces": {
     "claude-plugins-official": {
       "source": {
@@ -218,8 +222,7 @@
     "allowUnsandboxedCommands": true
   },
   "effortLevel": "medium",
-  "attribution": {
-    "commit": "Co-Authored-By: AI Assistant <noreply@ai>",
-    "pr": "🤖 Generated with AI assistance"
+  "enabledPlugins": {
+    "frontend-design@claude-plugins-official": true
   }
 }

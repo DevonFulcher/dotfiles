@@ -1,16 +1,16 @@
 {
   "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "[python]": {
     "analysis.autoImportCompletions": true,
     "analysis.typeCheckingMode": "basic",
     "editor.codeActionsOnSave": {
       "source.fixAll": "explicit",
-      "source.organizeImports": "explicit"
+      "source.organizeImports": "explicit",
     },
     "editor.defaultFormatter": "charliermarsh.ruff",
     "editor.formatOnPaste": false,
@@ -18,15 +18,15 @@
     "editor.formatOnSaveMode": "file",
     "editor.tabSize": 4,
     "formatting.provider": "none",
-    "testing.pytestEnabled": true
+    "testing.pytestEnabled": true,
   },
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "updateImportsOnFileMove.enabled": "always"
+    "updateImportsOnFileMove.enabled": "always",
   },
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "updateImportsOnFileMove.enabled": "always"
+    "updateImportsOnFileMove.enabled": "always",
   },
   "breadcrumbs.enabled": true,
   "cursor.cpp.disabledLanguages": ["plaintext", "markdown", "scminput"],
@@ -53,7 +53,7 @@
   "files.autoSave": "afterDelay",
   "files.exclude": {
     "**/.git": false,
-    "**/.DS_Store": false
+    "**/.DS_Store": false,
   },
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
@@ -61,7 +61,7 @@
     "**/.git/objects/**": true,
     "**/.git/subtree-cache/**": true,
     "**/node_modules/*/**": true,
-    "**/site-packages/**": true
+    "**/site-packages/**": true,
   },
   "git.autofetch": true,
   "git.openRepositoryInParentFolders": "never",
@@ -72,17 +72,17 @@
     "rgba(255,255,64,0.15)",
     "rgba(127,255,127,0.15)",
     "rgba(255,127,255,0.15)",
-    "rgba(79,236,236,0.15)"
+    "rgba(79,236,236,0.15)",
   ],
   "javascript.updateImportsOnFileMove.enabled": "always",
   "makefile.configureOnOpen": false,
   "notebook.cellToolbarLocation": {
     "default": "right",
-    "jupyter-notebook": "left"
+    "jupyter-notebook": "left",
   },
   "notebook.codeActionsOnSave": {
     "notebook.source.fixAll": "explicit",
-    "notebook.source.organizeImports": "explicit"
+    "notebook.source.organizeImports": "explicit",
   },
   "notebook.formatOnSave.enabled": true,
   "notebook.lineNumbers": "on",
@@ -100,7 +100,7 @@
   "search.exclude": {
     "**/.git": true,
     "**/node_modules/*/**": true,
-    "**/site-packages/**": true
+    "**/site-packages/**": true,
   },
   "search.useGlobalIgnoreFiles": true,
   "security.promptForLocalFileProtocolHandling": false,
@@ -115,7 +115,7 @@
   "workbench.editor.empty.hint": "hidden",
   "workbench.editor.enablePreview": false,
   "workbench.editorAssociations": {
-    "*.ipynb": "jupyter-notebook"
+    "*.ipynb": "jupyter-notebook",
   },
   "workbench.reduceMotion": "on",
   "workbench.startupEditor": "none",
@@ -133,10 +133,10 @@
     "editor.insertSpaces": true,
     "editor.tabSize": 2,
     "editor.autoIndent": "advanced",
-    "editor.defaultFormatter": "redhat.vscode-yaml"
+    "editor.defaultFormatter": "redhat.vscode-yaml",
   },
   "[github-actions-workflow]": {
-    "editor.defaultFormatter": "redhat.vscode-yaml"
+    "editor.defaultFormatter": "redhat.vscode-yaml",
   },
   "datadog.staticAnalysis.notification.suppressOnboarding": true,
   "cursor.enable_git_worktrees_setting": true,
@@ -156,10 +156,8 @@
     "**/id_rsa",
     "**/id_dsa",
     "**/.ssh/id_*",
-    "**/.envrc"
+    "**/.envrc",
   ],
   "cursor.semanticSearch.includeCommitsWithFiles": true,
-  "update.releaseTrack": "dev",
   "datadog.connection.notification.suppressSignInNotification": true,
-  "update.mode": "silentlyApplyOnQuit"
 }
