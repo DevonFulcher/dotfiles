@@ -138,7 +138,6 @@
   "[github-actions-workflow]": {
     "editor.defaultFormatter": "redhat.vscode-yaml",
   },
-  "datadog.staticAnalysis.notification.suppressOnboarding": true,
   "cursor.enable_git_worktrees_setting": true,
   "cursor.general.globalCursorIgnoreList": [
     "**/.env",
@@ -160,4 +159,6 @@
   ],
   "cursor.semanticSearch.includeCommitsWithFiles": true,
   "datadog.connection.notification.suppressSignInNotification": true,
+  "datadog.codeSecurity.notification.suppressOnboarding": true,
+  "datadog.cursor.notification.suppressMcpMigrationMessage": true,
 }
