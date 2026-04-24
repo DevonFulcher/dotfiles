@@ -72,16 +72,20 @@ def rest_paginated(path):
 
 
 def graphql(query, **variables):
-    payload = json.dumps({"query": query, "variables": variables}).encode()
+    body = json.dumps({"query": query, "variables": variables}).encode()
     headers = {**_headers(), "Content-Type": "application/json"}
     req = urllib.request.Request(
-        "https://api.github.com/graphql", data=payload, headers=headers, method="POST"
+        "https://api.github.com/graphql", data=body, headers=headers, method="POST"
     )
     try:
         with urllib.request.urlopen(req) as resp:
-            return json.loads(resp.read())
+            payload = json.loads(resp.read())
     except urllib.error.HTTPError as e:
         raise RuntimeError(f"GraphQL query failed {e.code}: {e.read().decode()}")
+    errs = payload.get("errors")
+    if errs:
+        raise RuntimeError("GraphQL errors: " + json.dumps(errs))
+    return payload
 
 
 def get_review_threads(owner, repo, number):
@@ -91,7 +95,22 @@ def get_review_threads(owner, repo, number):
           repository(owner: $owner, name: $repo) {
             pullRequest(number: $number) {
               reviewThreads(first: 50) {
-                nodes { id isResolved isOutdated }
+                nodes {
+                  id
+                  isResolved
+                  isOutdated
+                  comments(first: 100) {
+                    nodes {
+                      fullDatabaseId
+                      author {
+                        login
+                      }
+                      replyTo {
+                        id
+                      }
+                    }
+                  }
+                }
               }
             }
           }
@@ -101,13 +120,46 @@ def get_review_threads(owner, repo, number):
         repo=repo,
         number=number,
     )
-    return (
+    raw = (
         data.get("data", {})
         .get("repository", {})
         .get("pullRequest", {})
         .get("reviewThreads", {})
         .get("nodes", [])
     )
+    out = []
+    for node in raw:
+        comments = (node.get("comments") or {}).get("nodes") or []
+        # REST GET .../pulls/comments/:comment_id uses the same numeric id as GraphQL fullDatabaseId
+        comment_summaries = []
+        root = {}
+        for c in comments:
+            if not c:
+                continue
+            aid = c.get("author") or {}
+            login = aid.get("login") if isinstance(aid, dict) else None
+            raw_id = c.get("fullDatabaseId")
+            if raw_id is None:
+                continue
+            dbid = int(raw_id)
+            is_root = not c.get("replyTo")
+            entry = {"id": dbid, "user": login}
+            comment_summaries.append(entry)
+            if is_root and not root:
+                root = entry
+        if not root and comment_summaries:
+            root = comment_summaries[0]
+        out.append(
+            {
+                "id": node.get("id"),
+                "isResolved": node.get("isResolved"),
+                "isOutdated": node.get("isOutdated"),
+                "comments": comment_summaries,
+                "root_comment_id": root.get("id"),
+                "root_author": root.get("user"),
+            }
+        )
+    return out
 
 
 def get_checks(repo_full, head_sha):
