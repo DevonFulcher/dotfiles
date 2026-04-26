@@ -1,6 +1,6 @@
 ---
-globs: *.py
-alwaysApply: false
+name: python
+description: Follow these guidelines for authoring or reviewing Python code.
 ---
 ## Imports and layout
 - Prefer imports at the top of files. Don't import modules mid-file unless there is a strong, explicit reason.
