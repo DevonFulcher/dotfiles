@@ -87,6 +87,28 @@ results = await asyncio.gather(*[fetch(item) for item in items])
 - Prefer `pathlib` over `str` and `os` for path and filesystem operations.
 
 ## Patterns to avoid
+- Do not rely on truthy/falsy resolution to distinguish a sentinel from a valid value. The two cases this rule covers:
+  - Any union with `None` (e.g. `T | None`): compare with `is` / `is not None`, never `if x:`.
+  - Any value where a falsy literal (`0`, `0.0`, `""`, `b""`, `[]`, `{}`, `False`) is a legal, meaningful value: compare to that literal explicitly.
+
+  Implicit truthiness on these types can silently change meaning without a type error when the schema, annotation, or upstream API evolves (e.g. a field gains `0` as a valid value, or a required field becomes optional). Truthiness on a plain `bool` or on a non-optional collection where emptiness is the question (`if items:`) is fine.
+
+Bad (truthy check on `int | None`—conflates `0` with absent):
+```python
+def label(count: int | None) -> str:
+  if count:
+    return f"n={count}"
+  return "none"
+```
+
+Good (explicit `None` check):
+```python
+def label(count: int | None) -> str:
+  if count is not None:
+    return f"n={count}"
+  return "none"
+```
+
 - Avoid `getattr` and `hasattr`. Prefer explicit attributes, protocol/ABC interfaces, or `match` with concrete types.
 - Avoid `args` and `kwargs` parameters. Use specific types.
 - Avoid parameter-driven branching for core behavior selection. Prefer explicit composition.
