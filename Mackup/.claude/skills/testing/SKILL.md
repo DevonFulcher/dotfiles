@@ -2,6 +2,9 @@
 name: testing
 description: Instructions for writing tests.
 ---
+
+## Prefer dependency injection over mocks
+
 Avoid mocks and patching functions. Prefer dependency injection and fakes.
 
 **Avoid** (patch the import site; brittle, asserts on call shape):
@@ -40,3 +43,7 @@ def test_send_welcome_email() -> None:
     send_welcome_email("a@b.com", sender=fake)
     assert fake.sent == ["a@b.com"]
 ```
+
+## Update tests, not source, when tests fail
+
+To resolve test failures, type errors, and lint errors in tests, prefer updating the test rather than the source code. The source reflects the intended new behavior; the test encodes the old contract and is usually what's stale. Exception: if the failure reveals a genuine bug in the source (wrong output, regression, broken invariant), fix the source.
