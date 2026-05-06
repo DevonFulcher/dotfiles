@@ -257,5 +257,6 @@
   "sandbox": {
     "enabled": false
   },
-  "effortLevel": "medium"
+  "effortLevel": "medium",
+  "model": "opus[1m]"
 }
