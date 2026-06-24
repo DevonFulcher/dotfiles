@@ -263,11 +263,11 @@
   "hooks": {
     "Notification": [
       {
-        "matcher": "",
+        "matcher": "permission_prompt",
         "hooks": [
           {
             "type": "command",
-            "command": "afplay /System/Library/Sounds/Submarine.aiff & osascript -e 'display notification \"Claude is waiting on you\" with title \"Claude Code\"' >/dev/null 2>&1 || true"
+            "command": "afplay /System/Library/Sounds/Submarine.aiff >/dev/null 2>&1 || true"
           }
         ]
       }
