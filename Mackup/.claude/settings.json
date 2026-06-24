@@ -237,8 +237,9 @@
       "mcp__github__update_pull_request",
       "mcp__ide__getDiagnostics"
     ],
-    "defaultMode": "acceptEdits"
+    "defaultMode": "auto"
   },
+  "model": "opus[1m]",
   "statusLine": {
     "type": "command",
     "command": "bash ~/.claude/statusline-command.sh"
@@ -258,5 +259,5 @@
     "enabled": false
   },
   "effortLevel": "medium",
-  "model": "opus[1m]"
+  "tui": "fullscreen"
 }
