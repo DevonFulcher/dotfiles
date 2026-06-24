@@ -258,6 +258,30 @@
   "sandbox": {
     "enabled": false
   },
-  "effortLevel": "medium",
-  "tui": "fullscreen"
+  "effortLevel": "high",
+  "tui": "fullscreen",
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "afplay /System/Library/Sounds/Submarine.aiff & osascript -e 'display notification \"Claude is waiting on you\" with title \"Claude Code\"' >/dev/null 2>&1 || true"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "afplay /System/Library/Sounds/Submarine.aiff >/dev/null 2>&1 || true"
+          }
+        ]
+      }
+    ]
+  }
 }
