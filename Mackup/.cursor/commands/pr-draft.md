@@ -9,7 +9,7 @@ Create a **PR draft doc** (title + description) in your tech docs repo so it can
 1. Identify the repo, head branch, and base branch:
    - Repo: `git rev-parse --show-toplevel`
    - Head: `git rev-parse --abbrev-ref HEAD`
-   - Base: `git-town branch` (use the “parent” / base branch)
+   - Base: the repo default branch (`git remote show origin | sed -n '/HEAD branch/s/.*: //p'`)
 2. Craft a PR title + thorough description (use `git diff` when needed).
 3. Write the draft file into tech docs `pr/pending/` and open it for review.
 
@@ -43,8 +43,8 @@ set -euo pipefail
 repo="$(basename "$(git rev-parse --show-toplevel)")"
 head_branch="$(git rev-parse --abbrev-ref HEAD)"
 
-# Fill this in from `git-town branch` output (the parent/base branch).
-base_branch="<base branch>"
+# The repo default branch (adjust if the PR should target another base).
+base_branch="$(git remote show origin | sed -n '/HEAD branch/s/.*: //p')"
 
 tech_docs_dir="${GIT_PROJECTS_WORKDIR:?}/tech-docs"
 pending_dir="$tech_docs_dir/pr/pending"

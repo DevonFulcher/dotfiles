@@ -22,4 +22,3 @@ Config files are managed with [mackup](https://github.com/lra/mackup).
 8. Run `sh signing_commits.sh` to setup signing git commits. The script will copy a public key to the clipboard which needs to be added at `GitHub → Settings → SSH and GPG keys → New SSH key`
 9. Adjust `Key repeat rate` and `Delay until repeat` in the Mac Keyboard settings.
 10. Install Cursor [here](https://cursor.com/en) and open it to setup.
-11. Alacritty has already been installed, but Mac won't allow it to be opened without updating settings. First, try to open Alacritty. Next, in Mac's `Privacy & Settings` allow Alacritty to be used.

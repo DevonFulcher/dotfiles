@@ -1,5 +1,5 @@
 1. Run unit tests via `toolbelt unit` and ensure they pass.
-2. Run `git-town branch` to know the base branch.
+2. Determine the base branch (usually the repo default): `git remote show origin | sed -n '/HEAD branch/s/.*: //p'`.
 3. Ensure you are on a branch (not `main`/`master`). If you are on `main`/`master`, create and switch to a new branch with a sensible name prefixed with `devon/` (snake-case is preferred):
 
 ```shell

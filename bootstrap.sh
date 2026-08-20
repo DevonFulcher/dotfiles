@@ -14,7 +14,6 @@ brew install \
   fzf \
   git-delta \
   direnv \
-  git-town \
   koekeishiya/formulae/yabai \
   koekeishiya/formulae/skhd \
   borders \
@@ -27,7 +26,7 @@ brew install \
 # Install UI applications with --cask
 brew install --cask \
   raycast \
-  alacritty
+  iterm2
 
 echo "Restoring configurations with Mackup"
 cd $GIT_PROJECTS_WORKDIR/dotfiles/Mackup/.mackup.cfg $HOME/.mackup.cfg

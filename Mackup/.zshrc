@@ -141,7 +141,6 @@ alias gc="git change"
 alias gs="git status"
 alias gn="git send"
 alias ga="git add"
-alias gt="git-town"
 
 # Directory aliases
 alias lab="$GIT_PROJECTS_WORKDIR/TheLaboratory"
@@ -160,7 +159,6 @@ zstyle ':omz:plugins:alias-finder' cheaper yes
 # Shell completions
 eval "$(direnv hook zsh)" # Setup direnv https://direnv.net/
 eval "$(delta --generate-completion zsh)" # Delta completions https://dandavison.github.io/delta/tips-and-tricks/shell-completion.html
-source <(git-town completions zsh) # Git Town completions https://www.git-town.com/commands/completions#zsh
 
 # Setup dotfiles repo
 [[ -r $GIT_PROJECTS_WORKDIR/dotfiles ]] ||
