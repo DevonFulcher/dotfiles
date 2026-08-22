@@ -13,6 +13,7 @@ brew install \
   gh \
   fzf \
   git-delta \
+  difftastic \
   direnv \
   koekeishiya/formulae/yabai \
   koekeishiya/formulae/skhd \

@@ -47,6 +47,10 @@
 	wta = "!f() { FORCE_COLOR=1 GIT_FORCE_COLOR=1 toolbelt git worktree add \"$@\"; }; f"
 	wtr = "!f() { FORCE_COLOR=1 GIT_FORCE_COLOR=1 toolbelt git worktree remove \"$@\"; }; f"
 	wtl = "!f() { FORCE_COLOR=1 GIT_FORCE_COLOR=1 toolbelt git worktree list; }; f"
+	# Structural (AST-aware) diff via difftastic. `git diff` still uses delta;
+	# reach for `git dft` when reformatting/moves make the line diff noisy.
+	# For history: `git dft log -p --ext-diff`.
+	dft = difftool --tool=difftastic --no-prompt
 [merge]
 	conflictstyle = diff3
 [interactive]
@@ -100,8 +104,13 @@
 	name = jupyter notebook merge driver
 [difftool "nbdime"]
 	cmd = git-nbdifftool diff \"$LOCAL\" \"$REMOTE\" \"$BASE\"
+[difftool "difftastic"]
+	cmd = difft \"$LOCAL\" \"$REMOTE\"
 [difftool]
 	prompt = false
+[pager]
+	# Page difftastic's output (and other difftool output) through the default pager.
+	difftool = true
 [mergetool "nbdime"]
 	cmd = git-nbmergetool merge \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
 [mergetool]
