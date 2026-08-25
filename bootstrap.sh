@@ -36,6 +36,15 @@ mackup --force restore # Using force to override .mackup.cfg
 echo "Sourcing zshrc to include new configurations"
 source $HOME/.zshrc
 
+echo "Linking Claude Code skills"
+sh $GIT_PROJECTS_WORKDIR/dotfiles/scripts/link_skills.sh
+
+echo "Setting up private dotfiles (not tracked in this public repo)"
+if [ ! -d $GIT_PROJECTS_WORKDIR/dotfiles-private ]; then
+  git clone git@github.com:DevonFulcher/dotfiles-private.git $GIT_PROJECTS_WORKDIR/dotfiles-private
+fi
+sh $GIT_PROJECTS_WORKDIR/dotfiles-private/setup.sh
+
 echo "Installing software with asdf"
 asdf plugin add python
 asdf plugin add rust
