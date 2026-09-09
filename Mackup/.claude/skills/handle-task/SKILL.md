@@ -42,7 +42,16 @@ Behavior:
 
 ## Agent lifecycle
 
-Default to async teammates via `TeamCreate`. They stay alive, accept `SendMessage` follow-ups, and coordinate via a shared task list. **`Agent()` is synchronous:** it runs once, returns, and cannot take follow-up messages—**do not use `Agent()` to delegate** sub-work in normal workflows, even for small jobs. If `TeamCreate` is unavailable, do the work yourself before falling back to `Agent()`.
+Every session has one implicit team — there is no setup step. Spawn a teammate by giving the `Agent` tool a `name`:
+
+- **Spawn:** `Agent({name: "schema-audit", prompt: "..."})`. Always pass a `name`; a named teammate is addressable, an unnamed one is a fire-and-forget subagent.
+- **Follow up:** `SendMessage({to: "schema-audit", message: "..."})` continues that teammate with its context intact. A fresh `Agent` call starts over from nothing, so reach for `SendMessage` whenever the work is a continuation.
+- **List:** `ListAgents` shows live teammates and their names.
+- **Async by default:** teammates run in the background and you are notified when they finish. Pass `run_in_background: false` only when your very next action depends on the result and nothing else could usefully happen meanwhile.
+- **Never invent results.** If a teammate is still running, say so — do not predict or fabricate what it will report.
+- Do not pass `team_name`; it is accepted but ignored.
+
+If a teammate cannot be spawned at all, do the work yourself rather than silently skipping it.
 
 ### Relaying user context to teammates
 
@@ -64,7 +73,7 @@ For medium- and high-complexity work, **default to splitting effort across multi
 - **Break the task down** into sub-tasks with explicit goals, inputs, outputs, and dependencies. Prefer pieces that can run in parallel when there is no ordering constraint.
 - **Assign ownership** so each teammate has a bounded scope; avoid duplicating full context in every brief—give each teammate what it needs plus pointers to shared artifacts (Notion, key files, etc.).
 - **Coordinate handoffs:** make downstream steps depend on named deliverables from upstream steps; use `SendMessage` or the shared task list so everyone sees status and blockers.
-- **Delegate through `TeamCreate` teammates** for essentially all sub-work—including quick lookups—so follow-ups stay possible. Use the leader’s own tools directly only for trivial inline checks.
+- **Delegate through named `Agent` teammates** for essentially all sub-work—including quick lookups—so follow-ups stay possible. Use the leader’s own tools directly only for trivial inline checks.
 
 **Teammate brief template** (each delegation should cover these):
 - **Goal:** what done looks like in one sentence.
