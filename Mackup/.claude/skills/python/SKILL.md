@@ -21,7 +21,13 @@ def build(project_id: int, *, name: str, owner: str) -> str:
 ```
 
 ## Data modeling
-- Prefer Pydantic models or dataclasses to dictionaries.
+- Prefer Pydantic models or dataclasses to dictionaries in net-new code.
+- When tightening existing code that already passes dicts around, a `TypedDict` is
+  usually the right minimal step: it names the keys and types the values without
+  changing call sites or runtime behavior. Prefer it to leaving `dict[str, Any]` in
+  place, and to a wholesale restructure into a model when the dict is only built,
+  read, and unpacked. Reach for a dataclass or Pydantic model instead once the type
+  needs behavior, validation, or invariants.
 - Prefer distinct types over strings, including for IDs.
 - Use enums for categorical data rather than strings.
 - Prefer discriminated unions for variants with different shapes; include a literal tag field and exhaustively match on it.
@@ -111,6 +117,11 @@ def label(count: int | None) -> str:
 
 - Avoid `getattr` and `hasattr`. Prefer explicit attributes, protocol/ABC interfaces, or `match` with concrete types.
 - Avoid `args` and `kwargs` parameters. Use specific types.
+- Avoid unpacking a dict into call arguments (`f(**fields)`) when the argument list is
+  small and known. Write the arguments out so the call site shows what is being
+  passed. Exception: unpacking a `TypedDict` into a signature whose keyword
+  parameters it mirrors is acceptable when tightening existing code, because mypy
+  checks the keys and value types against the signature.
 - Avoid parameter-driven branching for core behavior selection. Prefer explicit composition.
 
 Bad (core behavior selection by flag):
