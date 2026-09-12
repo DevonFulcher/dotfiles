@@ -15,6 +15,7 @@ brew install \
   git-delta \
   difftastic \
   direnv \
+  beads \
   koekeishiya/formulae/yabai \
   koekeishiya/formulae/skhd \
   borders \
