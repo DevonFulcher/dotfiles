@@ -21,7 +21,13 @@ def build(project_id: int, *, name: str, owner: str) -> str:
 ```
 
 ## Data modeling
-- Prefer Pydantic models or dataclasses to dictionaries.
+- Prefer Pydantic models or dataclasses to dictionaries in net-new code.
+- When tightening existing code that already passes dicts around, a `TypedDict` is
+  usually the right minimal step: it names the keys and types the values without
+  changing call sites or runtime behavior. Prefer it to leaving `dict[str, Any]` in
+  place, and to a wholesale restructure into a model when the dict is only built,
+  read, and unpacked. Reach for a dataclass or Pydantic model instead once the type
+  needs behavior, validation, or invariants.
 - Prefer distinct types over strings, including for IDs.
 - Use enums for categorical data rather than strings.
 - Prefer discriminated unions for variants with different shapes; include a literal tag field and exhaustively match on it.
@@ -87,8 +93,35 @@ results = await asyncio.gather(*[fetch(item) for item in items])
 - Prefer `pathlib` over `str` and `os` for path and filesystem operations.
 
 ## Patterns to avoid
+- Do not rely on truthy/falsy resolution to distinguish a sentinel from a valid value. The two cases this rule covers:
+  - Any union with `None` (e.g. `T | None`): compare with `is` / `is not None`, never `if x:`.
+  - Any value where a falsy literal (`0`, `0.0`, `""`, `b""`, `[]`, `{}`, `False`) is a legal, meaningful value: compare to that literal explicitly.
+
+  Implicit truthiness on these types can silently change meaning without a type error when the schema, annotation, or upstream API evolves (e.g. a field gains `0` as a valid value, or a required field becomes optional). Truthiness on a plain `bool` or on a non-optional collection where emptiness is the question (`if items:`) is fine.
+
+Bad (truthy check on `int | None`—conflates `0` with absent):
+```python
+def label(count: int | None) -> str:
+  if count:
+    return f"n={count}"
+  return "none"
+```
+
+Good (explicit `None` check):
+```python
+def label(count: int | None) -> str:
+  if count is not None:
+    return f"n={count}"
+  return "none"
+```
+
 - Avoid `getattr` and `hasattr`. Prefer explicit attributes, protocol/ABC interfaces, or `match` with concrete types.
 - Avoid `args` and `kwargs` parameters. Use specific types.
+- Avoid unpacking a dict into call arguments (`f(**fields)`) when the argument list is
+  small and known. Write the arguments out so the call site shows what is being
+  passed. Exception: unpacking a `TypedDict` into a signature whose keyword
+  parameters it mirrors is acceptable when tightening existing code, because mypy
+  checks the keys and value types against the signature.
 - Avoid parameter-driven branching for core behavior selection. Prefer explicit composition.
 
 Bad (core behavior selection by flag):
