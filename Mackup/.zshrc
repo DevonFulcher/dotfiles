@@ -116,13 +116,8 @@ compinit
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # Setup environment variables
-export GITHUB_USERNAME="DevonFulcher"
-export CURRENT_ORG="dbt_labs"
+# Static env vars moved to `.zshenv` so non-interactive shells get them too.
 export PYTHON_PATH=$(asdf which python)
-export EDITOR="cursor"
-export GIT_PROJECTS_WORKDIR="$HOME/git"
-export DOTFILES="$GIT_PROJECTS_WORKDIR/dotfiles"
-export PY_SCRIPTS="$DOTFILES/scripts/python"
 
 # Add executables to PATH
 export PATH="$PATH:/usr/local/bin"
