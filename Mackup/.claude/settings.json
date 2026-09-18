@@ -164,7 +164,6 @@
       "Bash(rustup toolchain:*)",
       "Edit(/../**)",
       "Read(/../**)",
-      "Write(/../**)",
       "WebSearch",
       "WebFetch(domain:api.github.com)",
       "WebFetch(domain:community.temporal.io)",
