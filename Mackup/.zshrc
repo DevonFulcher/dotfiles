@@ -221,17 +221,6 @@ function format-json() {
   prettier --parser json5 --write $@
 }
 
-function wtc() {
-  local command
-  command=$(toolbelt git worktree change "$@" 2>&1)
-  local exit_code=$?
-  if [ $exit_code -eq 0 ]; then
-    eval "$command"
-  else
-    echo "$command" >&2
-  fi
-}
-
 function cl() {
   claude --add-dir "$GIT_PROJECTS_WORKDIR/" "$@"
 }

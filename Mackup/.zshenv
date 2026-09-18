@@ -10,6 +10,13 @@ if [[ -n "${CURSOR_AGENT-}" || -n "${CLAUDECODE-}" ]]; then
   eval "$(direnv export zsh 2>/dev/null)"
 fi
 
+# Claude Code Desktop sets CLAUDE_CODE_ENTRYPOINT=claude-desktop (vs. e.g.
+# "cli" for terminal sessions). Unset GITHUB_TOKEN there only, since Desktop
+# sessions shouldn't inherit it.
+if [[ "${CLAUDE_CODE_ENTRYPOINT-}" == "claude-desktop" ]]; then
+  unset GITHUB_TOKEN
+fi
+
 ## Static environment variables
 #
 # These live here rather than in `.zshrc` because non-interactive shells
