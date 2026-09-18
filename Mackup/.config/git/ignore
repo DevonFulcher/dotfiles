@@ -26,3 +26,5 @@ worktrees
 .techdocs
 .setup.sh
 
+
+**/.claude/.cc-writes/

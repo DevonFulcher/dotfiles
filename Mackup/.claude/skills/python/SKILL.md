@@ -38,6 +38,7 @@ def build(project_id: int, *, name: str, owner: str) -> str:
 - Prefer match-case statements instead of if-else.
 - Avoid nested and multi-line ternary operators (single expression if-else). Use a regular if-else statement instead.
 - Use `assert_never(*)` in `case _:` statements to ensure type safety.
+- To narrow a discriminated union (a `Union` of dataclasses/models tagged by a `Literal` field, per the Data modeling section), use `match`/`case` on the tag rather than `isinstance` checks — it stays exhaustive-checkable with `assert_never` and reads as one decision instead of a chain of type tests.
 
 Example:
 ```python
@@ -51,6 +52,23 @@ def to_label(kind: Kind) -> str:
       return "bar"
     case _:
       assert_never(kind)
+```
+
+Bad (isinstance narrowing on a tagged union):
+```python
+if isinstance(shape, Circle):
+  return shape.radius
+```
+
+Good (match on the tag):
+```python
+match shape.kind:
+  case ShapeKind.CIRCLE:
+    return shape.radius
+  case ShapeKind.SQUARE | ShapeKind.TRIANGLE:
+    return None
+  case _:
+    assert_never(shape.kind)
 ```
 
 ## Async and concurrency
