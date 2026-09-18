@@ -32,7 +32,31 @@ def build(project_id: int, *, name: str, owner: str) -> str:
 - Use enums for categorical data rather than strings.
 - Prefer discriminated unions for variants with different shapes; include a literal tag field and exhaustively match on it.
 - Be pedantic with modeling types.
-- Avoid use of `| None`. Prefer discriminated unions when data can sometimes be `None`.
+- Avoid union-typed fields (including `| None`) when the value correlates with other fields' validity/requiredness, or when code branches on it at more than one call site. Model it as a discriminated union of classes instead, so exhaustive `match` catches new call sites when variants change.
+
+Bad (correlated union fields — invalid states representable):
+```python
+@dataclass
+class Response:
+  status: Literal["ok", "error"]
+  data: dict | None
+  error: str | None
+```
+
+Good (discriminated union of classes):
+```python
+@dataclass
+class Ok:
+  status: Literal["ok"]
+  data: dict
+
+@dataclass
+class Error:
+  status: Literal["error"]
+  error: str
+
+Response = Ok | Error
+```
 
 ## Control flow
 - Prefer match-case statements instead of if-else.
