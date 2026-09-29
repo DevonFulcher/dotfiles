@@ -29,7 +29,30 @@ def build(project_id: int, *, name: str, owner: str) -> str:
   read, and unpacked. Reach for a dataclass or Pydantic model instead once the type
   needs behavior, validation, or invariants.
 - Prefer distinct types over strings, including for IDs.
-- Use enums for categorical data rather than strings.
+- Use enums for categorical data rather than strings, when the categories carry no extra data.
+- Keep data about a thing on the thing itself. When items need extra attributes (a display name, a capability, an owner), make those attributes fields of a frozen dataclass. Don't keep separate dicts or sets keyed by the item elsewhere in the module: nothing forces anyone to update them when an item is added, so they drift. Don't reach for enum tricks either, such as a custom `__new__` that packs extra arguments into members; a plain dataclass is easier to read. If callers need to iterate over every item, give the container an explicit `all()`.
+
+Bad (attribute kept in a separate set):
+```python
+class Plan(Enum):
+  FREE = "free"
+  PRO = "pro"
+
+PAID_PLANS = frozenset({Plan.PRO})
+```
+
+Good (attribute is a field on each item):
+```python
+@dataclass(frozen=True)
+class Plan:
+  key: str
+  paid: bool
+
+class Plans:
+  FREE = Plan("free", paid=False)
+  PRO = Plan("pro", paid=True)
+```
+
 - Prefer discriminated unions for variants with different shapes; include a literal tag field and exhaustively match on it.
 - Be pedantic with modeling types.
 - Avoid union-typed fields (including `| None`) when the value correlates with other fields' validity/requiredness, or when code branches on it at more than one call site. Model it as a discriminated union of classes instead, so exhaustive `match` catches new call sites when variants change.

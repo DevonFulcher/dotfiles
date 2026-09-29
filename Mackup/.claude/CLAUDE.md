@@ -8,3 +8,7 @@
 
 - Avoid overly broad or ambiguous file and directory names like `utils` or `types`.
 - For greenfield code, prefer simple code over graceful degradation. Let errors propagate rather than preemptively handling failure modes you haven't actually encountered.
+
+## Git
+
+- Use the `toolbelt` CLI for stacked branches and worktrees. See `toolbelt git --help`.
