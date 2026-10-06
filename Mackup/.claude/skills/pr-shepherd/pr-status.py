@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
 """pr-status.py — gather PR data for pr-shepherd using the GitHub API.
 
-Usage: python pr-status.py <pr-url>
+Usage: python pr-status.py [pr-url]
   pr-url: GitHub PR URL, e.g. https://github.com/owner/repo/pull/123
 
-Outputs one JSON object with all PR data.
+With a pr-url, outputs one JSON object with that PR's data and blocked_reasons.
+With no arguments, finds my open PRs with a commit of mine in the last
+ACTIVE_WORKING_DAYS working days and outputs {"active_blocked": [...],
+"active_mergeable": [...], "inactive": [...]}; each active_blocked entry is the
+full PR data plus blocked_reasons and thrash (signs the PR keeps getting
+re-blocked: repeated bot reviews or CI failures across commits).
 """
 
 import json
@@ -14,7 +19,12 @@ import subprocess
 import sys
 import urllib.error
 import urllib.request
+from datetime import date, datetime, timedelta
 
+
+ACTIVE_WORKING_DAYS = 3
+THRASH_BOT_REVIEW_ROUNDS = 3
+THRASH_FAILED_CI_COMMITS = 3
 
 _TOKEN = None
 
@@ -216,7 +226,7 @@ def fetch_pr(owner, repo, number):
         for r in reviews
     ]
 
-    print(json.dumps({
+    return {
         "owner": owner,
         "repo": repo,
         "repo_full": repo_full,
@@ -224,24 +234,116 @@ def fetch_pr(owner, repo, number):
         "title": pr_detail["title"],
         "url": pr_detail.get("html_url", ""),
         "is_draft": pr_detail.get("draft", False),
-        "mergeable": pr_detail.get("mergeable") or "UNKNOWN",
+        "head_ref": pr_detail.get("head", {}).get("ref", ""),
+        "base_ref": pr_detail.get("base", {}).get("ref", ""),
+        "default_branch": repo_info.get("default_branch", ""),
+        "mergeable": "UNKNOWN" if pr_detail.get("mergeable") is None else pr_detail["mergeable"],
+        "mergeable_state": pr_detail.get("mergeable_state", ""),
         "review_comments": review_comments,
         "issue_comments": issue_comments,
         "review_threads": review_threads,
         "checks": checks,
         "reviews": reviews,
-    }))
+    }
+
+
+def own_blocked_reasons(data):
+    reasons = []
+    if data["mergeable_state"] == "dirty":
+        reasons.append("merge conflicts")
+    failing = [c["name"] for c in data["checks"] if c["conclusion"] in ("failure", "timed_out")]
+    if failing:
+        reasons.append("failing checks: " + ", ".join(failing))
+    unresolved = sum(1 for t in data["review_threads"] if not t["isResolved"])
+    if unresolved:
+        reasons.append(f"{unresolved} unresolved review threads")
+    return reasons
+
+
+def blocked_reasons(data, cache):
+    """Own blockers plus a stack blocker if the PR's base branch is another blocked open PR."""
+    cache[data["url"]] = data
+    reasons = own_blocked_reasons(data)
+    if data["base_ref"] != data["default_branch"]:
+        base_prs = rest(f"repos/{data['repo_full']}/pulls?state=open&head={data['owner']}:{data['base_ref']}")
+        if base_prs:
+            base_url = base_prs[0]["html_url"]
+            base = cache.get(base_url) or fetch_pr(data["owner"], data["repo"], base_prs[0]["number"])
+            if blocked_reasons(base, cache):
+                reasons.append(f"stacked on blocked PR {base_url}")
+    return reasons
+
+
+def thrash_signals(data):
+    """Signs the PR keeps getting re-blocked rather than converging."""
+    signals = []
+    bot_reviews = [
+        r for r in data["reviews"]
+        if r["user"].endswith("[bot]") and r["user"] != "github-actions[bot]"
+    ]
+    if len(bot_reviews) >= THRASH_BOT_REVIEW_ROUNDS:
+        signals.append(f"{len(bot_reviews)} bot reviews")
+    runs = rest(f"repos/{data['repo_full']}/actions/runs?branch={data['head_ref']}&event=pull_request&per_page=100")
+    failed_shas = {r["head_sha"] for r in runs["workflow_runs"] if r["conclusion"] == "failure"}
+    if len(failed_shas) >= THRASH_FAILED_CI_COMMITS:
+        signals.append(f"CI failed on {len(failed_shas)} different commits")
+    return signals
+
+
+def active_cutoff(today):
+    """The date ACTIVE_WORKING_DAYS weekdays before today."""
+    cutoff = today
+    remaining = ACTIVE_WORKING_DAYS
+    while remaining:
+        cutoff -= timedelta(days=1)
+        if cutoff.weekday() < 5:
+            remaining -= 1
+    return cutoff
+
+
+def has_recent_commit(owner, repo, number, login, cutoff):
+    commits = rest_paginated(f"repos/{owner}/{repo}/pulls/{number}/commits?per_page=100")
+    for c in commits:
+        author = (c.get("author") or {}).get("login")
+        committed = datetime.fromisoformat(c["commit"]["committer"]["date"].replace("Z", "+00:00"))
+        if author == login and committed.astimezone().date() >= cutoff:
+            return True
+    return False
+
+
+def list_my_prs():
+    login = rest("user")["login"]
+    cutoff = active_cutoff(date.today())
+    found = rest_paginated(f"search/issues?q=is:pr+is:open+archived:false+author:{login}&per_page=100")
+    # search/issues returns {"items": [...]} pages; rest_paginated wraps each page dict
+    items = [item for page in found for item in page["items"]]
+
+    cache = {}
+    out = {"active_blocked": [], "active_mergeable": [], "inactive": []}
+    for item in items:
+        m = re.match(r"https://api\.github\.com/repos/([^/]+)/([^/]+)/issues/(\d+)", item["url"])
+        owner, repo, number = m.group(1), m.group(2), int(m.group(3))
+        summary = {"title": item["title"], "url": item["html_url"]}
+        if not has_recent_commit(owner, repo, number, login, cutoff):
+            out["inactive"].append(summary)
+            continue
+        data = cache.get(item["html_url"]) or fetch_pr(owner, repo, number)
+        reasons = blocked_reasons(data, cache)
+        if reasons:
+            out["active_blocked"].append({**data, "blocked_reasons": reasons, "thrash": thrash_signals(data)})
+        else:
+            out["active_mergeable"].append(summary)
+    print(json.dumps(out))
 
 
 def main():
     if len(sys.argv) < 2 or not sys.argv[1].strip():
-        print("Usage: python pr-status.py <pr-url>", file=sys.stderr)
-        print("Example: python pr-status.py https://github.com/owner/repo/pull/123", file=sys.stderr)
-        sys.exit(1)
+        list_my_prs()
+        return
 
-    pr_url = sys.argv[1].strip()
-    owner, repo, number = parse_pr_url(pr_url)
-    fetch_pr(owner, repo, number)
+    owner, repo, number = parse_pr_url(sys.argv[1].strip())
+    data = fetch_pr(owner, repo, number)
+    print(json.dumps({**data, "blocked_reasons": blocked_reasons(data, {}), "thrash": thrash_signals(data)}))
 
 
 if __name__ == "__main__":

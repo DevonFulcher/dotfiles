@@ -12,9 +12,13 @@
 
 ## Git
 
+- Only open PRs in draft mode unless the user says otherwise.
 - Use the `toolbelt` CLI for stacked branches and worktrees. See `toolbelt git --help`.
 - When addressing PR feedback, only edit the PR's own branch for critical issues. Otherwise reply on the thread, resolve it, and stack any fix on a follow-up branch (`toolbelt git append`). It is better to stack than edit.
+- The exception is PR feedback that only asks for documentation or comment changes: update the PR itself, even if it is approved, rather than stacking a follow-up.
 
 ## Communication
 
 - When posting anywhere others read (GitHub comments and reviews, Slack, Jira, Notion comments), always identify yourself as AI, e.g. start with "🤖 AI-generated on behalf of Devon:".
+- When referring to a PR (or issue), give its link, not just its number: `[title or short label](https://github.com/org/repo/pull/123)`. Never a bare `#123`.
+- If a step needs the user to run a command or do something themselves (an SSO login, a reinstall, approving a permission, anything outside your reach), stop right away and say exactly what you need, instead of working around it or carrying on with the rest. Resume once they confirm.
