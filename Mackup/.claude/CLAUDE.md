@@ -21,4 +21,8 @@
 
 - When posting anywhere others read (GitHub comments and reviews, Slack, Jira, Notion comments), always identify yourself as AI, e.g. start with "🤖 AI-generated on behalf of Devon:".
 - When referring to a PR (or issue), give its link, not just its number: `[title or short label](https://github.com/org/repo/pull/123)`. Never a bare `#123`.
+- Always include a link for every relevant resource you mention or rely on, not just PRs: Jira tickets, Slack threads, Notion pages, CI runs, docs. When tying work to a ticket or thread, link the PR to it and the ticket back to the PR, so each can be found from the other.
+- Every PR that belongs to a Jira ticket gets the ticket key in its title and a link to the ticket in its body, and the PR is added to the ticket as a remote link (not only pasted in a comment). If a PR has no ticket, say so rather than leaving it out silently. Do this when creating the PR.
+- Keep the Jira status in step with the PR: draft PR or no PR yet is "In Progress", open non-draft PR is "In Review" (if the project has that status; if not, say so instead of leaving it "In Progress"), merged is "Done".
 - If a step needs the user to run a command or do something themselves (an SSO login, a reinstall, approving a permission, anything outside your reach), stop right away and say exactly what you need, instead of working around it or carrying on with the rest. Resume once they confirm.
+- Exception: after changing the `toolbelt` CLI, reinstall it yourself (`uv tool install --reinstall /Users/devonfulcher/git/toolbelt`) and confirm the installed copy has the change. No need to ask.

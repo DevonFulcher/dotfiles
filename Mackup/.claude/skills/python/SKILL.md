@@ -118,6 +118,28 @@ match shape.kind:
     assert_never(shape.kind)
 ```
 
+- More generally, prefer `match` with class patterns over `isinstance` to narrow any value's type, including exceptions. Use `isinstance` only where a `match` would be contrived, such as a single boolean test inside a comprehension or a `TypeGuard` helper.
+
+Bad (isinstance chain):
+```python
+if isinstance(error, TimeoutError):
+  return "timeout"
+if isinstance(error, ConnectionError):
+  return "connection"
+return "other"
+```
+
+Good (match on the class):
+```python
+match error:
+  case TimeoutError():
+    return "timeout"
+  case ConnectionError():
+    return "connection"
+  case _:
+    return "other"
+```
+
 ## Async and concurrency
 - Prefer concurrent execution over sequential calls when awaiting multiple independent async functions.
 
