@@ -20,6 +20,24 @@ def build(project_id: int, *, name: str, owner: str) -> str:
   return f"{project_id}:{name}:{owner}"
 ```
 
+- Prefer methods on a class to separate module-level functions that take an instance of it, especially when the function is a relatively straightforward check or mapping over that class's own attributes. The behavior then travels with the type: callers find it by autocompletion, subclasses can override it, and a new subclass can't forget it. Keep a free function for logic that spans several unrelated types or doesn't belong to any one of them.
+
+Bad (a check on a class's own data lives elsewhere):
+```python
+def is_expired(token: Token, now: datetime) -> bool:
+  return token.expires_at <= now
+```
+
+Good (the class owns it):
+```python
+@dataclass(frozen=True)
+class Token:
+  expires_at: datetime
+
+  def is_expired(self, now: datetime) -> bool:
+    return self.expires_at <= now
+```
+
 ## Data modeling
 - Prefer Pydantic models or dataclasses to dictionaries in net-new code.
 - When tightening existing code that already passes dicts around, a `TypedDict` is
