@@ -12,8 +12,13 @@ the private `dotfiles-private` repo. Which repos are used is set by
 - `tt dotfiles status`: read-only report of what is linked.
 - `tt dotfiles link [--dry-run]`: link everything; anything displaced is first
   moved into `~/.toolbelt/dotfiles-backups/<timestamp>/`.
-- `tt dotfiles adopt <path>`: move an existing file into a repo and link it back.
 - `tt dotfiles check`: scan this public repo for secret-looking content.
+
+`tt dotfiles link` also points this repo's `core.hooksPath` at `.githooks`, whose
+`pre-commit` hook runs `tt dotfiles check` and rejects a commit that contains
+secret-looking content (findings show `path:line:rule`, never the match). Add
+`tt:allow-secret` to a line to allow a deliberate false positive. To test the
+hook: `sh .githooks/test-pre-commit.sh`.
 
 ## Setup
 

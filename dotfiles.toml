@@ -1,6 +1,5 @@
 # Manifest for `tt dotfiles` (toolbelt). Layered first: dotfiles-private overlays this.
 visibility = "public"
-adopt_dir = "Mackup"
 
 # Claude Code. ~/.claude itself is a real directory full of runtime state, so
 # only individual entries are linked. Skills come from both repos.
