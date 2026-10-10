@@ -4,7 +4,16 @@ My configurations for Mac.
 
 ## Background
 
-Config files are managed with [mackup](https://github.com/lra/mackup).
+Config files are linked into `$HOME` by `toolbelt dotfiles` (alias `tt dotfiles`)
+from the `dotfiles.toml` manifest in this repo, layered under the manifest in
+the private `dotfiles-private` repo. Which repos are used is set by
+`dotfiles.repos` in `~/.config/toolbelt/config.yaml`.
+
+- `tt dotfiles status`: read-only report of what is linked.
+- `tt dotfiles link [--dry-run]`: link everything; anything displaced is first
+  moved into `~/.toolbelt/dotfiles-backups/<timestamp>/`.
+- `tt dotfiles adopt <path>`: move an existing file into a repo and link it back.
+- `tt dotfiles check`: scan this public repo for secret-looking content.
 
 ## Setup
 
