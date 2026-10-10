@@ -1,0 +1,173 @@
+# Manifest for `tt dotfiles` (toolbelt). Layered first: dotfiles-private overlays this.
+visibility = "public"
+adopt_dir = "Mackup"
+
+# Claude Code. ~/.claude itself is a real directory full of runtime state, so
+# only individual entries are linked. Skills come from both repos.
+[[link]]
+src = "Mackup/.claude/CLAUDE.md"
+dest = "~/.claude/CLAUDE.md"
+
+[[link]]
+src = "Mackup/.claude/settings.json"
+dest = "~/.claude/settings.json"
+
+[[link]]
+src = "Mackup/.claude/statusline-command.sh"
+dest = "~/.claude/statusline-command.sh"
+
+[[link]]
+src = "Mackup/.claude/plugins/config.json"
+dest = "~/.claude/plugins/config.json"
+
+[[link]]
+src = "Mackup/.claude/agents"
+dest = "~/.claude/agents"
+kind = "dir"
+
+[[link]]
+src = "Mackup/.claude/commands"
+dest = "~/.claude/commands"
+kind = "dir"
+
+[[link]]
+src = "Mackup/.claude/skills"
+dest = "~/.claude/skills"
+kind = "merge_dir"
+
+# Cursor
+[[link]]
+src = "Mackup/.cursor/commands"
+dest = "~/.cursor/commands"
+kind = "dir"
+
+[[link]]
+src = "Mackup/.cursor/hooks"
+dest = "~/.cursor/hooks"
+kind = "dir"
+
+[[link]]
+src = "Mackup/.cursor/hooks.json"
+dest = "~/.cursor/hooks.json"
+
+[[link]]
+src = "Mackup/Library/Application Support/Cursor/User/keybindings.json"
+dest = "~/Library/Application Support/Cursor/User/keybindings.json"
+
+[[link]]
+src = "Mackup/Library/Application Support/Cursor/User/settings.json"
+dest = "~/Library/Application Support/Cursor/User/settings.json"
+
+[[link]]
+src = "Mackup/Library/Application Support/Cursor/User/snippets"
+dest = "~/Library/Application Support/Cursor/User/snippets"
+kind = "dir"
+
+# VS Code
+[[link]]
+src = "Mackup/Library/Application Support/Code/User/keybindings.json"
+dest = "~/Library/Application Support/Code/User/keybindings.json"
+
+[[link]]
+src = "Mackup/Library/Application Support/Code/User/settings.json"
+dest = "~/Library/Application Support/Code/User/settings.json"
+
+# ~/.config
+[[link]]
+src = "Mackup/.config/alacritty/alacritty.toml"
+dest = "~/.config/alacritty/alacritty.toml"
+
+[[link]]
+src = "Mackup/.config/direnv/direnv.toml"
+dest = "~/.config/direnv/direnv.toml"
+
+[[link]]
+src = "Mackup/.config/direnv/direnvrc"
+dest = "~/.config/direnv/direnvrc"
+
+[[link]]
+src = "Mackup/.config/ghostty/config"
+dest = "~/.config/ghostty/config"
+
+[[link]]
+src = "Mackup/.config/git/attributes"
+dest = "~/.config/git/attributes"
+
+[[link]]
+src = "Mackup/.config/git/ignore"
+dest = "~/.config/git/ignore"
+
+[[link]]
+src = "Mackup/.config/opencode"
+dest = "~/.config/opencode"
+kind = "dir"
+
+[[link]]
+src = "Mackup/.config/skhd/skhdrc"
+dest = "~/.config/skhd/skhdrc"
+
+[[link]]
+src = "Mackup/.config/starship.toml"
+dest = "~/.config/starship.toml"
+
+[[link]]
+src = "Mackup/.config/yabai/yabairc"
+dest = "~/.config/yabai/yabairc"
+
+# Other apps
+[[link]]
+src = "Mackup/Library/Application Support/k9s/config.yaml"
+dest = "~/Library/Application Support/k9s/config.yaml"
+
+[[link]]
+src = "Mackup/Library/LaunchAgents/com.user.docker.desktop.plist"
+dest = "~/Library/LaunchAgents/com.user.docker.desktop.plist"
+
+# Shell and tool config in $HOME
+[[link]]
+src = "Mackup/.default-npm-packages"
+dest = "~/.default-npm-packages"
+
+[[link]]
+src = "Mackup/.editorconfig"
+dest = "~/.editorconfig"
+
+[[link]]
+src = "Mackup/.gitconfig"
+dest = "~/.gitconfig"
+
+[[link]]
+src = "Mackup/.tmux.conf"
+dest = "~/.tmux.conf"
+
+[[link]]
+src = "Mackup/.tool-versions"
+dest = "~/.tool-versions"
+
+[[link]]
+src = "Mackup/.zfunc"
+dest = "~/.zfunc"
+kind = "dir"
+
+[[link]]
+src = "Mackup/.zprofile"
+dest = "~/.zprofile"
+
+[[link]]
+src = "Mackup/.zshenv"
+dest = "~/.zshenv"
+
+[[link]]
+src = "Mackup/.zshrc"
+dest = "~/.zshrc"
+
+# Mackup's own config. Only needed while mackup is still installed; delete
+# these two entries (and the Mackup/.mackup* files) once it is gone.
+[[link]]
+src = "Mackup/.mackup"
+dest = "~/.mackup"
+kind = "dir"
+
+[[link]]
+src = "Mackup/.mackup.cfg"
+dest = "~/.mackup.cfg"
