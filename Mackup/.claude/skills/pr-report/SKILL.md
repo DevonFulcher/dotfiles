@@ -10,13 +10,13 @@ Report on all PRs I have open. Ignore PRs in archived repos. This skill is READ-
 
 ```
 ## Waiting on CI
-<PRs where CI is failing or pending>
+<PRs where CI is pending or running. Failing CI is NOT waiting — it needs action, so it goes under Waiting on Me>
 
 ## Waiting on Review
 <PRs where CI passes but awaiting review or re-review>
 
 ## Waiting on Me
-<PRs with changes requested, unresolved comments, or merge conflicts>
+<PRs with failing CI, changes requested, unresolved comments, or merge conflicts>
 ```
 
 Each PR entry should use this format:
