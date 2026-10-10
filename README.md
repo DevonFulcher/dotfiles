@@ -32,7 +32,8 @@ hook: `sh .githooks/test-pre-commit.sh`.
 7. Add secrets shell files in the `./secrets` directory:
   - `GITHUB_PERSONAL_ACCESS_TOKEN`: Access token for github-mcp-server.
   - `GITHUB_PERSONAL_EMAIL`: Personal email used in GitHub.
-  - `IS_PERSONAL=true`: Set to true if this is a personal laptop.
+  - Per-machine flags go in `./secrets/machine.sh`, which `.zshenv` sources so non-interactive shells (agents, `zsh -c`) see them too. Do not put tokens in it:
+    - `export IS_PERSONAL=true`: Set to true if this is a personal laptop. Toolbelt then makes `--task` optional on `tt git append`.
 8. Run `sh signing_commits.sh` to setup signing git commits. The script will copy a public key to the clipboard which needs to be added at `GitHub → Settings → SSH and GPG keys → New SSH key`
 9. Adjust `Key repeat rate` and `Delay until repeat` in the Mac Keyboard settings.
 10. Install Cursor [here](https://cursor.com/en) and open it to setup.
