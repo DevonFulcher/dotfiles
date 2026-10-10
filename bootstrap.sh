@@ -37,6 +37,13 @@ if [ ! -d $GIT_PROJECTS_WORKDIR/toolbelt ]; then
 fi
 uv tool install --editable $GIT_PROJECTS_WORKDIR/toolbelt
 
+echo "Installing the gh-stack extension (GitHub stacked PRs, mirrored by 'toolbelt git sync')"
+if gh auth status >/dev/null 2>&1; then
+  gh extension list | grep -q gh-stack || gh extension install github/gh-stack
+else
+  echo "gh is not authenticated; run 'gh auth login' then 'gh extension install github/gh-stack'"
+fi
+
 echo "Cloning private dotfiles (not tracked in this public repo)"
 if [ ! -d $GIT_PROJECTS_WORKDIR/dotfiles-private ]; then
   git clone git@github.com:DevonFulcher/dotfiles-private.git $GIT_PROJECTS_WORKDIR/dotfiles-private
