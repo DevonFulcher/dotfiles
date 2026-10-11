@@ -30,6 +30,15 @@ If `active_blocked` is empty, skip to the final report. Otherwise, for each entr
 
 Run the teammates in parallel. Work on stacked PRs bottom-up so a fix to a base branch is in place before its children are handled.
 
+### Second pass: catch comments that arrive during the run
+
+The PR JSON is a snapshot from the start of the run, and bot reviewers (Copilot and similar) post comments on a PR within minutes of every push, including the pushes teammates make. So when the first-pass teammates finish:
+1. Re-fetch the unresolved review threads for every PR in the run (the PRs you shepherded and any PR a teammate pushed to), with `gh api graphql` on `reviewThreads` (`isResolved`, `isOutdated`, first comment's author and body) or by re-running `pr-status.py`.
+2. For each PR with an unresolved thread that wasn't in its original JSON, send a teammate the fresh thread data and the Step 3 instructions, as for any blocked PR. Do not hand bot comments to the user as a next action ("read the new comments"): evaluate them, fix or answer them, and resolve them.
+3. Repeat until a re-fetch finds no new unresolved bot threads, at most two extra rounds. A PR that was pushed to less than a few minutes ago may not have been re-reviewed yet, so say so in the report instead of treating it as clean.
+
+Only unresolved **human** threads that need the user's decision are left open and reported.
+
 ## Step 3: Instructions to send to each teammate
 
 The teammate receives the PR JSON and these instructions:
@@ -37,6 +46,8 @@ The teammate receives the PR JSON and these instructions:
 ---
 
 You are shepherding a single PR. You have been given its JSON data.
+
+**The JSON is a snapshot and may be stale.** Before acting, and again just before you report, fetch the PR's current state with `gh` (merge state, checks, and `reviewThreads` via GraphQL). Bot reviewers such as Copilot comment within minutes of a push, including your own, so a thread may exist now that is not in the JSON.
 
 1. **Parse the PR JSON.** You have both comment sources:
    - `review_comments` — inline review comments (line-level; bot comments appear here)
@@ -68,6 +79,7 @@ You are shepherding a single PR. You have been given its JSON data.
 
 5. **Handle review threads.** Every comment you post must identify itself as AI, e.g. start with "🤖 AI-generated on behalf of Devon:".
    - For unresolved review comments (human or bot): evaluate whether the concern is valid. If a fix is warranted, apply it per step 3 and reply on the thread saying where the fix is (the pushed commit, or the stacked PR).
+   - **Bot comments (Copilot and similar) are your work, not the user's.** Never report one as "read the comment" or "address the feedback" in `next_action`. Read the code the comment points at, decide whether it is valid, then fix it (a real bug found in review is a critical fix on the PR branch), reply and resolve it, or reply with why it is invalid and resolve it.
    - **Outdated AI threads:** For a thread where `isOutdated` is true and `root_author` is a bot (github-copilot[bot], copilot-pull-request-reviewer[bot], and similar), **post a thread reply saying the comment is outdated** (the diff it refers to has since changed), then resolve the thread.
    - **Do not reply to substantive human review comments** (non-nit feedback, design concerns, architecture questions, requests for explanation). Leave those open for the user to respond to. Only reply to: bot comments and human nit-level comments (typos, minor style, formatting).
    - **Only resolve a thread if one of the following is true:**

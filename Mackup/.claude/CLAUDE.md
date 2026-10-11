@@ -7,6 +7,7 @@
 ## Style
 
 - Avoid overly broad or ambiguous file and directory names like `utils` or `types`.
+- Use terms directly from the data (field and column names) in labels, titles and docs rather than renaming them.
 - For greenfield code, prefer simple code over graceful degradation. Let errors propagate rather than preemptively handling failure modes you haven't actually encountered.
 - Comments and docstrings describe what the code does now and why. Don't narrate how it was worked out ("confirmed against…", "as of this writing", "not yet verified") or cite docs, tickets or threads the reader can't open. Put that context in the PR description instead.
 
@@ -14,6 +15,7 @@
 
 - Only open PRs in draft mode unless the user says otherwise.
 - Verify a change end to end before opening a PR for review: run it on real data or in the real tool (render, open generated links, exercise the code path), not just unit tests and validators. State in the PR what was verified and how.
+- A PR with any visual or UI change (dashboards, charts, web pages, app screens, rendered output) includes screenshots of the result in its description: the changed parts, and the states a reviewer needs.
 - Use the `toolbelt` CLI for stacked branches and worktrees. See `toolbelt git --help`.
 - When addressing PR feedback on a PR that is ready for review or approved, only edit the PR's own branch for critical issues. Otherwise reply on the thread, resolve it, and stack any fix on a follow-up branch (`toolbelt git append`). It is better to stack than edit.
 - The exception is PR feedback that only asks for documentation or comment changes: update the PR itself, even if it is approved, rather than stacking a follow-up.
