@@ -31,3 +31,8 @@ export PY_SCRIPTS="$DOTFILES/scripts/python"
 export EDITOR="cursor"
 export GITHUB_USERNAME="DevonFulcher"
 export CURRENT_ORG="dbt_labs"
+
+# Per-machine flags such as IS_PERSONAL (untracked; see README). Only this file
+# is sourced here, not the rest of ./secrets, so tokens stay out of
+# non-interactive shells.
+[[ -r "$DOTFILES/secrets/machine.sh" ]] && source "$DOTFILES/secrets/machine.sh"

@@ -24,27 +24,36 @@ brew install \
   asdf \
   starship \
   sst/tap/opencode \
-  tmux
+  tmux \
+  uv # needed before asdf to install toolbelt, which links the dotfiles
 # Install UI applications with --cask
 brew install --cask \
   raycast \
   iterm2
 
-echo "Restoring configurations with Mackup"
-cd $GIT_PROJECTS_WORKDIR/dotfiles/Mackup/.mackup.cfg $HOME/.mackup.cfg
-mackup --force restore # Using force to override .mackup.cfg
+echo "Installing toolbelt (provides 'toolbelt dotfiles')"
+if [ ! -d $GIT_PROJECTS_WORKDIR/toolbelt ]; then
+  git clone https://github.com/DevonFulcher/toolbelt.git $GIT_PROJECTS_WORKDIR/toolbelt
+fi
+uv tool install --editable $GIT_PROJECTS_WORKDIR/toolbelt
 
-echo "Sourcing zshrc to include new configurations"
-source $HOME/.zshrc
+echo "Installing the gh-stack extension (GitHub stacked PRs, mirrored by 'toolbelt git sync')"
+if gh auth status >/dev/null 2>&1; then
+  gh extension list | grep -q gh-stack || gh extension install github/gh-stack
+else
+  echo "gh is not authenticated; run 'gh auth login' then 'gh extension install github/gh-stack'"
+fi
 
-echo "Linking Claude Code skills"
-sh $GIT_PROJECTS_WORKDIR/dotfiles/scripts/link_skills.sh
-
-echo "Setting up private dotfiles (not tracked in this public repo)"
+echo "Cloning private dotfiles (not tracked in this public repo)"
 if [ ! -d $GIT_PROJECTS_WORKDIR/dotfiles-private ]; then
   git clone git@github.com:DevonFulcher/dotfiles-private.git $GIT_PROJECTS_WORKDIR/dotfiles-private
 fi
-sh $GIT_PROJECTS_WORKDIR/dotfiles-private/setup.sh
+
+echo "Linking dotfiles from both repos with toolbelt"
+$HOME/.local/bin/toolbelt dotfiles link
+
+echo "Sourcing zshrc to include new configurations"
+source $HOME/.zshrc
 
 echo "Installing software with asdf"
 asdf plugin add python
@@ -59,13 +68,9 @@ asdf plugin add task
 asdf plugin add nodejs
 asdf install
 
-echo "Installing software with git"
-git clone https://github.com/DevonFulcher/toolbelt.git $GIT_PROJECTS_WORKDIR/toolbelt
-
 echo "Installing software with uv"
 uv tool install nbdime # Used for jupyter notebook diffs
 uv tool install dbt-core
-uv tool install --editable $GIT_PROJECTS_WORKDIR/toolbelt
 
 echo "Setting up dotfiles and toolbelt repos"
 git setup $GIT_PROJECTS_WORKDIR/dotfiles
