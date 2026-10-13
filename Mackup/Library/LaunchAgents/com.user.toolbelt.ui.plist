@@ -16,7 +16,7 @@
     <key>EnvironmentVariables</key>
     <dict>
       <key>PATH</key>
-      <string>/Users/devonfulcher/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+      <string>/Users/devonfulcher/.local/bin:/Users/devonfulcher/.asdf/shims:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
     </dict>
     <key>WorkingDirectory</key>
     <string>/Users/devonfulcher</string>
