@@ -44,6 +44,12 @@ else
   echo "gh is not authenticated; run 'gh auth login' then 'gh extension install github/gh-stack'"
 fi
 
+echo "Installing the toolbelt-claims Claude Code mod (records which worktrees an agent session works on)"
+if [ -x $GIT_PROJECTS_WORKDIR/toolbelt/claude-plugin/install.sh ]; then
+  # idempotent; exits 0 with a message when claude is not on PATH
+  $GIT_PROJECTS_WORKDIR/toolbelt/claude-plugin/install.sh || echo "toolbelt-claims install failed; re-run claude-plugin/install.sh in toolbelt"
+fi
+
 echo "Cloning private dotfiles (not tracked in this public repo)"
 if [ ! -d $GIT_PROJECTS_WORKDIR/dotfiles-private ]; then
   git clone git@github.com:DevonFulcher/dotfiles-private.git $GIT_PROJECTS_WORKDIR/dotfiles-private
