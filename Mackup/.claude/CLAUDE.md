@@ -18,14 +18,19 @@
 - A PR with any visual or UI change (dashboards, charts, web pages, app screens, rendered output) includes screenshots of the result in its description: the changed parts, and the states a reviewer needs.
 - Use the `toolbelt` CLI for stacked branches and worktrees. See `toolbelt git --help`.
 - Create the stacked branch with `toolbelt git append` before you start editing, not after. `append` commits any uncommitted changes onto the current branch as a checkpoint before it forks, so changes made first end up on the wrong branch and in its PR.
-- When addressing PR feedback on a PR that is ready for review or approved, only edit the PR's own branch for critical issues. Otherwise reply on the thread, resolve it, and stack any fix on a follow-up branch (`toolbelt git append`). It is better to stack than edit.
+- Where a fix for PR feedback goes depends on the PR's state:
+  - Critical issues (merge conflicts, CI failures the PR caused, bugs, security or data-loss risks) go on the PR's own branch, whatever its state.
+  - A draft has no reviewers to disturb: fix everything in place instead of stacking, then re-merge any child branches onto its new tip.
+  - A ready PR that is not approved yet: commit a non-critical fix to the branch only if it is minimal enough not to disrupt a human review; otherwise stack it.
+  - An approved PR: always stack a non-critical fix on a follow-up branch (`toolbelt git append`), however small. Reply on the thread, link the follow-up, and resolve it.
 - The exception is PR feedback that only asks for documentation or comment changes: update the PR itself, even if it is approved, rather than stacking a follow-up.
-- A PR that is still a draft has no reviewers to disturb: fix feedback on it in place instead of stacking, then re-merge any child branches onto its new tip.
+- `toolbelt git sync` (which `toolbelt git save` also runs) merges each parent into its children, or restacks a child with `git rebase --onto` once its parent has landed. On a conflict it stops with "Merge conflict while syncing" or "Rebase conflict restacking" and leaves that worktree mid-merge or mid-rebase. Resolving it is part of the task, even when it is in a child branch you did not edit: resolve it in that worktree, `git add`, and re-run `toolbelt git sync` (it continues a rebase in progress). Don't `git merge --abort` or `git rebase --abort` to get out of it, because that leaves the child's PR conflicting.
 - Keep a refactor of related functionality in one PR so a reviewer sees the whole design working, rather than spreading it across several PRs. Don't land scaffolding in one PR that a later PR deletes. Split a stack only along independent seams (a pure move, a separate behavior change), not along the steps of one refactor.
 
 ## Communication
 
 - When a message has several bullets or questions, answer each one in order, as a bullet-for-bullet reply: restate the bullet, then respond under it. Put details inside the matching bullet.
+- When you ask me a question or for a decision, make it self-contained: don't assume I've read the whole transcript or remember earlier context. For each one, say what it is about in a sentence, what is at stake (what happens under each answer), the options, your recommendation, and what you already checked or couldn't check, with links to the PR or ticket involved. Look up what you can yourself before asking. A few well-specified questions beat a long terse list.
 
 - When posting anywhere others read (GitHub comments and reviews, Slack, Jira, Notion comments), always identify yourself as AI, e.g. start with "🤖 AI-generated on behalf of Devon:".
 - When referring to a PR (or issue) in chat, write a markdown link whose text is the number and whose target is the full URL: `[#1692](https://github.com/dbt-labs/ai-codegen-api/pull/1692)`. The app renders it as `dbt-labs/ai-codegen-api#1692`. Never a bare `#123` and never the plain text `org/repo#123` (it doesn't render). Add a short description of what the PR does the first time. Never use an invented label such as "PR A" or "PR 2": the reader can't look those up.
@@ -33,4 +38,4 @@
 - Every PR that belongs to a Jira ticket gets the ticket key in its title and a link to the ticket in its body, and the PR is added to the ticket as a remote link (not only pasted in a comment). If a PR has no ticket, say so rather than leaving it out silently. Do this when creating the PR.
 - Keep the Jira status in step with the PR: draft PR or no PR yet is "In Progress", open non-draft PR is "In Review" (if the project has that status; if not, say so instead of leaving it "In Progress"), merged is "Done".
 - If a step needs the user to run a command or do something themselves (an SSO login, a reinstall, approving a permission, anything outside your reach), stop right away and say exactly what you need, instead of working around it or carrying on with the rest. Resume once they confirm.
-- Exception: after changing the `toolbelt` CLI, reinstall it yourself (`uv tool install --reinstall /Users/devonfulcher/git/toolbelt`) and confirm the installed copy has the change. No need to ask.
+- Exception: after changing the `toolbelt` CLI, reinstall it yourself, editable so `toolbelt ui` can find the web sources (`uv tool install --editable --reinstall /Users/devonfulcher/git/toolbelt`) and confirm the installed copy has the change. No need to ask.

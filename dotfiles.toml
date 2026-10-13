@@ -122,6 +122,11 @@ dest = "~/Library/Application Support/k9s/config.yaml"
 src = "Mackup/Library/LaunchAgents/com.user.docker.desktop.plist"
 dest = "~/Library/LaunchAgents/com.user.docker.desktop.plist"
 
+# `tt ui` as a login service: http://127.0.0.1:8765
+[[link]]
+src = "Mackup/Library/LaunchAgents/com.user.toolbelt.ui.plist"
+dest = "~/Library/LaunchAgents/com.user.toolbelt.ui.plist"
+
 # Shell and tool config in $HOME
 [[link]]
 src = "Mackup/.default-npm-packages"

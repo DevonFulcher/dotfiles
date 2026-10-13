@@ -62,20 +62,35 @@ You are shepherding a single PR. You have been given its JSON data.
    - Thrash (`thrash` is non-empty): the PR keeps getting re-blocked. Fix what is blocking it now, but don't assume more patching will converge — flag it in your result.
    - Being stacked on a blocked branch (nothing to fix on this PR itself; this does not stop it from being reviewed, so don't report waiting on the base PR)
 
-3. **Be cautious about changing the PR's branch.** Only push to the PR's own branch for **critical** issues:
+3. **Choose where the fix goes by the PR's state.** Push to the PR's own branch for **critical** issues, whatever the PR's state:
    - Merge conflicts
    - CI failures caused by the PR that block merging (broken build, failing tests, lint errors)
    - Bugs, security problems, or data-loss risks identified in review
 
-   For everything else (non-critical review feedback, nits, refactors, improvements), **append the fix on top of the stack** as a follow-up branch using `toolbelt git append` (see `toolbelt git --help`) and open it as a stacked PR. It is better to stack than edit. When in doubt, stack.
+   For everything else (non-critical review feedback, nits, refactors, improvements):
+   - **Draft PR** (`is_draft`): no reviewers to disturb, so fix it in place on the PR's branch, then re-merge any child branches onto its new tip.
+   - **Ready PR that is not approved yet**: commit the fix to the branch only if it is minimal enough not to disrupt a human review in progress (a typo, a rename, a one-line change). Otherwise stack it.
+   - **Approved PR**: always stack it, however small.
+
+   To stack, **append the fix on top of the stack** as a follow-up branch using `toolbelt git append` (see `toolbelt git --help`) and open it as a stacked PR. When in doubt, stack.
 
 4. **Make the fixes.** You must actually make the fix (on the PR branch for critical issues, on an appended branch otherwise), not just describe it. Identifying a fixable issue without fixing it is a failure.
    - **Before making any code changes**, review the PR's commit history (`git log origin/main...HEAD --oneline`) to understand what decisions have already been made. Do not revert or undo previously committed changes.
    - **Before pushing**, run the repo's full check suite (e.g. `task check` — look in the repo's CLAUDE.md for the exact command). Do not push without passing checks.
-   - For CI failures that are likely transient, re-run jobs.
+   - A transient CI failure is very likely a flake that needs fixing, not just retrying. Re-run the job (following the repo's CLAUDE.md rules on how to rerun) so the PR can move, and also work through **Flaky CI** below, whether or not the rerun passes. A rerun that passes proves the flake exists; it doesn't fix it.
    - For CI failures caused by code issues: find the repo under `$GIT_PROJECTS_WORKDIR`, use `toolbelt git` to work in a worktree for the PR branch, make the fix, run linters/tests, and push (to the PR branch if critical, otherwise to an appended branch).
    - For test failures: investigate whether they were introduced by the PR (`git diff origin/main...HEAD`). If pre-existing, note it but do not attempt a fix. If introduced by the PR, fix it.
    - **After pushing any code fix to the PR's branch**, review the PR description and update it if the changes materially affect scope or content (add/adjust the # What section or notes). For appended branches, write the new PR's description to cover the fix.
+
+   **Flaky CI.** Treat any failure that is not caused by the PR's diff as a flake until shown otherwise: "transient", "infrastructure" and "network" are descriptions of a flake, not reasons to skip it. Compare with `main` and other recent runs of the same workflow. Do not just rerun and move on:
+   1. **Find the failing test or step and the reason it fails** from the log (the assertion, the timeout, the HTTP error), and check how often it fails across recent runs on other branches.
+   2. **Look for existing work first**: search open PRs and branches for the same test or error (`gh pr list --search`). If someone is already fixing it, link that PR in your result and don't duplicate it.
+   3. **Decide who owns the cause.**
+      - Our code or tests: the flake is in the test (a timing or ordering assumption, an assertion on nondeterministic output) or in the source under test.
+      - Another team's system: a shared service, platform tooling or an external dependency (for example a warm-environment manager, a package or image registry, a GitHub Actions or runner problem, a third-party API). Find the owning team from CODEOWNERS, the repo's docs, `git log`/`git blame` of the relevant config, or the service's README, and name the team and the evidence in your result. Don't try to fix another team's system.
+   4. **If it is ours, fix it.** Make the smallest change that removes the nondeterminism. Prefer fixing the test over changing source, and change source only when the source is genuinely at fault. A test that asserts a third party's behavior (such as a provider's cache) should stop depending on it. Put the fix on a **new branch off the default branch**, not on the blocked PR's branch, so it can merge on its own: use `toolbelt git append` from a clean checkout of the default branch (it commits uncommitted changes onto the current branch first, so make sure there are none). Run the repo's full check suite, open it as a **draft** PR, and say in the description which runs flaked, and link them.
+   5. **If it isn't clear whether it is ours**, say what you checked and what is missing instead of guessing.
+   6. **Report it** in the `flake` field below.
 
 5. **Handle review threads.** Every comment you post must identify itself as AI, e.g. start with "🤖 AI-generated on behalf of Devon:".
    - For unresolved review comments (human or bot): evaluate whether the concern is valid. If a fix is warranted, apply it per step 3 and reply on the thread saying where the fix is (the pushed commit, or the stacked PR).
@@ -106,6 +121,7 @@ You are shepherding a single PR. You have been given its JSON data.
    - `reviews_status`: comma-separated from "Waiting on reviewer", "Approved", "Unresolved comments", "Draft"
    - `actions_performed`: everything done this run (code fixes and which branch they went to, comment replies, CI re-runs, thread resolutions). Use a dash if nothing was done.
    - `thrash`: the `thrash` signals from the PR JSON plus your read of the cause (e.g. a bot re-raising the same concern, a flaky test). Use a dash if none.
+   - `flake`: for a flaky CI failure, the failing test or step, the cause, who owns it (this repo or the named team, with evidence), and the link to the fix PR or the existing PR that fixes it. Use a dash if there was no flake.
    - `next_action`: what needs to happen next (one short sentence). Stacked PRs can be reviewed before their base merges, so never make waiting on a base PR the next action; only mention merge order if it matters.
 
 ---
