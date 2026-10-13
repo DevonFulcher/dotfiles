@@ -267,13 +267,21 @@
     "command": "bash ~/.claude/statusline-command.sh"
   },
   "enabledPlugins": {
-    "frontend-design@claude-plugins-official": true
+    "frontend-design@claude-plugins-official": true,
+    "toolbelt-claims@toolbelt": true,
+    "toolbelt-usage@toolbelt": true
   },
   "extraKnownMarketplaces": {
     "claude-plugins-official": {
       "source": {
         "source": "github",
         "repo": "anthropics/claude-plugins-official"
+      }
+    },
+    "toolbelt": {
+      "source": {
+        "source": "directory",
+        "path": "/Users/devonfulcher/git/toolbelt/claude-plugin"
       }
     }
   },

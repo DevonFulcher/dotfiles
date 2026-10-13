@@ -17,16 +17,18 @@
 - Verify a change end to end before opening a PR for review: run it on real data or in the real tool (render, open generated links, exercise the code path), not just unit tests and validators. State in the PR what was verified and how.
 - A PR with any visual or UI change (dashboards, charts, web pages, app screens, rendered output) includes screenshots of the result in its description: the changed parts, and the states a reviewer needs.
 - Use the `toolbelt` CLI for stacked branches and worktrees. See `toolbelt git --help`.
+- Create the stacked branch with `toolbelt git append` before you start editing, not after. `append` commits any uncommitted changes onto the current branch as a checkpoint before it forks, so changes made first end up on the wrong branch and in its PR.
 - When addressing PR feedback on a PR that is ready for review or approved, only edit the PR's own branch for critical issues. Otherwise reply on the thread, resolve it, and stack any fix on a follow-up branch (`toolbelt git append`). It is better to stack than edit.
 - The exception is PR feedback that only asks for documentation or comment changes: update the PR itself, even if it is approved, rather than stacking a follow-up.
 - A PR that is still a draft has no reviewers to disturb: fix feedback on it in place instead of stacking, then re-merge any child branches onto its new tip.
+- Keep a refactor of related functionality in one PR so a reviewer sees the whole design working, rather than spreading it across several PRs. Don't land scaffolding in one PR that a later PR deletes. Split a stack only along independent seams (a pure move, a separate behavior change), not along the steps of one refactor.
 
 ## Communication
 
 - When a message has several bullets or questions, answer each one in order, as a bullet-for-bullet reply: restate the bullet, then respond under it. Put details inside the matching bullet.
 
 - When posting anywhere others read (GitHub comments and reviews, Slack, Jira, Notion comments), always identify yourself as AI, e.g. start with "🤖 AI-generated on behalf of Devon:".
-- When referring to a PR (or issue), give its link, not just its number: `[title or short label](https://github.com/org/repo/pull/123)`. Never a bare `#123`.
+- When referring to a PR (or issue) in chat, write a markdown link whose text is the number and whose target is the full URL: `[#1692](https://github.com/dbt-labs/ai-codegen-api/pull/1692)`. The app renders it as `dbt-labs/ai-codegen-api#1692`. Never a bare `#123` and never the plain text `org/repo#123` (it doesn't render). Add a short description of what the PR does the first time. Never use an invented label such as "PR A" or "PR 2": the reader can't look those up.
 - Always include a link for every relevant resource you mention or rely on, not just PRs: Jira tickets, Slack threads, Notion pages, CI runs, docs. When tying work to a ticket or thread, link the PR to it and the ticket back to the PR, so each can be found from the other.
 - Every PR that belongs to a Jira ticket gets the ticket key in its title and a link to the ticket in its body, and the PR is added to the ticket as a remote link (not only pasted in a comment). If a PR has no ticket, say so rather than leaving it out silently. Do this when creating the PR.
 - Keep the Jira status in step with the PR: draft PR or no PR yet is "In Progress", open non-draft PR is "In Review" (if the project has that status; if not, say so instead of leaving it "In Progress"), merged is "Done".
