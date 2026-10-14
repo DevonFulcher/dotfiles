@@ -5,30 +5,19 @@
   <dict>
     <key>Label</key>
     <string>com.user.toolbelt.ui</string>
+    <!-- launchd does not expand $HOME, so the shell does: this file holds no
+         machine-specific paths and links unchanged on every laptop. -->
     <key>ProgramArguments</key>
     <array>
-      <string>/Users/devonfulcher/.local/bin/toolbelt</string>
-      <string>ui</string>
-      <string>--no-build</string>
-      <string>--port</string>
-      <string>8765</string>
+      <string>/bin/zsh</string>
+      <string>-c</string>
+      <string>export PATH="$HOME/.local/bin:$HOME/.asdf/shims:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"; mkdir -p "$HOME/.toolbelt"; exec toolbelt ui --no-build --port 8765 >>"$HOME/.toolbelt/ui.log" 2>&amp;1</string>
     </array>
-    <key>EnvironmentVariables</key>
-    <dict>
-      <key>PATH</key>
-      <string>/Users/devonfulcher/.local/bin:/Users/devonfulcher/.asdf/shims:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
-    </dict>
-    <key>WorkingDirectory</key>
-    <string>/Users/devonfulcher</string>
     <key>RunAtLoad</key>
     <true/>
     <key>KeepAlive</key>
     <true/>
     <key>ThrottleInterval</key>
     <integer>30</integer>
-    <key>StandardOutPath</key>
-    <string>/Users/devonfulcher/.toolbelt/ui.log</string>
-    <key>StandardErrorPath</key>
-    <string>/Users/devonfulcher/.toolbelt/ui.log</string>
   </dict>
 </plist>
