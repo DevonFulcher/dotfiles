@@ -10,6 +10,7 @@
 - Use terms directly from the data (field and column names) in labels, titles and docs rather than renaming them.
 - For greenfield code, prefer simple code over graceful degradation. Let errors propagate rather than preemptively handling failure modes you haven't actually encountered.
 - Comments and docstrings describe what the code does now and why. Don't narrate how it was worked out ("confirmed against…", "as of this writing", "not yet verified") or cite docs, tickets or threads the reader can't open. Put that context in the PR description instead.
+- When code is shaped for work that is coming (an abstraction with a single implementation today, a policy with one value, an extension point nothing uses yet), say so in a comment: what is coming and what it will change, in terms the reader can act on. Without it, the shape reads as needless indirection and gets removed or copied wrongly.
 
 ## Git
 
@@ -32,6 +33,7 @@
 
 - When a message has several bullets or questions, answer each one in order, as a bullet-for-bullet reply: restate the bullet, then respond under it. Put details inside the matching bullet.
 - When you ask me a question or for a decision, make it self-contained: don't assume I've read the whole transcript or remember earlier context. For each one, say what it is about in a sentence, what is at stake (what happens under each answer), the options, your recommendation, and what you already checked or couldn't check, with links to the PR or ticket involved. Look up what you can yourself before asking. A few well-specified questions beat a long terse list.
+- The same goes for any pointer to something from earlier in the session: leftovers, pending work, "still open", "as discussed". Never write a bare reference like "the scratch worktree and devspace are still open". For each item, say what it is, where it is (path, branch, namespace, PR link), why it exists, what it costs or risks to leave it, and what you propose to do. If you can't spell it out that fully, drop the mention or look it up first.
 
 - When posting anywhere others read (GitHub comments and reviews, Slack, Jira, Notion comments), always identify yourself as AI, e.g. start with "🤖 AI-generated on behalf of Devon:".
 - When referring to a PR (or issue) in chat, write a markdown link whose text is the number and whose target is the full URL: `[#1692](https://github.com/dbt-labs/ai-codegen-api/pull/1692)`. The app renders it as `dbt-labs/ai-codegen-api#1692`. Never a bare `#123` and never the plain text `org/repo#123` (it doesn't render). Add a short description of what the PR does the first time. Never use an invented label such as "PR A" or "PR 2": the reader can't look those up.

@@ -136,26 +136,72 @@ match shape.kind:
     assert_never(shape.kind)
 ```
 
-- More generally, prefer `match` with class patterns over `isinstance` to narrow any value's type, including exceptions. Use `isinstance` only where a `match` would be contrived, such as a single boolean test inside a comprehension or a `TypeGuard` helper.
+- In an open class hierarchy you own (one that others may subclass), don't branch on a value's class, neither with `isinstance` nor with `match` and class patterns. Each such branch is a place a new subclass can be forgotten, and they pile up as the codebase grows (a status mapper here, a message mapper there, a classifier elsewhere, all keyed on the same hierarchy). Put the answer on the type instead: an abstract method or property on an `ABC` base that every subclass must implement, so a new subclass cannot be instantiated without answering.
+  - Behavior that is intrinsic to the type is an abstract method (`error.retry_delay()`).
+  - A concern that belongs to another layer (HTTP status, rendering, serialization, telemetry) does not go on the domain class. Put a discriminator on the type, an abstract property returning an enum (`error.kind`), and let each layer map it with an exhaustive `match` on the enum. That is matching on a value, so it stays preferred.
+- `match` on classes stays right for a closed discriminated union (a fixed set of data variants such as `Ok | Error`): the type checker proves it exhaustive, and adding an operation doesn't touch every variant. It also stays right at the boundary with types you do not own (SDK, stdlib and other third-party classes): branch on them in one place to convert them into your own type, and use that type everywhere else. Separate `except` clauses for different exception types are fine, since that is the language's own dispatch.
+- Don't add inheritance only to avoid a branch; where the variants share no behavior, prefer the closed union or composition.
 
-Bad (isinstance chain):
+Bad (every new subclass must be remembered in each of these chains):
 ```python
-if isinstance(error, TimeoutError):
-  return "timeout"
-if isinstance(error, ConnectionError):
-  return "connection"
-return "other"
+def http_status(error: AppError) -> int:
+  match error:
+    case NotFoundError():
+      return 404
+    case ConflictError():
+      return 409
+    case _:
+      return 500
 ```
 
-Good (match on the class):
+Good (the type states its kind; the web layer maps the kind exhaustively):
 ```python
-match error:
-  case TimeoutError():
-    return "timeout"
-  case ConnectionError():
-    return "connection"
-  case _:
-    return "other"
+class ErrorKind(Enum):
+  NOT_FOUND = "not_found"
+  CONFLICT = "conflict"
+
+class AppError(Exception, ABC):
+  @property
+  @abstractmethod
+  def kind(self) -> ErrorKind: ...
+
+class NotFoundError(AppError):
+  @property
+  def kind(self) -> ErrorKind:
+    return ErrorKind.NOT_FOUND
+
+def http_status(error: AppError) -> int:
+  match error.kind:
+    case ErrorKind.NOT_FOUND:
+      return 404
+    case ErrorKind.CONFLICT:
+      return 409
+    case _:
+      assert_never(error.kind)
+```
+
+- Give every loop in production code a fixed upper bound visible at the loop. Don't write `while True` (or a `while` whose only exit is a condition computed inside the body) for retries, polling or draining; iterate over a bounded `range` or a finite collection, and handle running out of attempts explicitly. Reserve an unbounded loop for a process that is meant to run until shutdown (a worker or server loop), and say so in a comment.
+
+Bad (the bound is hidden inside the body):
+```python
+attempt = 0
+while True:
+  try:
+    return call()
+  except TransientError:
+    if attempt >= policy.max_retries:
+      raise
+    attempt += 1
+```
+
+Good (the bound is in the loop header):
+```python
+for attempt in range(MAX_RETRIES):
+  try:
+    return call()
+  except TransientError:
+    wait(attempt)
+return call()
 ```
 
 ## Async and concurrency
@@ -220,7 +266,7 @@ def label(count: int | None) -> str:
   return "none"
 ```
 
-- Avoid `getattr` and `hasattr`. Prefer explicit attributes, protocol/ABC interfaces, or `match` with concrete types.
+- Avoid `getattr` and `hasattr`. Prefer explicit attributes or protocol/ABC interfaces (methods on a class hierarchy).
 - Avoid `args` and `kwargs` parameters. Use specific types.
 - Avoid unpacking a dict into call arguments (`f(**fields)`) when the argument list is
   small and known. Write the arguments out so the call site shows what is being
