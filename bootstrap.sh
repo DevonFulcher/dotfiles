@@ -7,7 +7,6 @@ curl -fsSL https://claude.ai/install.sh | bash
 echo "Installing software with Homebrew"
 brew tap FelixKratz/formulae # used for borders
 brew install \
-  mackup \
   eza \
   bat \
   gh \

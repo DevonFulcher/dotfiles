@@ -164,14 +164,3 @@ dest = "~/.zshenv"
 [[link]]
 src = "Mackup/.zshrc"
 dest = "~/.zshrc"
-
-# Mackup's own config. Only needed while mackup is still installed; delete
-# these two entries (and the Mackup/.mackup* files) once it is gone.
-[[link]]
-src = "Mackup/.mackup"
-dest = "~/.mackup"
-kind = "dir"
-
-[[link]]
-src = "Mackup/.mackup.cfg"
-dest = "~/.mackup.cfg"
