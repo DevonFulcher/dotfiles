@@ -1,6 +1,6 @@
 ---
 name: pr-description
-description: The standard for every pull request description. Use whenever writing, opening, editing, improving or reviewing a PR description or PR body, including via `gh pr create` or `gh pr edit`. Defines the five sections (What, Why, How, Verified, Details), mermaid diagrams, and the PR conventions (Jira key, draft, links, attribution).
+description: The standard for every pull request description. Use whenever writing, opening, editing, improving or reviewing a PR description or PR body, including via `gh pr create` or `gh pr edit`. Defines the five sections (What, Why, How, Verified, Details), mermaid diagrams, list-first writing, GitHub links for every code reference, and the PR conventions (Jira key, draft, links, attribution).
 ---
 
 Every PR description has exactly these `##` sections, in this order: `What`, `Why`, `How`, `Verified`, `Details`.
@@ -26,6 +26,31 @@ Keep everything except `Details` high level. A reviewer must understand the whol
 
   The blank line after `<summary>` is required so markdown renders. Put here: file-by-file or job-by-job changes, event/decision matrices and tables, full verification output, edge cases, rejected alternatives, follow-ups, rollout/rollback notes, caveats and risks, lock/dependency changes. Mermaid diagrams may appear here too. Details must still be accurate and scannable: use headings and tables, not walls of text.
 
+## Writing style: lists over prose
+
+- Explain concepts, mechanisms and decisions as bulleted or numbered lists, not paragraphs. Use a numbered list for anything with an order (steps, a flow, an event sequence) and bullets for sets of facts, options or conditions.
+- One idea per item, short enough to scan. Prose is for the one-to-three sentence summaries in `What` and `Why`.
+- Prefer a table over a list when items share the same attributes (see `Details`).
+
+## Link every code reference
+
+Any mention of a file, directory, workflow, job, class, function, method, variable, config key, constant or specific statement is a link to that code on GitHub, on its first mention in each section (repeat the link where a reader would otherwise have to hunt for it).
+
+- **Where it points:** the PR's version when the PR adds or changes that code; `main` when the PR does not touch it. Pick whichever is more relevant to what the sentence says.
+- **Permalinks:** use a commit SHA, not a branch name, so the link and its line anchor don't drift: `https://github.com/<org>/<repo>/blob/<sha>/<path>#L10-L24`. For PR code use the PR head SHA (`gh pr view <n> --json headRefOid --jq .headRefOid`); for untouched code use the SHA of `main` at writing time (`gh api repos/<org>/<repo>/commits/main --jq .sha`). Check a link resolves (`gh api repos/<org>/<repo>/contents/<path>?ref=<sha>`).
+- **Granularity:** a file for a file; the definition line (`#L<n>`) for a class, function, variable or key; a line range for a statement or block. The link text is the name in backticks: [`claim_warm_env`](https://github.com/org/repo/blob/abc123/src/app.py#L42).
+- Re-point the links when the PR's head SHA changes materially (new commits that move or rewrite the referenced code).
+- Don't link what you cannot open (private repos the reader cannot see, local-only paths).
+
+## What GitHub renders: mermaid, not arbitrary HTML
+
+GitHub sanitizes HTML in descriptions (checked with `gh api markdown`):
+
+- Survives: `<details>`/`<summary>`, `<table>` (as plain tables), `<div align>`, `<img>` and `<picture>`, `<b>`, `<sub>`, `<sup>`, `<kbd>`, `<ins>`, `<br>`.
+- Stripped or escaped: `style=` attributes, `<style>`, `<script>`, `<iframe>`, inline `<svg>`, `<input>`, `<button>`, `<font>`, `javascript:` links.
+
+So an HTML page cannot be rendered inline. Use mermaid for diagrams. Use HTML only for the Details toggle, alignment, and side-by-side images. For a visual that mermaid cannot express, attach a screenshot or an SVG/PNG as an image (`<img>` or markdown), and link a hosted page if one exists.
+
 ## Mermaid diagrams: use them more often
 
 Put a diagram in `How` whenever the change involves a flow, sequence, state, branching conditions, pipeline/job dependencies, a request path, a stack of PRs, architecture, or before/after behavior. When behavior changes, show before and after. Skip it only for trivial changes (typo, version bump, one-line fix) and say why in `How`.
@@ -48,11 +73,12 @@ Put a diagram in `How` whenever the change involves a flow, sequence, state, bra
 ## Improving an existing description
 
 1. Read the diff and the existing body: `gh pr view <n> --json title,body,files,commits` and `gh pr diff <n>`.
-2. Sort the old body into high level vs detail. Move all detail into `Details`; add the How diagram.
+2. Sort the old body into high level vs detail. Move all detail into `Details`; add the How diagram. Turn prose that explains a concept into bulleted or numbered lists.
 3. Keep every verified fact, caveat and link from the old body. Relocate information, never drop it. Re-check cheap claims against the repo instead of trusting old text.
-4. Write the new body to a temp file and run `gh pr edit <n> --body-file <file>`. Never pass large bodies inline.
-5. Re-read the result: `gh pr view <n> --json body --jq .body`. Check the mermaid fences and the `<details>` structure are intact.
-6. Validate mermaid before publishing if a validator is available: `npx -y -p @mermaid-js/mermaid-cli mmdc -i diagram.mmd -o /tmp/out.svg`, or parse with the `mermaid` package. If it cannot be installed, say so and keep the diagram simple.
+4. Link every file, class, function, variable, key and statement mentioned (see "Link every code reference"): get the PR head SHA and the `main` SHA first, then link PR-changed code to the PR SHA and untouched code to `main`.
+5. Write the new body to a temp file and run `gh pr edit <n> --body-file <file>`. Never pass large bodies inline.
+6. Re-read the result: `gh pr view <n> --json body --jq .body`. Check the mermaid fences and the `<details>` structure are intact, and spot-check that code links resolve.
+7. Validate mermaid before publishing if a validator is available: `npx -y -p @mermaid-js/mermaid-cli mmdc -i diagram.mmd -o /tmp/out.svg`, or parse with the `mermaid` package. If it cannot be installed, say so and keep the diagram simple.
 
 ## Template
 
@@ -66,7 +92,9 @@ Ticket: [KEY-123](https://example.atlassian.net/browse/KEY-123)
 <Problem or motivation, and what happens without it. Link the originating thread.>
 
 ## How
-<Approach in a few sentences.>
+<Approach as a short list; link each code reference.>
+1. <step> in [`name`](https://github.com/org/repo/blob/<sha>/path/file.py#L10)
+2. <step>
 
 ```mermaid
 <diagram>
