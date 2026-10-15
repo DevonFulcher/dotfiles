@@ -2,7 +2,7 @@ Scan my repos and consolidate generally-applicable Claude settings into my user-
 
 1. **Discover per-repo settings**: Find all `.claude/settings.json` and `.claude/settings.local.json` files under `$GIT_PROJECTS_WORKDIR` (exclude this dotfiles repo). Read each one. Note: `settings.json` is team-shared (committed to git), while `settings.local.json` is personal (gitignored). Both can contain generally-applicable settings worth promoting.
 
-2. **Read current user-level settings**: Read `$GIT_PROJECTS_WORKDIR/dotfiles/Mackup/.claude/settings.json` — this is the user-level config (symlinked to `~/.claude/settings.json`).
+2. **Read current user-level settings**: Read `$GIT_PROJECTS_WORKDIR/dotfiles/home/.claude/settings.json` — this is the user-level config (symlinked to `~/.claude/settings.json`).
 
 3. **Identify generally-applicable settings**: For each per-repo settings file, identify settings that are NOT repo-specific. Use this guidance:
    - **Generally applicable** (candidates to promote):
@@ -32,6 +32,6 @@ Scan my repos and consolidate generally-applicable Claude settings into my user-
 6. **Wait for my approval**: Ask me to confirm before making any changes. Do NOT proceed without explicit approval.
 
 7. **Apply changes**: If I approve:
-   - Update `$GIT_PROJECTS_WORKDIR/dotfiles/Mackup/.claude/settings.json` with the consolidated settings
+   - Update `$GIT_PROJECTS_WORKDIR/dotfiles/home/.claude/settings.json` with the consolidated settings
    - Do NOT edit any per-repo settings files — only update the user-level dotfiles config
    - Commit the dotfiles repo change (only the dotfiles repo — do not commit to other repos)
