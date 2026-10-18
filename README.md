@@ -36,6 +36,7 @@ hook: `sh .githooks/test-pre-commit.sh`.
 7. Add secrets shell files in the `./secrets` directory:
   - `GITHUB_PERSONAL_ACCESS_TOKEN`: Access token for github-mcp-server.
   - `GITHUB_PERSONAL_EMAIL`: Personal email used in GitHub.
+  - `./secrets/toolbelt.sh`: `export JIRA_API_TOKEN=...`, the Atlassian API token `tt ui` uses to show each task's title and status (the account email and site are in toolbelt's config). The `tt ui` launchd service sources this file itself (see its plist), since `.zshenv` does not, so reload the service after changing it.
   - Per-machine flags go in `./secrets/machine.sh`, which `.zshenv` sources so non-interactive shells (agents, `zsh -c`) see them too. Do not put tokens in it:
     - `export IS_PERSONAL=true`: Set to true if this is a personal laptop. Toolbelt then makes `--task` optional on `tt git append`.
 8. Run `sh signing_commits.sh` to setup signing git commits. The script will copy a public key to the clipboard which needs to be added at `GitHub → Settings → SSH and GPG keys → New SSH key`

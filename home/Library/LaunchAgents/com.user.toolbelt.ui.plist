@@ -6,12 +6,14 @@
     <key>Label</key>
     <string>com.user.toolbelt.ui</string>
     <!-- launchd does not expand $HOME, so the shell does: this file holds no
-         machine-specific paths and links unchanged on every laptop. -->
+         machine-specific paths and links unchanged on every laptop. $DOTFILES comes
+         from .zshenv. toolbelt.sh (untracked, see README) holds the Jira API token;
+         only this service sources it, so it stays out of other non-interactive shells. -->
     <key>ProgramArguments</key>
     <array>
       <string>/bin/zsh</string>
       <string>-c</string>
-      <string>export PATH="$HOME/.local/bin:$HOME/.asdf/shims:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"; mkdir -p "$HOME/.toolbelt"; exec toolbelt ui --no-build --port 8765 >>"$HOME/.toolbelt/ui.log" 2>&amp;1</string>
+      <string>export PATH="$HOME/.local/bin:$HOME/.asdf/shims:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"; if [ -r "$DOTFILES/secrets/toolbelt.sh" ]; then . "$DOTFILES/secrets/toolbelt.sh"; fi; mkdir -p "$HOME/.toolbelt"; exec toolbelt ui --no-build --port 8765 >>"$HOME/.toolbelt/ui.log" 2>&amp;1</string>
     </array>
     <key>RunAtLoad</key>
     <true/>
