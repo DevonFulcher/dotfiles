@@ -43,6 +43,13 @@ else
   echo "gh is not authenticated; run 'gh auth login' then 'gh extension install github/gh-stack'"
 fi
 
+echo "Installing the gh-webhook extension (forwards GitHub webhooks to 'toolbelt ui' for repos you administer)"
+if gh auth status >/dev/null 2>&1; then
+  gh extension list | grep -q gh-webhook || gh extension install cli/gh-webhook
+else
+  echo "gh is not authenticated; run 'gh auth login' then 'gh extension install cli/gh-webhook'"
+fi
+
 echo "Installing the toolbelt-claims Claude Code mod (records which worktrees an agent session works on)"
 if [ -x $GIT_PROJECTS_WORKDIR/toolbelt/claude-plugin/install.sh ]; then
   # idempotent; exits 0 with a message when claude is not on PATH
