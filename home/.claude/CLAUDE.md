@@ -33,17 +33,17 @@
 ## Communication
 
 - When a message has several bullets or questions, answer each one in order: restate the item, then respond under it. Put details inside the matching item.
-- Label only what I am meant to respond to. Each question or decision for me gets one label, D1, D2, D3, ..., so I can answer "D2: option 1". Write each one in exactly this format (it is the only place nested bullets are allowed):
+- Label only what I am meant to respond to. Each question or decision for me gets one label, D1, D2, D3, ..., so I can answer "D2: O1". Write each one in exactly this format (it is the only place nested bullets are allowed):
 
   D<decision number>: <short title>
 
   - Context: <background information; don't assume I have read anything earlier in the transcript, and link the PR, ticket, thread or file involved>
-  - Option 1: <option title>
+  - O1: <option title>
     - Context: <what this option is and what picking it means>
     - Benefits: ...
     - Costs: ...
     - Risks: ...
-  - Option N: <option title> (same sub-bullets)
+  - ON: <option title> (same sub-bullets)
   - Recommendation: <which option and why, and what would change your mind>
 
   Everything else (status, results, what you did, background that is not a decision) is plain prose with no labels, no bullets and no nesting. If a reply has more than a handful of decisions, you have labelled things that don't need an answer: cut them.
@@ -54,6 +54,8 @@
 - The same goes for any pointer to something from earlier in the session: leftovers, pending work, "still open", "as discussed". Never write a bare reference like "the scratch worktree and devspace are still open". For each item, say what it is, where it is (path, branch, namespace, PR link), why it exists, what it costs or risks to leave it, and what you propose to do. If you can't spell it out that fully, drop the mention or look it up first.
 
 - When posting anywhere others read (GitHub comments and reviews, Slack, Jira, Notion comments), always identify yourself as AI, e.g. start with "🤖 AI-generated on behalf of Devon:".
+- Never attribute a decision, approval, reason or quote to me (or anyone) that I did not say. In PR descriptions, Jira, Slack and any other write-up, name a person as the source only when you can point to their words (a quote or close paraphrase, with a link for a comment or thread, or a message from me in the session). Label your own choices (scope limits, defaults, flags, rollout gates, naming) as the AI agent's proposals, not as mine. Check every attribution against the actual conversation before publishing; a brief, a summary or another agent's output is not a source. When delegating a write-up, pass each decision with who made it and their words, mark your own choices as proposals, and tell the agent to attribute exactly as given. An answer I give to one option you offered is my decision only for that option.
+- In anything other people read (PR descriptions, Jira, Slack, commit messages, review comments), never use chat shorthand: decision or option labels (D1, O1, "option 2", "the first option"), message or question numbers, "as discussed", or my abbreviations. Say the choice in plain words, naming what was chosen and what it was chosen over. If my reply was only a label, describe the choice instead of quoting it.
 - When referring to a PR (or issue) in chat, write a markdown link whose text is the number and whose target is the full URL: `[#1692](https://github.com/dbt-labs/ai-codegen-api/pull/1692)`. The app renders it as `dbt-labs/ai-codegen-api#1692`. Never a bare `#123` and never the plain text `org/repo#123` (it doesn't render). Add a short description of what the PR does the first time. Never use an invented label such as "PR A" or "PR 2": the reader can't look those up.
 - Always include a link for every relevant resource you mention or rely on, not just PRs: Jira tickets, Slack threads, Notion pages, CI runs, docs. When tying work to a ticket or thread, link the PR to it and the ticket back to the PR, so each can be found from the other.
 - Every PR that belongs to a Jira ticket gets the ticket key in its title and a link to the ticket in its body. Do not add the PR to the ticket as a remote link and do not mention missing remote links. If a PR has no ticket, say so rather than leaving it out silently. Do this when creating the PR.
