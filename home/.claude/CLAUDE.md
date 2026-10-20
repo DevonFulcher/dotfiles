@@ -26,24 +26,33 @@
 
   ```mermaid
   flowchart TD
-      A([Feedback or a needed change on a PR]) --> B{Critical? bug, conflict,<br/>CI failure it caused,<br/>security or data loss}
-      B -- yes --> IN
-      B -- no --> C{Docs or comment<br/>change only?}
+      A([Feedback or a needed change on a PR]) --> C{Docs or comment<br/>change only?}
       C -- yes --> IN
       C -- no --> D{Is the PR a draft?}
       D -- yes --> IN
       D -- no --> E{Did the user explicitly say<br/>to put it on the PR?}
       E -- yes --> IN
-      E -- no --> F{Who asked for it?}
-      F -- bot --> STACK
-      F -- human --> G{Is the PR approved?}
+      E -- no --> K{How critical is it?}
+      K -- critical: bug, conflict, CI failure it caused,<br/>security or data loss --> FIX[Fix it on the PR's own branch<br/>toolbelt git save]
+      FIX --> LOOP
+      K -- not critical --> S{What is its scope and impact?}
+      K -- unsure --> LOOP
+      S -- small, low impact --> G{Is the PR approved?}
+      S -- larger or wider impact --> STACK
+      S -- unsure --> LOOP
       G -- yes --> STACK
       G -- no --> IN
-      IN[On the PR's own branch.<br/>toolbelt git save updates the stack above]
-      STACK[Stacked follow-up branch, toolbelt git append.<br/>Reply on the thread, link it, resolve it]
+      IN[On the PR's own branch.<br/>toolbelt git save updates the stack above] --> W
+      STACK[Stacked follow-up branch, toolbelt git append] --> W
+      W{Who wrote the comment?}
+      W -- human --> LOOP
+      W -- AI --> N{Does it need Devon's intervention?}
+      N -- yes --> LOOP
+      N -- no --> REPLY[Reply on the thread, identified as AI,<br/>link the change, and resolve it]
+      LOOP([Get Devon in the loop: say what was changed,<br/>or ask with options and a recommendation])
   ```
 - `toolbelt git sync` (which `toolbelt git save` also runs) merges each parent into its children. When a parent has landed, or has been rewritten (restacked, amended or squashed), it instead replays the child's own commits onto it with `git rebase --onto` and force-pushes. On a conflict it stops with "Merge conflict while syncing", "Rebase conflict restacking" or "Rebase conflict replaying" and leaves that worktree mid-merge or mid-rebase. Resolving it is part of the task, even when it is in a child branch you did not edit: resolve it in that worktree, `git add`, and re-run `toolbelt git sync` (it continues a rebase in progress). Don't `git merge --abort` or `git rebase --abort` to get out of it, because that leaves the child's PR conflicting.
-- Keep a refactor of related functionality in one PR so a reviewer sees the whole design working, rather than spreading it across several PRs. Don't land scaffolding in one PR that a later PR deletes. Split a stack only along independent seams (a pure move, a separate behavior change), not along the steps of one refactor.
+- Keep a refactor of related functionality in one PR so a reviewer sees the whole design working, rather than spreading it across several PRs. Don't land scaffolding in one PR that a later PR deletes. Split a stack only along independent seams (a pure move, a separate behavior change), not along the steps of one refactor. A mechanical rename of a variable, file or class, or a move, goes in its own PR, not inside a refactor or feature PR.
 
 ## Communication
 
