@@ -22,11 +22,26 @@
 - `toolbelt git save`, `sync`, `append`, `set-parent`, `remove` and `merge` are safe, routine and expected, never destructive. They commit and push your own branches, merge parents into children, and (only when a parent landed or was rewritten) restack children with a lease-protected force-push, which is the intended behavior. Run them directly and without asking; they are explicitly authorized. Do not combine them with other commands in one shell call (a combined command can be denied as a whole by the permission classifier): run `toolbelt git save` on its own. If a call is denied anyway, retry it alone and say so; if it is denied again, replicate what it does with plain `git` (`git add`, `git commit`, `git push -u origin <branch>`, no force) and tell me, rather than stopping.
 - Create the stacked branch with `toolbelt git append` before you start editing, not after. `append` commits any uncommitted changes onto the current branch as a checkpoint before it forks, so changes made first end up on the wrong branch and in its PR.
 - If the work has no Jira ticket, create one before running `toolbelt git append` (it requires `--task`) and pass its key. Don't stop to ask for a key. Personal repos such as toolbelt and dotfiles don't need a ticket.
-- Where a fix for PR feedback goes depends on the PR's state:
-  - Critical issues (merge conflicts, CI failures the PR caused, bugs, security or data-loss risks) go on the PR's own branch, whatever its state.
-  - A draft has no reviewers to disturb: fix everything in place instead of stacking, then re-merge any child branches onto its new tip.
-  - A non-draft PR (approved or not) takes only critical fixes and documentation or comment changes on its own branch. Every other change, however small (a dependency or tooling change, a rename, a test tweak, a refactor, new behavior), goes on a stacked follow-up branch (`toolbelt git append`). Reply on the thread, link the follow-up, and resolve it. Don't fold a non-critical change into a non-draft PR because you are already pushing to it, and don't treat review feedback or a bot suggestion as critical just because it is a comment on the PR. Put a non-critical change on the PR itself only when I explicitly tell you to.
-- PR feedback that only asks for documentation or comment changes always goes on the PR itself, even if it is approved.
+- Where a fix for PR feedback goes follows this flow. A comment or bot suggestion is not critical just because it is a comment on the PR.
+
+  ```mermaid
+  flowchart TD
+      A([Feedback or a needed change on a PR]) --> B{Critical? bug, conflict,<br/>CI failure it caused,<br/>security or data loss}
+      B -- yes --> IN
+      B -- no --> C{Docs or comment<br/>change only?}
+      C -- yes --> IN
+      C -- no --> D{Is the PR a draft?}
+      D -- yes --> IN
+      D -- no --> E{Did the user explicitly say<br/>to put it on the PR?}
+      E -- yes --> IN
+      E -- no --> F{Who asked for it?}
+      F -- bot --> STACK
+      F -- human --> G{Is the PR approved?}
+      G -- yes --> STACK
+      G -- no --> IN
+      IN[On the PR's own branch.<br/>toolbelt git save updates the stack above]
+      STACK[Stacked follow-up branch, toolbelt git append.<br/>Reply on the thread, link it, resolve it]
+  ```
 - `toolbelt git sync` (which `toolbelt git save` also runs) merges each parent into its children. When a parent has landed, or has been rewritten (restacked, amended or squashed), it instead replays the child's own commits onto it with `git rebase --onto` and force-pushes. On a conflict it stops with "Merge conflict while syncing", "Rebase conflict restacking" or "Rebase conflict replaying" and leaves that worktree mid-merge or mid-rebase. Resolving it is part of the task, even when it is in a child branch you did not edit: resolve it in that worktree, `git add`, and re-run `toolbelt git sync` (it continues a rebase in progress). Don't `git merge --abort` or `git rebase --abort` to get out of it, because that leaves the child's PR conflicting.
 - Keep a refactor of related functionality in one PR so a reviewer sees the whole design working, rather than spreading it across several PRs. Don't land scaffolding in one PR that a later PR deletes. Split a stack only along independent seams (a pure move, a separate behavior change), not along the steps of one refactor.
 
