@@ -50,7 +50,7 @@ else
   echo "gh is not authenticated; run 'gh auth login' then 'gh extension install cli/gh-webhook'"
 fi
 
-echo "Installing the toolbelt-claims Claude Code mod (records which worktrees an agent session works on)"
+echo "Installing the toolbelt Claude Code mods (toolbelt-claims records which worktrees an agent session works on) and registering the toolbelt-decisions MCP server (lets a session ask you to decide: claude mcp add --scope user toolbelt-decisions -- toolbelt decisions mcp)"
 if [ -x $GIT_PROJECTS_WORKDIR/toolbelt/claude-plugin/install.sh ]; then
   # idempotent; exits 0 with a message when claude is not on PATH
   $GIT_PROJECTS_WORKDIR/toolbelt/claude-plugin/install.sh || echo "toolbelt-claims install failed; re-run claude-plugin/install.sh in toolbelt"

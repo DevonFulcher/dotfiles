@@ -14,9 +14,11 @@ the private `dotfiles-private` repo. Which repos are used is set by
   moved into `~/.toolbelt/dotfiles-backups/<timestamp>/`.
 - `tt dotfiles check`: scan this public repo for secret-looking content.
 
-`bootstrap.sh` also installs the `toolbelt-claims` Claude Code mod (user scope)
-by running `$GIT_PROJECTS_WORKDIR/toolbelt/claude-plugin/install.sh` when it
-exists; re-run that script to update it.
+`bootstrap.sh` also installs the toolbelt Claude Code mods (`toolbelt-claims`,
+`toolbelt-usage`; user scope) and registers the `toolbelt-decisions` MCP server
+(`claude mcp add --scope user toolbelt-decisions -- toolbelt decisions mcp`) by
+running `$GIT_PROJECTS_WORKDIR/toolbelt/claude-plugin/install.sh` when it exists;
+re-run that script to update them.
 
 `tt dotfiles link` also points this repo's `core.hooksPath` at `.githooks`, whose
 `pre-commit` hook runs `tt dotfiles check` and rejects a commit that contains
