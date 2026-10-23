@@ -28,38 +28,49 @@ The first lines of the body, above `## What` and with no heading of their own. T
 - **What**: 1-3 sentences on the change and its user-visible or reviewer-visible outcome. When the approach is not obvious from `Before`/`After`, follow with a short numbered list of how it works, one idea per step, linking each code reference. The detailed mechanics (every file, every call site) go in `Details`. No ticket or stack lines here; they are in the header. There is no separate `How` section.
 - **Before** and **After**: short excerpts of the relevant parts of the change, side by side in meaning, so a reviewer sees the shape of the change without reading the diff. See "Before and After" below.
 - **Why**: the motivation, the problem, what happens without the change. Link the originating discussion, PR review, Slack thread or incident when there is one (full URLs). Don't invent numbers or link what you cannot open.
-- **Decision Record**: the decisions the PR was built around and how each was carried out, written the way decisions are discussed in review. A decision comes from the author (me), a reviewer or another person: a request in chat, a review comment, a Slack thread, a ticket comment, a design doc. One entry per decision, in the order they were made, in exactly this shape:
+- **Decision Record**: the decisions the PR was built around and how each was carried out, written the way decisions are discussed in review. A decision comes from the author (me), a reviewer or another person: a request in chat, a review comment, a Slack thread, a ticket comment, a design doc. One entry per decision, in the order they were made, in exactly this shape: a bold lead a reviewer can read on its own, with the supporting bullets folded into a `Details` toggle.
 
   ```markdown
-  - **Devon** (chat): Keep the retry policy unchanged
-    - Context: the new classifier could have replaced the schedule; Devon wanted no behavior change in retries. Left [`retry_policy.py`](https://github.com/org/repo/blob/<sha>/src/app/retry_policy.py#L108) as it was, so the new classifier feeds the same schedule.
+  - **Devon** (chat): **Keep the retry policy unchanged.** The new classifier feeds the existing schedule in [`retry_policy.py`](https://github.com/org/repo/blob/<sha>/src/app/retry_policy.py#L108) instead of replacing it, so retry timing stays the same as today.
+    <details>
+    <summary>Details</summary>
+
+    - Context: the new classifier could have replaced the schedule, and Devon wanted no behavior change in retries ("keep retries as they are").
     - Benefits: retry timing is identical to today.
     - Costs: the classifier keeps a mapping layer it could otherwise drop.
     - Risks: the mapping can drift from the schedule table; a test pins it.
     - Alternatives: derive the schedule from the new classes (rejected: changes retry timing).
-  - **wiggzz** ([review comment](https://github.com/org/repo/pull/123#discussion_r1)): Drop the fallback path
+
+    </details>
+  - **wiggzz** ([review comment](https://github.com/org/repo/pull/123#discussion_r1)): **Drop the fallback path.** <what was removed and what replaces it, with a code link>
+    <details>
+    <summary>Details</summary>
+
     - Context: ...
     - Benefits: ...
     - Costs: ...
     - Risks: ...
     - Alternatives: ...
+
+    </details>
   ```
 
-  - First line: `**<Who>** (<where>): <Decision title>`. Name who made it and where (link the thread, comment or doc when it can be opened; "chat" when it was said to the agent in a session); the title is a few words naming the decision, not the instruction's full text.
-  - Then the five sub-bullets, always in this order: `Context` (the situation and how the PR carries the decision out, linking the code or commit), `Benefits`, `Costs`, `Risks`, `Alternatives` (what else was considered and why it was not chosen). Keep each to one or two lines; put long reasoning in `Details`. Write `None` rather than dropping a sub-bullet.
-  - Include decisions that shaped scope, design or behavior, and any that were deliberately **not** followed (record the instruction as the title, and the reason in `Context`). Leave out routine ones (fix a typo, rename a variable).
+  - **The lead line** is `**<Who>** (<where>): **<Decision title>.** <one or two sentences>`. Name who made the decision and where (link the thread, comment or doc when it can be opened; "chat" when it was said to the agent in a session). The bold title is a few words naming the decision, not the instruction's full text. The sentences after it say, in plain words, what was decided, what it was chosen over when there was a real alternative, and how the PR carries it out, linking the code or commit. A reviewer who reads only the lead lines should be able to follow the decisions without opening a toggle.
+  - **The `Details` toggle** holds the five sub-bullets, always in this order: `Context` (the situation and why it came up, with the person's short quote when they gave a reason), `Benefits`, `Costs`, `Risks`, `Alternatives` (what else was considered and why it was not chosen). Keep each to one or two lines; put long reasoning in the PR's own `Details`. Write `None` rather than dropping a sub-bullet. The toggle is indented to the list item, with a blank line after `<summary>` and before `</details>`, so it renders inside the list.
+  - Include decisions that shaped scope, design or behavior, and any that were deliberately **not** followed (record the instruction as the title, the reason in the lead sentences, and the person's quote in `Context`). Leave out routine ones (fix a typo, rename a variable).
   - It is not a changelog: do not list changes nobody asked for; those belong in `What` and `Details`.
-  - Leave the section out only when nobody gave instructions beyond the ticket, as for a trivial change.
+  - Only human decisions go in the record. A choice the agent made itself (a scope limit, default, flag, rollout gate, list of statuses or types, naming, or where code lives) is not a decision entry, even labelled as the agent's: describe it in `What` or `Details` as how the change works, without attribution.
+  - Leave the section out when no person gave an instruction or made a choice beyond the ticket, as for a trivial change or a PR the agent designed alone. Do not write a section that only says there were none.
 
   Attribution is the part reviewers trust, so it is strict. Never put a decision, a reason or a quote in a person's name unless they said it:
   - **Attribute only what the person said.** Name a person as the source of a decision only when you can point to their words: a quote or close paraphrase from their message, with a link to the review comment, thread or doc, or, for a chat decision, a message from the user in the session. If you cannot point to their words, it is not their decision.
-  - **Your own choices are yours.** Any scope limit, default, flag, rollout gate, list of statuses or types, naming or other choice the person did not state, including one you made while following a ticket or a brief, is recorded as `**AI agent** (proposal in chat, not confirmed by <author>): <title>`. Never record it under a person's name, and never as "ship it" because the person approved something nearby.
+  - **Your own choices are not in the record.** Any scope limit, default, flag, rollout gate, list of statuses or types, naming or other choice the person did not state, including one you made while following a ticket or a brief, stays out of the `Decision Record`. Never record it under a person's name, and never as "ship it" because the person approved something nearby.
   - **A pick covers only that pick.** When you offered options and the person chose one, the decision is theirs, described in plain words as what they chose over what ("chose to keep the Helm value rather than make the behavior always on"), and it covers only that choice. Silence, "looks good", or an answer to a different question confirms nothing else.
-  - **Confirmation changes the entry.** When the author later confirms a proposal, change the attribution to them and say how in `Context`, in plain words ("chose to keep it rather than ..."). Until then it stays marked as an unconfirmed AI proposal.
+  - **Confirmation adds the entry.** When the author later states or confirms a choice you made, add it as their decision with their words in `Context`, in plain words ("chose to keep it rather than ..."). Until then it is not in the record.
   - **Write for a reader who was not in the conversation.** Never use chat shorthand in the description: decision or option labels (`D1`, `O2`, "option 1", "the first option"), message or question numbers, "as discussed", "per the earlier list", or abbreviations only the author knows. Describe each choice in plain words, naming what was chosen and what it was chosen over. If a person's reply was only a label, do not quote it; describe the choice in plain words and attribute it to them.
   - **Quote, do not reword.** When the person gave a reason, put a short verbatim quote in `Context`. Never tidy or invent a quote, and never supply a rationale and attribute it to them.
-  - **A brief is not a source.** When another agent, a summary or a delegation brief supplies the decisions, check each attribution against the original conversation, review comment or thread before publishing. A brief that says "put these in the record" does not make them the author's; decisions in it that the author never stated go in as AI proposals.
-  - **When you delegate the description,** write each decision into the brief with who made it and their words, mark your own choices as proposals, and tell the agent to attribute exactly as given.
+  - **A brief is not a source.** When another agent, a summary or a delegation brief supplies the decisions, check each attribution against the original conversation, review comment or thread before publishing. A brief that says "put these in the record" does not make them the author's; decisions in it that the author never stated are left out.
+  - **When you delegate the description,** write each human decision into the brief with who made it and their words, leave your own choices out of the decisions, and tell the agent to attribute exactly as given.
 - **Verified**: the testing done **in addition to** the normal tests and checks, a `Coverage` list of what is and is not tested, and a `Not verified` list. Do not list or count what CI already runs (unit tests, lint, type checks, build, pre-commit): the PR's checks show it. Include what CI cannot show:
   - a manual or end-to-end run, with the exact command and a link to the output or run;
   - a run on real data or in the real tool (a render, a deployed environment, a devspace);
@@ -145,9 +156,10 @@ When one is worth it:
 - Open PRs as draft unless told otherwise.
 - Link the Jira ticket in the body. Do not add the PR to the Jira issue as a remote link. Keep status in step: draft or in progress = In Progress, open non-draft = In Review, merged = Done. With no ticket, say so explicitly.
 - Refer to related PRs, such as others in a stack, by full markdown link plus a short description of what each does: `[#1692](https://github.com/org/repo/pull/1692) adds X`. Never a bare `#123`, never invented labels like "PR A".
+- Never mention `toolbelt` (Devon's personal tool) in a description or in the code, comments and docs of the PR. Describe the general mechanism instead, such as a stack sync, a merge of `main`, or GitHub's "Update branch".
 - Public repos (for example dbt-labs/dbt-mcp) must not mention internal repos, internal Jira URLs or internal Slack.
 - Documentation- or comment-only changes still get the header, `What`, `Why` and `Verified`, but each may be one line; skip `Before`, `After` and `Decision Record`.
-- Never attribute a decision, approval, reason or quote to a person who did not say it (see `Decision Record`). Your own choices are labelled as the AI agent's.
+- Never attribute a decision, approval, reason or quote to a person who did not say it (see `Decision Record`). Your own choices are not recorded as decisions.
 - The description is read by people who were not in the conversation: no chat shorthand such as `D1`, `O1` or "option 2", and no references to earlier messages. Say the choice in plain words.
 - The last line of every description is `🤖 Generated with AI assistance`.
 
@@ -155,7 +167,7 @@ When one is worth it:
 
 1. Read the diff and the existing body: `gh pr view <n> --json title,body,files,commits` and `gh pr diff <n>`.
 2. Sort the old body into high level vs detail. Move all detail into `Details`. Move the ticket, stack and design lines into the header block. Add `Before` and `After` excerpts of the relevant parts of the change. Fold a `How` section into `What` (a short list) and `Details` (the mechanics). Add a `Decision Record` from the decisions and instructions in the old body, the PR's review threads and the conversation that produced it. Cut `Verified` down to testing beyond CI. Add a diagram only if it passes the test in "Mermaid diagrams"; remove one that does not. Turn prose that explains a concept into bulleted or numbered lists.
-3. Check every attribution in the `Decision Record` against the source (see "Attribute only what the person said"): for each entry naming a person, find the message, comment or thread with their words and put a quote in `Context`; recheck whether the conversation later confirmed or changed the decision; move any entry without their words to an `AI agent` proposal, and keep it marked unconfirmed. Replace any chat shorthand (`D1`, `O1`, "option 2") with plain words. Do this even when the entries came from an old body, a summary or another agent's brief.
+3. Check every attribution in the `Decision Record` against the source (see "Attribute only what the person said"): for each entry naming a person, find the message, comment or thread with their words and put a quote in `Context`; recheck whether the conversation later confirmed or changed the decision; remove any entry without their words from the record (describe it in `What` or `Details` if it still matters). Replace any chat shorthand (`D1`, `O1`, "option 2") with plain words. Do this even when the entries came from an old body, a summary or another agent's brief.
 4. Keep every verified fact, caveat and link from the old body. Relocate information, never drop it. Re-check cheap claims against the repo instead of trusting old text.
 5. Link every file, class, function, variable, key and statement mentioned (see "Link every code reference"): get the PR head SHA and the `main` SHA first, then link PR-changed code to the PR SHA and untouched code to `main`.
 6. Write the new body to a temp file and run `gh pr edit <n> --body-file <file>`. Never pass large bodies inline.
@@ -191,24 +203,28 @@ Design: [title](https://example.com/design)
 <Problem or motivation, and what happens without it. Link the originating thread.>
 
 ## Decision Record
-- **<Who>** (<where, linked>): <Decision title>
-  - Context: <the situation, and how the PR carries the decision out, with a code or commit link>
+- **<Who>** (<where, linked>): **<Decision title>.** <What was decided, what it was chosen over, and how the PR carries it out, with a code or commit link.>
+  <details>
+  <summary>Details</summary>
+
+  - Context: <the situation and why it came up; the person's short quote when they gave a reason>
   - Benefits: ...
   - Costs: ...
   - Risks: ...
   - Alternatives: ...
-- **<Who>** (<where>): <An instruction deliberately not followed>
-  - Context: not done because <reason>
+
+  </details>
+- **<Who>** (<where>): **<An instruction deliberately not followed.>** <What was asked and why the PR does not do it.>
+  <details>
+  <summary>Details</summary>
+
+  - Context: ...
   - Benefits: ...
   - Costs: ...
   - Risks: ...
   - Alternatives: ...
-- **AI agent** (proposal in chat, not confirmed by <author>): <A choice nobody stated>
-  - Context: the author did not state this; the agent chose it because <reason>, carried out in <code link>
-  - Benefits: ...
-  - Costs: ...
-  - Risks: ...
-  - Alternatives: ...
+
+  </details>
 
 ## Verified
 - <testing beyond CI: the command or run and a link to its output>.
