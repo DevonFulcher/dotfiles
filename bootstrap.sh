@@ -172,7 +172,7 @@ run brew tap FelixKratz/formulae # used for borders
 run brew install \
   eza bat gh fzf git-delta difftastic direnv beads \
   koekeishiya/formulae/yabai koekeishiya/formulae/skhd borders \
-  rip2 1password-cli asdf starship sst/tap/opencode tmux uv
+  rip2 1password-cli asdf starship tmux uv
 run brew install --cask raycast iterm2
 
 # ---------------------------------------------------------------------------

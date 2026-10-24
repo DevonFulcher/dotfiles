@@ -97,11 +97,6 @@ src = "home/.config/git/ignore"
 dest = "~/.config/git/ignore"
 
 [[link]]
-src = "home/.config/opencode"
-dest = "~/.config/opencode"
-kind = "dir"
-
-[[link]]
 src = "home/.config/skhd/skhdrc"
 dest = "~/.config/skhd/skhdrc"
 

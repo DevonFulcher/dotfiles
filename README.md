@@ -80,6 +80,7 @@ Two commands, one on each machine. Nothing in this repo depends on the user name
   ones you use. Repos not under `~/git` are not recreated.
 - `DEVSPACE_NAMESPACE` defaults to `dev-$USER`; set it in `secrets/machine.sh`
   when the namespace differs from the account name.
+- On a laptop that had opencode linked, `tt dotfiles link` leaves the dangling `~/.config/opencode` symlink (it only prunes stale links inside `merge_dir` folders): `rm ~/.config/opencode`.
 - Open a new terminal and run `toolbelt dotfiles status`.
 
 ### Intentionally not carried
