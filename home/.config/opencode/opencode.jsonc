@@ -45,7 +45,7 @@
         "uvx",
         "arxiv-mcp-server",
         "--storage-path",
-        "/Users/devon/data/arxiv-mcp-server"
+        "{env:HOME}/data/arxiv-mcp-server"
       ],
       "enabled": true
     }

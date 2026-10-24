@@ -18,7 +18,7 @@ alias dbt-mcp-cli="$HOME/.dbt-mcp/dbt-mcp"
 alias aca="$GIT_PROJECTS_WORKDIR/ai-codegen-api"
 
 # dbt aliases
-alias dbtf=/Users/devonfulcher/.local/bin/dbt
+alias dbtf="$HOME/.local/bin/dbt"
 
 export APPLE_SSH_ADD_BEHAVIOR="macos"
 export GITHUB_TOKEN="$HOMEBREW_GITHUB_API_TOKEN"
@@ -32,7 +32,7 @@ fi
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/amazon-corretto-17.jdk/Contents/Home
 
 # bun completions
-[ -s "/Users/devonfulcher/.bun/_bun" ] && source "/Users/devonfulcher/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
@@ -43,9 +43,11 @@ if [ -f "$HOME/.cargo/env" ]; then
 fi
 
 export AWS_USER="devon.fulcher"
-export AFS_JDBC_DRIVER=/Users/devonfulcher/drivers/flight-sql-jdbc-driver-12.0.0.jar
+export AFS_JDBC_DRIVER="$HOME/drivers/flight-sql-jdbc-driver-12.0.0.jar"
 alias tableau="/Applications/Tableau\ Desktop\ 2023.2.app/Contents/MacOS/Tableau -DDisableVerifyConnectorPluginSignature=true -DConnectPluginsPath=$GIT_PROJECTS_WORKDIR/semantic-layer-gateway/integrations/tableau"
-export DEVSPACE_NAMESPACE="dev-devonfulcher"
+# Defaults to the macOS user; set DEVSPACE_NAMESPACE in secrets/machine.sh when the
+# namespace differs from the account name.
+export DEVSPACE_NAMESPACE="${DEVSPACE_NAMESPACE:-dev-$USER}"
 
 kubectl config set-context --current --namespace=$DEVSPACE_NAMESPACE > /dev/null 2>&1
 
@@ -202,7 +204,7 @@ function run-sql-file-codex() {
 }
 
 # pnpm
-export PNPM_HOME="/Users/devonfulcher/Library/pnpm"
+export PNPM_HOME="$HOME/Library/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
