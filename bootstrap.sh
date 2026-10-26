@@ -49,6 +49,12 @@ run_sh() {
 have() { command -v "$1" >/dev/null 2>&1; }
 
 # ---------------------------------------------------------------------------
+step "Rosetta (the dotfiles ask asdf for amd64 terraform and helm builds)"
+if [ "$(uname -m)" = arm64 ] && ! pgrep oahd >/dev/null 2>&1; then
+  run softwareupdate --install-rosetta --agree-to-license ||
+    follow_up "Rosetta did not install: run softwareupdate --install-rosetta --agree-to-license"
+fi
+
 step "Homebrew"
 if ! have brew; then
   run_sh '/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
