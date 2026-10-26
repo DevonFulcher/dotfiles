@@ -28,60 +28,85 @@ hook: `sh .githooks/test-pre-commit.sh`.
 
 ## Setup: moving to a new laptop
 
-Two commands, one on each machine. Nothing in this repo depends on the user name
-(`$HOME` everywhere), so the new laptop's account may be named differently.
+Nothing in this repo depends on the user name (`$HOME` everywhere), so the new
+laptop's account may be named differently. In short: **export on the old laptop,
+run `bootstrap.sh` on the new one, do the few sign-ins it lists, and run it
+again.** The script is safe to re-run; it skips what is done.
 
-1. **Old laptop**: `toolbelt machine export`. It stores one archive in 1Password
-   (the document "toolbelt machine archive"; `--to-file PATH` writes a file
-   instead) and prints a checklist of work git does not carry: uncommitted
-   changes, unpushed commits and stashes. Commit and push those first. It refuses
-   while an autonomous run is active, a decision is pending, or
-   `secrets/machine.sh` says `IS_PERSONAL=true`; `--force` overrides. What is
-   carried is documented in toolbelt's `docs/machine-move.md`.
-2. **New laptop**: run the bootstrap (or `sh bootstrap.sh` from a clone;
-   `DRY_RUN=1` prints the steps without running them):
+### 1. On the old laptop
 
-   ```sh
-   sh -c "$(curl -fsSL https://raw.githubusercontent.com/DevonFulcher/dotfiles/main/bootstrap.sh)"
-   ```
+Commit or discard uncommitted changes in the repos you work in, then run
+`toolbelt machine export`. It:
 
-   It installs Homebrew, 1Password and its CLI, **stops for your 1Password
-   sign-in**, fetches the archive, restores the SSH keys first (the private repos
-   are cloned over SSH), clones `dotfiles`, `dotfiles-private` and `toolbelt`
-   under `$GIT_PROJECTS_WORKDIR` (default `~/git`), installs the rest (Homebrew,
-   asdf, uv tools, Claude Code), runs `toolbelt dotfiles link`, runs
-   `toolbelt machine import` (secrets, toolbelt's DB with the old home rewritten
-   to the new one, clones the repos toolbelt tracks, recreates their worktrees),
-   installs the Claude plugins and loads the launchd agents. It can be re-run: it
-   skips what is done. It ends by printing the checklist below with anything that
-   failed added.
+- pushes the branches only this laptop has (open PRs and branches that already
+  have an upstream; never by force; branches whose PR is merged or closed are
+  left alone and listed);
+- stops the `tt ui` service and its webhook forwarders (GitHub allows one
+  forwarder per repo, so the old laptop's would block the new one's);
+- stores one archive in 1Password: a *Document* item titled "toolbelt machine
+  archive", in the `op` CLI's default vault (`--vault NAME` picks another;
+  `--to-file PATH` writes a file instead). It holds the secrets, your SSH keys,
+  toolbelt's DB and Claude's memory files;
+- prints what git still does not carry: uncommitted changes and unpushed commits
+  to deal with, and how many stashes there are (not carried).
 
-### Manual steps
+It refuses while an autonomous run is active, a decision is pending, or
+`secrets/machine.sh` says `IS_PERSONAL=true` (`--force` overrides). What is
+carried is in toolbelt's `docs/machine-move.md`.
 
-- Sign in to 1Password (the script waits for it): app, then Settings >
-  Developer > "Integrate with 1Password CLI".
-- `gh auth login` with the work account, then
-  `gh extension install github/gh-stack` and `gh extension install cli/gh-webhook`.
-- Authorize the restored SSH key for the GitHub org's SSO (GitHub > Settings >
-  SSH and GPG keys > Configure SSO). Until then cloning the org's repos fails;
-  `toolbelt machine import` lists them under "Still to do", and re-running it
-  after authorizing clones them. Once the old laptop is retired, remove its key
-  from GitHub: the private key now also lives in the 1Password archive.
-- macOS permissions: Accessibility for yabai and skhd (System Settings > Privacy &
-  Security), then `yabai --start-service` and `skhd --start-service`.
-- Approve any MDM / company software prompts.
-- Sign in to Raycast, Cursor (and install its extensions) and the 1Password
-  browser extension.
-- Check `secrets/machine.sh`: `IS_PERSONAL` must not be `true` on a work laptop.
-- Install `MonaspaceNeon-Regular.otf` from
-  [Monaspace](https://github.com/githubnext/monaspace/releases).
-- Adjust `Key repeat rate` and `Delay until repeat` in the Keyboard settings.
-- Worktrees come back as plain checkouts: run `uv sync` / `asdf install` in the
-  ones you use. Repos not under `~/git` are not recreated.
-- `DEVSPACE_NAMESPACE` defaults to `dev-$USER`; set it in `secrets/machine.sh`
-  when the namespace differs from the account name.
-- On a laptop that had opencode linked, `tt dotfiles link` leaves the dangling `~/.config/opencode` symlink (it only prunes stale links inside `merge_dir` folders): `rm ~/.config/opencode`.
-- Open a new terminal and run `toolbelt dotfiles status`.
+### 2. On the new laptop
+
+```sh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/DevonFulcher/dotfiles/main/bootstrap.sh)"
+```
+
+(or `sh bootstrap.sh` from a clone; `DRY_RUN=1` prints the steps without running
+them.) It stops once, for your **1Password sign-in** (the app, then Settings >
+Developer > "Integrate with 1Password CLI"). Everything else it does by itself:
+
+- installs Homebrew, 1Password, git, the formulae and casks listed in the
+  script (including iTerm2 and the Monaspace font), Cursor, Claude Code, asdf and
+  its tools, and the uv tools;
+- restores your SSH keys first, then clones `dotfiles`, `dotfiles-private` and
+  `toolbelt` under `$GIT_PROJECTS_WORKDIR` (default `~/git`);
+- installs toolbelt, runs `toolbelt dotfiles link` and `toolbelt machine import`
+  (secrets, the toolbelt DB with the old home rewritten to the new one, the repos
+  toolbelt tracks cloned, their worktrees recreated);
+- runs `toolbelt machine setup` (`asdf install` and `uv sync` in each tracked
+  repo's checkout; `toolbelt machine setup --worktrees` does the worktrees too);
+- installs the Claude plugins and MCP servers, builds the `tt ui` web app, loads
+  the launchd agents, sets the keyboard repeat, starts yabai and skhd, and checks
+  `secrets/machine.sh`.
+
+It ends by printing what is left, which is the list below.
+
+### 3. By hand afterwards
+
+These need you (a browser sign-in, a macOS permission, a company prompt); the
+script cannot do them. It prints this same list at its end, with anything that
+failed added.
+
+1. `gh auth login` with the work account, and authorize the restored SSH key for
+   the GitHub org's SSO (GitHub > Settings > SSH and GPG keys > Configure SSO).
+   Until then cloning the org's repos fails and the script lists them.
+2. **Run `bootstrap.sh` again.** It now installs the `gh` extensions, clones the
+   org's repos, recreates their worktrees and sets them up.
+3. `claude auth login` (Claude Code, and so the autonomous agents; the MCP
+   servers that need it ask you to sign in the first time they are used).
+4. System Settings > Privacy & Security: Accessibility for yabai and skhd, Screen
+   Recording for yabai. Approve any company (MDM) software prompts.
+5. Sign in to Cursor (and install its extensions), set up iTerm2, and sign in to
+   the 1Password browser extension.
+6. Log out and in once (the keyboard repeat applies then), open a new terminal and
+   run `toolbelt dotfiles status`: it should say 0 need attention.
+7. Once the old laptop is retired, remove its SSH key from GitHub: the private
+   key now also lives in the 1Password archive.
+
+Also worth knowing:
+
+- Repos that are not under `~/git` are not recreated.
+- `DEVSPACE_NAMESPACE` defaults to `dev-$USER`; set it in `secrets/machine.sh` when
+  the namespace differs from the account name.
 
 ### Intentionally not carried
 

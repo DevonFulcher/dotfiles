@@ -173,7 +173,7 @@ run brew install \
   eza bat gh fzf git-delta difftastic direnv beads \
   koekeishiya/formulae/yabai koekeishiya/formulae/skhd borders \
   rip2 1password-cli asdf starship tmux uv
-run brew install --cask raycast iterm2
+run brew install --cask iterm2 font-monaspace
 
 # ---------------------------------------------------------------------------
 step "Installing toolbelt (provides 'toolbelt dotfiles' and 'toolbelt machine')"
@@ -203,6 +203,11 @@ step "Installing software with uv"
 run uv tool install nbdime # Used for jupyter notebook diffs
 run uv tool install dbt-core
 
+step "Setting up the repos toolbelt tracks (asdf install, uv sync in each checkout)"
+# Worktrees are plain checkouts: `toolbelt machine setup --worktrees` does them too.
+run toolbelt machine setup ||
+  follow_up "'toolbelt machine setup' had failures (listed above): fix them and re-run it."
+
 step "gh extensions"
 if have gh && gh auth status >/dev/null 2>&1; then
   gh extension list | grep -q gh-stack || run gh extension install github/gh-stack
@@ -220,6 +225,12 @@ if [ -x "$GIT_PROJECTS_WORKDIR/toolbelt/claude-plugin/install.sh" ]; then
   # idempotent; exits 0 with a message when claude is not on PATH
   run "$GIT_PROJECTS_WORKDIR/toolbelt/claude-plugin/install.sh" ||
     follow_up "claude-plugin/install.sh failed: re-run it from the toolbelt repo."
+fi
+
+step "Registering your Claude MCP servers (from dotfiles-private, if it has the script)"
+if [ -x "$GIT_PROJECTS_WORKDIR/dotfiles-private/claude-mcp-servers.sh" ]; then
+  run "$GIT_PROJECTS_WORKDIR/dotfiles-private/claude-mcp-servers.sh" ||
+    follow_up "dotfiles-private/claude-mcp-servers.sh failed: re-run it."
 fi
 
 step "Building the toolbelt UI (the launchd service runs it with --no-build)"
@@ -245,18 +256,31 @@ for plist in "$HOME"/Library/LaunchAgents/com.user.*.plist; do
   fi
 done
 
+step "Keyboard repeat (takes effect after you log out and in)"
+run defaults write NSGlobalDomain KeyRepeat -int 2
+run defaults write NSGlobalDomain InitialKeyRepeat -int 15
+
+step "Window manager services (they need the macOS permissions below to do anything)"
+have yabai && { run yabai --start-service || true; }
+have skhd && { run skhd --start-service || true; }
+
+step "Checking secrets/machine.sh"
+if [ -f "$GIT_PROJECTS_WORKDIR/dotfiles/secrets/machine.sh" ] &&
+  grep -q 'IS_PERSONAL=true' "$GIT_PROJECTS_WORKDIR/dotfiles/secrets/machine.sh"; then
+  follow_up "secrets/machine.sh says IS_PERSONAL=true: remove it on a work laptop."
+fi
+
 # ---------------------------------------------------------------------------
 step "Done. Still to do by hand"
 cat <<EOF
 $FOLLOW_UPS
-  [ ] gh auth login with the work account, then: gh extension install github/gh-stack && gh extension install cli/gh-webhook
-  [ ] Authorize the SSH key for the GitHub org's SSO: GitHub > Settings > SSH and GPG keys > Configure SSO
-  [ ] If you moved the private key: revoke the old laptop's key on GitHub once it is retired
-  [ ] System Settings > Privacy & Security: Accessibility for yabai and skhd, Screen Recording for yabai; start them (yabai --start-service, skhd --start-service)
+  [ ] gh auth login with the work account, then re-run this script (it installs the gh extensions and clones what needed the login)
+  [ ] Authorize the SSH key for the GitHub org's SSO (GitHub > Settings > SSH and GPG keys > Configure SSO), then re-run this script: it clones the org's repos and recreates their worktrees
+  [ ] claude auth login (Claude Code, and so the autonomous agents)
+  [ ] If you moved the private key: remove the old laptop's key from GitHub once it is retired
+  [ ] System Settings > Privacy & Security: Accessibility for yabai and skhd, Screen Recording for yabai
   [ ] Approve MDM / company software prompts
-  [ ] Sign in to Raycast, Cursor, iTerm2 settings, 1Password browser extension
-  [ ] Install Monaspace fonts (https://github.com/githubnext/monaspace/releases)
-  [ ] Adjust Key repeat rate and Delay until repeat in Keyboard settings
-  [ ] Open a new terminal; run: toolbelt dotfiles status
-  Full list: the Setup section of the dotfiles README.
+  [ ] Sign in to Cursor (and install its extensions), iTerm2 settings, the 1Password browser extension
+  [ ] Log out and in once (keyboard repeat), then open a new terminal and run: toolbelt dotfiles status
+  Everything else is done by this script; the dotfiles README lists what it does.
 EOF
