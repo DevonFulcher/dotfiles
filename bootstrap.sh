@@ -301,5 +301,5 @@ $FOLLOW_UPS
   [ ] Approve MDM / company software prompts
   [ ] Sign in to Cursor (and install its extensions), iTerm2 settings, the 1Password browser extension
   [ ] Log out and in once (keyboard repeat), then open a new terminal and run: toolbelt dotfiles status
-  Everything else is done by this script; the dotfiles README lists what it does.
+  Everything else is done by this script; docs/new-laptop.md in the dotfiles repo lists what it does.
 EOF
