@@ -66,6 +66,11 @@ for brew_bin in /opt/homebrew/bin/brew /usr/local/bin/brew; do
   fi
 done
 
+step "Updating Homebrew (an older install refuses to run: \"master branch is no longer supported\")"
+run brew update ||
+  run brew update-reset ||
+  follow_up "brew update failed: run 'brew update-reset' and re-run this script."
+
 step "git, 1Password and its CLI"
 run brew install git 1password-cli
 if [ ! -d /Applications/1Password.app ]; then
