@@ -56,8 +56,15 @@ if [ "$(uname -m)" = arm64 ] && ! pgrep oahd >/dev/null 2>&1; then
 fi
 
 step "Homebrew"
+HOMEBREW_INSTALLER='/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
 if ! have brew; then
-  run_sh '/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
+  run_sh "$HOMEBREW_INSTALLER"
+elif ! git -C "$(brew --repo)" rev-parse --git-dir >/dev/null 2>&1; then
+  # `brew update` needs Homebrew's own folder to be a git checkout ("not a git
+  # repository", "Failed to fetch Homebrew's main branch"). The installer
+  # repairs it in place and keeps the installed packages.
+  echo "Homebrew at $(brew --repo) is not a git checkout: running its installer to repair it"
+  run_sh "$HOMEBREW_INSTALLER"
 fi
 for brew_bin in /opt/homebrew/bin/brew /usr/local/bin/brew; do
   if [ -x "$brew_bin" ]; then
