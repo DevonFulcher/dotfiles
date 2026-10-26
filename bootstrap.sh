@@ -174,6 +174,18 @@ run brew install \
   koekeishiya/formulae/yabai koekeishiya/formulae/skhd borders \
   rip2 1password-cli asdf starship tmux uv
 run brew install --cask iterm2 font-monaspace
+# cask_unless_installed APP.app CASK: leave an app that is already there (put there
+# by IT or by hand) alone: brew refuses to install over it.
+cask_unless_installed() {
+  if [ -d "/Applications/$1" ]; then
+    echo "$1 is already installed"
+  else
+    run brew install --cask "$2"
+  fi
+}
+cask_unless_installed "Brave Browser.app" brave-browser
+cask_unless_installed "Docker.app" docker-desktop
+cask_unless_installed "Slack.app" slack
 
 # ---------------------------------------------------------------------------
 step "Installing toolbelt (provides 'toolbelt dotfiles' and 'toolbelt machine')"
@@ -193,7 +205,8 @@ fi
 # ---------------------------------------------------------------------------
 step "Installing software with asdf"
 if have asdf; then
-  for plugin in python rust terraform grpcurl golang uv pre-commit helm task nodejs; do
+  # every plugin the ~/.tool-versions of this repo names (toolbelt builds its web app with pnpm)
+  for plugin in python rust terraform grpcurl golang uv pre-commit helm task nodejs pnpm buf; do
     run asdf plugin add "$plugin" 2>/dev/null || true
   done
   (cd "$HOME" && run asdf install) || follow_up "'asdf install' failed in \$HOME: re-run it and read the error."
