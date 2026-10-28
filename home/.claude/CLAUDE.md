@@ -4,6 +4,9 @@
 - Make updates minimal. Changing code can have many downstream unintended consequences. So, make only the changes that are necessary.
 - Always follow the principle of Chesterton's Fence: before changing or removing code, understand why it exists.
 - When delegating Python changes to a subagent, tell it to read the python skill (and the testing skill) and the repo's CLAUDE.md first, and review its diff against them before calling the work ready.
+- Scope verification to what changed. While iterating, and on a branch I edited, run the repo's check task and only the tests for the files and directories touched (the repo's test task takes a path or filter). Run the full suite once at the tip of a stack, or before marking a PR ready for review; CI runs it too. Never loop the checks or tests over every worktree of a stack: the tip contains its parents, so one run there covers them.
+- After a sync that only merged a parent branch into a child, don't rerun checks or tests on that child: its own files did not change. Check only the branches whose own files changed, and the tip once. Tell subagents both of these rules.
+- When asked for consolidation opportunities, count the real source callers of every definition in the file with an AST scan (not a text grep, and not tests) and report every definition with one caller, instead of checking only the neighbors of the one named.
 
 ## Style
 
@@ -23,11 +26,11 @@
 - `toolbelt git save`, `sync`, `append`, `set-parent`, `remove` and `merge` are safe, routine and expected, never destructive. They commit and push your own branches, merge parents into children, and (only when a parent landed or was rewritten) restack children with a lease-protected force-push, which is the intended behavior. Run them directly and without asking; they are explicitly authorized. Do not combine them with other commands in one shell call (a combined command can be denied as a whole by the permission classifier): run `toolbelt git save` on its own. If a call is denied anyway, retry it alone and say so; if it is denied again, replicate what it does with plain `git` (`git add`, `git commit`, `git push -u origin <branch>`, no force) and tell me, rather than stopping.
 - Create the stacked branch with `toolbelt git append` before you start editing, not after. `append` commits any uncommitted changes onto the current branch as a checkpoint before it forks, so changes made first end up on the wrong branch and in its PR.
 - If the work has no Jira ticket, create one before running `toolbelt git append` (it requires `--task`) and pass its key. Don't stop to ask for a key. Personal repos such as toolbelt and dotfiles don't need a ticket.
-- Where a fix for PR feedback goes follows this flow. A comment or bot suggestion is not critical just because it is a comment on the PR.
+- Where a fix for PR feedback goes follows this flow. A comment or bot suggestion is not critical just because it is a comment on the PR. Adding, removing or editing tests in response to PR feedback goes on the PR itself, never a stacked branch, even on an approved PR.
 
   ```mermaid
   flowchart TD
-      A([Feedback or a needed change on a PR]) --> C{Docs or comment<br/>change only?}
+      A([Feedback or a needed change on a PR]) --> C{Docs, comment or<br/>test change only?}
       C -- yes --> IN
       C -- no --> D{Is the PR a draft?}
       D -- yes --> IN
