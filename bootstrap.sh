@@ -95,15 +95,23 @@ if [ -n "${MACHINE_ARCHIVE:-}" ]; then
 else
   step "1Password sign-in (manual)"
   if [ "$DRY_RUN" = 1 ]; then
-    echo "+ ask you to sign in to the 1Password app and turn on Settings > Developer > Integrate with the 1Password CLI, until 'op whoami' works"
+    echo "+ ask you to sign in to the 1Password app and turn on Settings > Developer > Integrate with the 1Password CLI, until 'op vault list' works"
   else
-    until op whoami >/dev/null 2>&1; do
+    # `op whoami` only reports a session that already exists, so on a new
+    # machine it can fail with the app signed in. `op vault list` needs access,
+    # so the 1Password app shows its approval dialog.
+    echo "If a 1Password dialog asks to allow the CLI, approve it (Touch ID or your password)."
+    until op_error=$(op vault list 2>&1 >/dev/null); do
       cat <<'MSG'
+
 Sign in to 1Password:
   1. Open the 1Password app and sign in to your account.
-  2. Settings > Developer > turn on "Integrate with 1Password CLI".
+  2. Settings > Developer > turn on "Integrate with 1Password CLI"
+     (turn on "Show 1Password Developer experience" first if you do not see it).
+  3. Quit 1Password (Cmd-Q) and open it again, then unlock it.
 MSG
-      printf 'Press Enter when done (or Ctrl-C to stop): '
+      printf 'op said: %s\n' "$op_error"
+      printf 'Press Enter to try again (or Ctrl-C to stop): '
       read -r _ </dev/tty
     done
   fi
