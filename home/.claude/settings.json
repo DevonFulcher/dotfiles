@@ -280,6 +280,12 @@
         "source": "github",
         "repo": "anthropics/claude-plugins-official"
       }
+    },
+    "toolbelt": {
+      "source": {
+        "source": "directory",
+        "path": "/Users/devonfulcher/git/toolbelt/claude-plugin"
+      }
     }
   },
   "sandbox": {

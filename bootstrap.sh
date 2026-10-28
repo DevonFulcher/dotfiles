@@ -298,8 +298,13 @@ for plist in "$HOME"/Library/LaunchAgents/com.user.*.plist; do
 done
 
 step "Keyboard repeat (takes effect after you log out and in)"
-run defaults write NSGlobalDomain KeyRepeat -int 2
+run defaults write NSGlobalDomain KeyRepeat -int 1 # 2 is the fastest the Settings slider allows
 run defaults write NSGlobalDomain InitialKeyRepeat -int 15
+run defaults write NSGlobalDomain com.apple.mouse.scaling -float 3 # the Settings slider's maximum
+
+step "Dock: hide until the pointer reaches the screen edge"
+run defaults write com.apple.dock autohide -bool true
+run killall Dock || true
 
 step "Window manager services (they need the macOS permissions below to do anything)"
 have yabai && { run yabai --start-service || true; }

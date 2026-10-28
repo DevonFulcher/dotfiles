@@ -169,4 +169,6 @@
     "**/.forgejo/workflows/*.yml",
     "**/.forgejo/workflows/*.yaml",
   ],
+  "cursor.composer.queueMessageDefaultBehavior": "steer",
+  "cursor.composer.queueManualSendBehavior2": "steer",
 }
