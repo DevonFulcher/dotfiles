@@ -193,11 +193,14 @@ if ! have claude; then
 fi
 
 step "Installing software with Homebrew"
-run brew tap FelixKratz/formulae # used for borders
+run brew tap FelixKratz/formulae # borders
+run brew tap asmvik/formulae # yabai and skhd (formerly koekeishiya/formulae)
+# Homebrew loads formulae from a tap outside homebrew/ only once it is trusted.
+run brew trust FelixKratz/formulae asmvik/formulae
 # uv is needed before asdf to install toolbelt, which links the dotfiles
 run brew install \
   eza bat gh fzf git-delta difftastic direnv beads \
-  koekeishiya/formulae/yabai koekeishiya/formulae/skhd borders \
+  asmvik/formulae/yabai asmvik/formulae/skhd borders \
   rip2 1password-cli asdf starship tmux uv
 run brew install --cask iterm2 font-monaspace
 # cask_unless_installed APP.app CASK: leave an app that is already there (put there
