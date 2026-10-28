@@ -185,9 +185,6 @@ if [ ! -d "$HOME/.oh-my-zsh" ]; then
   # KEEP_ZSHRC: the real .zshrc is linked from this repo below.
   run_sh 'RUNZSH=no CHSH=no KEEP_ZSHRC=yes sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"'
 fi
-if ! have cursor; then
-  run_sh 'curl https://cursor.com/install -fsS | bash'
-fi
 if ! have claude; then
   run_sh 'curl -fsSL https://claude.ai/install.sh | bash'
 fi
@@ -213,6 +210,8 @@ cask_unless_installed() {
   fi
 }
 cask_unless_installed "Brave Browser.app" brave-browser
+cask_unless_installed "Cursor.app" cursor
+cask_unless_installed "DisplayLink Manager.app" displaylink # needs a reboot
 cask_unless_installed "Docker.app" docker-desktop
 cask_unless_installed "Slack.app" slack
 
@@ -248,7 +247,7 @@ run uv tool install dbt-core
 step "Setting up the repos toolbelt tracks (asdf install, uv sync in each checkout)"
 # Worktrees are plain checkouts: `toolbelt machine setup --worktrees` does them too.
 run toolbelt machine setup ||
-  follow_up "'toolbelt machine setup' had failures (listed above): fix them and re-run it."
+  follow_up "'toolbelt machine setup' had failures (listed above): fix them and re-run it. If the org's repos failed to clone, authorize the SSH key for the org's SSO (GitHub > Settings > SSH and GPG keys > Configure SSO) first."
 
 step "gh extensions"
 if have gh && gh auth status >/dev/null 2>&1; then
@@ -312,17 +311,16 @@ if [ -f "$GIT_PROJECTS_WORKDIR/dotfiles/secrets/machine.sh" ] &&
   follow_up "secrets/machine.sh says IS_PERSONAL=true: remove it on a work laptop."
 fi
 
+# Logins this script cannot do: list them only while they are still missing.
+have gh && gh auth status >/dev/null 2>&1 ||
+  follow_up "gh auth login with the work account, then re-run this script (it installs the gh extensions and clones what needed the login)"
+have claude && claude auth status >/dev/null 2>&1 ||
+  follow_up "claude auth login (Claude Code, and so the autonomous agents)"
+
 # ---------------------------------------------------------------------------
 step "Done. Still to do by hand"
 cat <<EOF
+Open a new terminal first, then do the steps in docs/new-laptop.md (section 3,
+"By hand afterwards"). This run also found these still missing or failed:
 $FOLLOW_UPS
-  [ ] gh auth login with the work account, then re-run this script (it installs the gh extensions and clones what needed the login)
-  [ ] Authorize the SSH key for the GitHub org's SSO (GitHub > Settings > SSH and GPG keys > Configure SSO), then re-run this script: it clones the org's repos and recreates their worktrees
-  [ ] claude auth login (Claude Code, and so the autonomous agents)
-  [ ] If you moved the private key: remove the old laptop's key from GitHub once it is retired
-  [ ] System Settings > Privacy & Security: Accessibility for yabai and skhd, Screen Recording for yabai
-  [ ] Approve MDM / company software prompts
-  [ ] Sign in to Cursor (and install its extensions), iTerm2 settings, the 1Password browser extension
-  [ ] Log out and in once (keyboard repeat), then open a new terminal and run: toolbelt dotfiles status
-  Everything else is done by this script; docs/new-laptop.md in the dotfiles repo lists what it does.
 EOF

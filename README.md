@@ -12,19 +12,12 @@ the private `dotfiles-private` repo. Which repos are used is set by
 - `tt dotfiles status`: read-only report of what is linked.
 - `tt dotfiles link [--dry-run]`: link everything; anything displaced is first
   moved into `~/.toolbelt/dotfiles-backups/<timestamp>/`.
-- `tt dotfiles check`: scan this public repo for secret-looking content and for a literal `/Users/<name>/` path (use `$HOME` or `~`; a path that must stay gets `tt:allow-user-path` on its line).
 
 `bootstrap.sh` also installs the toolbelt Claude Code mods (`toolbelt-claims`,
 `toolbelt-usage`; user scope) and registers the `toolbelt-decisions` MCP server
 (`claude mcp add --scope user toolbelt-decisions -- toolbelt decisions mcp`) by
 running `$GIT_PROJECTS_WORKDIR/toolbelt/claude-plugin/install.sh` when it exists;
 re-run that script to update them.
-
-`tt dotfiles link` also points this repo's `core.hooksPath` at `.githooks`, whose
-`pre-commit` hook runs `tt dotfiles check` and rejects a commit that contains
-secret-looking content (findings show `path:line:rule`, never the match). Add
-`tt:allow-secret` to a line to allow a deliberate false positive. To test the
-hook: `sh .githooks/test-pre-commit.sh`.
 
 ## Setting up a laptop
 

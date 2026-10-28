@@ -37,7 +37,7 @@ them.) It stops once, for your **1Password sign-in** (the app, then Settings >
 Developer > "Integrate with 1Password CLI"). Everything else it does by itself:
 
 - installs Homebrew, 1Password, git, the formulae and casks listed in the
-  script (including iTerm2 and the Monaspace font), Cursor, Claude Code, asdf and
+  script (including iTerm2, the Monaspace font, Cursor and DisplayLink), Claude Code, asdf and
   its tools, and the uv tools;
 - restores your SSH keys first, then clones `dotfiles`, `dotfiles-private` and
   `toolbelt` under `$GIT_PROJECTS_WORKDIR` (default `~/git`);
@@ -50,29 +50,23 @@ Developer > "Integrate with 1Password CLI"). Everything else it does by itself:
   the launchd agents, sets the keyboard repeat, starts yabai and skhd, and checks
   `secrets/machine.sh`.
 
-It ends by printing what is left, which is the list below.
+It ends by pointing here and listing what it found still missing or failed:
+steps that errored, and `gh auth login` / `claude auth login` while either is
+still needed. Do those first, re-running `bootstrap.sh` when it says to.
 
 ## 3. By hand afterwards
 
-These need you (a browser sign-in, a macOS permission, a company prompt); the
-script cannot do them. It prints this same list at its end, with anything that
-failed added.
+These are the steps the script cannot check, so it does not list them.
 
-1. `gh auth login` with the work account, and authorize the restored SSH key for
-   the GitHub org's SSO (GitHub > Settings > SSH and GPG keys > Configure SSO).
-   Until then cloning the org's repos fails and the script lists them.
-2. **Run `bootstrap.sh` again.** It now installs the `gh` extensions, clones the
-   org's repos, recreates their worktrees and sets them up.
-3. `claude auth login` (Claude Code, and so the autonomous agents; the MCP
-   servers that need it ask you to sign in the first time they are used).
-4. System Settings > Privacy & Security: Accessibility for yabai and skhd, Screen
-   Recording for yabai. Approve any company (MDM) software prompts.
-5. Sign in to Cursor (and install its extensions), set up iTerm2, and sign in to
-   the 1Password browser extension.
-6. Log out and in once (the keyboard repeat applies then), open a new terminal and
-   run `toolbelt dotfiles status`: it should say 0 need attention.
-7. Once the old laptop is retired, remove its SSH key from GitHub: the private
-   key now also lives in the 1Password archive.
+1. Open a new terminal (or run `exec zsh`) so `PATH` picks up `~/.local/bin` and
+   asdf.
+2. System Settings > Privacy & Security: Accessibility for yabai and skhd, Screen
+   Recording for yabai. Reboot for DisplayLink, then allow it there too (Screen
+   Recording).
+3. Run `toolbelt dotfiles status`: it should say 0 need attention.
+4. Once the old laptop is retired, and only if this laptop got its own new SSH
+   key, remove the old laptop's key from GitHub. If you restored the key from
+   the archive, both laptops share it: leave it.
 
 Also worth knowing:
 
