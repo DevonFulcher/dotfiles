@@ -18,8 +18,9 @@ Shared skills are installed into `~/.agents/skills/` from both dotfiles repos.
 Both directories remain real directories; each app keeps its own `synced/`
 directory. Edit shared skills through `~/.agents/skills/`, and rerun
 `tt dotfiles link` after adding or removing skill folders to refresh the links.
-Codex's `~/.codex/AGENTS.md` links to `~/.claude/CLAUDE.md`, so both agents
-read the same personal instructions.
+Personal instructions are maintained in `home/.codex/AGENTS.md` and installed
+at `~/.codex/AGENTS.md`. Claude's `~/.claude/CLAUDE.md` links to that canonical
+file, so both agents read the same personal instructions.
 
 `bootstrap.sh` also installs the toolbelt Claude Code mods (`toolbelt-claims`,
 `toolbelt-usage`; user scope) and registers the `toolbelt-decisions` MCP server

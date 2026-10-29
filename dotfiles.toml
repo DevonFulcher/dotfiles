@@ -1,16 +1,17 @@
 # Manifest for `tt dotfiles` (toolbelt). Layered first: dotfiles-private overlays this.
 visibility = "public"
 
-# Claude Code. ~/.claude itself is a real directory full of runtime state, so
-# only individual entries are linked.
+# Personal instructions are canonical in AGENTS.md; Claude gets a compatibility link.
 [[link]]
-src = "home/.claude/CLAUDE.md"
+src = "home/.codex/AGENTS.md"
+dest = "~/.codex/AGENTS.md"
+
+[[link]]
+src = "~/.codex/AGENTS.md"
 dest = "~/.claude/CLAUDE.md"
 
-# Both agents read the same personal instructions.
-[[link]]
-src = "~/.claude/CLAUDE.md"
-dest = "~/.codex/AGENTS.md"
+# ~/.claude itself is a real directory full of runtime state, so
+# only individual entries are linked.
 
 [[link]]
 src = "home/.claude/settings.json"
