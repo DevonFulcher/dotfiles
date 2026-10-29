@@ -2,10 +2,15 @@
 visibility = "public"
 
 # Claude Code. ~/.claude itself is a real directory full of runtime state, so
-# only individual entries are linked. Skills come from both repos.
+# only individual entries are linked.
 [[link]]
 src = "home/.claude/CLAUDE.md"
 dest = "~/.claude/CLAUDE.md"
+
+# Both agents read the same personal instructions.
+[[link]]
+src = "~/.claude/CLAUDE.md"
+dest = "~/.codex/AGENTS.md"
 
 [[link]]
 src = "home/.claude/settings.json"
@@ -31,8 +36,16 @@ kind = "dir"
 
 [[link]]
 src = "home/.claude/skills"
+dest = "~/.agents/skills"
+kind = "merge_dir"
+
+# Shared skills live under ~/.agents; Claude gets compatibility links.
+# Each app manages its own account-synced skills.
+[[link]]
+src = "~/.agents/skills"
 dest = "~/.claude/skills"
 kind = "merge_dir"
+exclude = ["synced"]
 
 # Cursor
 [[link]]
