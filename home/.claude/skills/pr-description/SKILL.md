@@ -1,15 +1,15 @@
 ---
 name: pr-description
-description: The standard for every pull request description. Use whenever writing, opening, editing, improving or reviewing a PR description or PR body, including via `gh pr create` or `gh pr edit`. Defines the header block (ticket, stack, design links), the sections (What, Before, After, Why, Decision Record, Verified, Details), when a mermaid diagram is worth it (always a class diagram when the class hierarchy changes), list-first writing, GitHub links for every code reference, and the PR conventions (Jira key, draft, links, attribution).
+description: The standard for every pull request description. Use whenever writing, opening, editing, improving or reviewing a PR description or PR body, including via `gh pr create` or `gh pr edit`. Defines the header block (ticket, stack, design links), the sections (Why, What, Before, After, Decision Record, Verified, Details), when a mermaid diagram is worth it (always a class diagram when the class hierarchy changes), list-first writing, GitHub links for every code reference, and the PR conventions (Jira key, draft, links, attribution).
 ---
 
-Every PR description is a header block, then these `##` sections in this order: `What`, `Before`, `After`, `Why`, `Decision Record`, `Verified`, `Details`.
+Every PR description is a header block, then these `##` sections in this order: `Why`, `What`, `Before`, `After`, `Decision Record`, `Verified`, `Details`.
 
-Keep everything except `Details` high level. A reviewer must understand the whole PR from the header, What, Before/After, Why, Decision Record and Verified in under a minute.
+Keep everything except `Details` high level. A reviewer must understand the whole PR from the header, Why, What, Before/After, Decision Record and Verified in under a minute.
 
 ## Header block
 
-The first lines of the body, above `## What` and with no heading of their own. Ticket and stack information is not part of `What`: `What` describes the change, the header says where the PR sits. One line each, only the lines that apply:
+The first lines of the body, above `## Why` and with no heading of their own. Ticket and stack information is not part of `What`: `What` describes the change, the header says where the PR sits. One line each, only the lines that apply:
 
 - `Ticket: [KEY-123](url)`, or an explicit `No ticket`.
 - For a PR that is stacked or has PRs stacked on it, `Stack:` followed by indented bullets, one open PR per bullet, bottom of the stack first, each PR indented one level under its parent. Mark this PR so it stands out when scanning down the list: make its whole bullet bold and end it with a pointer emoji and the words `this PR`, `**[#1759](url) <what it does>** 👈 **this PR**`. No other bullet is bold and no other bullet has the pointer. Include every ancestor and every descendant, so a reviewer sees the whole stack, and leave out PRs that have already merged: the lowest open PR is the top-level bullet. Two PRs stacked on the same parent are siblings at the same indent. Each bullet is `[#1692](url) <what it does>`. Omit the `Stack:` line for a PR that is not part of a stack.
@@ -25,9 +25,9 @@ The first lines of the body, above `## What` and with no heading of their own. T
 
 ## Sections
 
+- **Why**: the motivation, the problem, what happens without the change. Link the originating discussion, PR review, Slack thread or incident when there is one (full URLs). Don't invent numbers or link what you cannot open.
 - **What**: 1-3 sentences on the change and its user-visible or reviewer-visible outcome. When the approach is not obvious from `Before`/`After`, follow with a short numbered list of how it works, one idea per step, linking each code reference. The detailed mechanics (every file, every call site) go in `Details`. No ticket or stack lines here; they are in the header. There is no separate `How` section.
 - **Before** and **After**: short excerpts of the relevant parts of the change, side by side in meaning, so a reviewer sees the shape of the change without reading the diff. See "Before and After" below.
-- **Why**: the motivation, the problem, what happens without the change. Link the originating discussion, PR review, Slack thread or incident when there is one (full URLs). Don't invent numbers or link what you cannot open.
 - **Decision Record**: the decisions the PR was built around and how each was carried out, written the way decisions are discussed in review. A decision comes from the author (me), a reviewer or another person: a request in chat, a review comment, a Slack thread, a ticket comment, a design doc. One entry per decision, in the order they were made, in exactly this shape: a bold lead a reviewer can read on its own, with the supporting bullets folded into a `Details` toggle.
 
   ```markdown
@@ -158,7 +158,7 @@ When one is worth it:
 - Refer to related PRs, such as others in a stack, by full markdown link plus a short description of what each does: `[#1692](https://github.com/org/repo/pull/1692) adds X`. Never a bare `#123`, never invented labels like "PR A".
 - Never mention `toolbelt` (Devon's personal tool) in a description or in the code, comments and docs of the PR. Describe the general mechanism instead, such as a stack sync, a merge of `main`, or GitHub's "Update branch".
 - Public repos (for example dbt-labs/dbt-mcp) must not mention internal repos, internal Jira URLs or internal Slack.
-- Documentation- or comment-only changes still get the header, `What`, `Why` and `Verified`, but each may be one line; skip `Before`, `After` and `Decision Record`.
+- Documentation- or comment-only changes still get the header, `Why`, `What` and `Verified`, but each may be one line; skip `Before`, `After` and `Decision Record`.
 - Never attribute a decision, approval, reason or quote to a person who did not say it (see `Decision Record`). Your own choices are not recorded as decisions.
 - The description is read by people who were not in the conversation: no chat shorthand such as `D1`, `O1` or "option 2", and no references to earlier messages. Say the choice in plain words.
 - The last line of every description is `🤖 Generated with AI assistance`.
@@ -184,6 +184,9 @@ Stack:
     - [#1694](https://github.com/org/repo/pull/1694) <what it does>
 Design: [title](https://example.com/design)
 
+## Why
+<Problem or motivation, and what happens without it. Link the originating thread.>
+
 ## What
 <1-3 sentences: the change and its outcome.>
 1. <how it works, only when Before/After do not make it obvious; link each code reference>
@@ -198,9 +201,6 @@ Design: [title](https://example.com/design)
 ```python
 # the same parts in the new shape
 ```
-
-## Why
-<Problem or motivation, and what happens without it. Link the originating thread.>
 
 ## Decision Record
 - **<Who>** (<where, linked>): **<Decision title>.** <What was decided, what it was chosen over, and how the PR carries it out, with a code or commit link.>
