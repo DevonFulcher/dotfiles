@@ -9,6 +9,7 @@ description: Follow these guidelines for authoring or reviewing Python code.
 - Avoid putting code in `__init__.py` files.
 
 ## Functions and typing
+- Prefer organizing related functions into cohesive classes rather than standalone module-level functions. Use an existing class when the behavior belongs to it, or a dedicated class for a workflow such as selection or execution. Keep the workflow's public methods and private helpers together; use instance methods when they share state and class or static methods when they do not.
 - Always include type annotations for function inputs and outputs.
 - Never add parameters that are unused by callers to a function, even if the parameters have a default value.
 - Only use default arguments when there is a reason to do so.
@@ -20,7 +21,7 @@ def build(project_id: int, *, name: str, owner: str) -> str:
   return f"{project_id}:{name}:{owner}"
 ```
 
-- Prefer methods on a class to separate module-level functions that take an instance of it, especially when the function is a relatively straightforward check or mapping over that class's own attributes. The behavior then travels with the type: callers find it by autocompletion, subclasses can override it, and a new subclass can't forget it. Keep a free function for logic that spans several unrelated types or doesn't belong to any one of them.
+- Prefer methods on a class to separate module-level functions that take an instance of it, especially when the function is a relatively straightforward check or mapping over that class's own attributes. The behavior then travels with the type: callers find it by autocompletion, subclasses can override it, and a new subclass can't forget it. Logic spanning several unrelated types can belong to a dedicated workflow class, keeping orchestration out of passive data classes.
 
 Bad (a check on a class's own data lives elsewhere):
 ```python
