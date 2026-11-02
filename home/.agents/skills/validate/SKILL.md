@@ -10,6 +10,7 @@ Perform a production-quality code review. Be direct, specific, and practical, pr
    - Existing architectural and style conventions
    - Any prior implementation that the code affects or is similar to
    - Include agent context such as the `.cursor` directory, `.claude` directory, `CLAUDE.md` and `AGENTS.md` files
+   - For a stacked PR, establish its base and immediate parent, and review only the PR's own diff against that parent. Check downstream changes when they affect end-to-end behavior, but do not credit a later branch with fixing a behavior absent from the PR under review.
 2. Describe the code covering:
    - The overall modification
    - The intent or objective driving it
@@ -65,8 +66,11 @@ Perform a production-quality code review. Be direct, specific, and practical, pr
    - Debugging: Sufficient context for troubleshooting production issues
    - User experience: Response times, error messages, consistency, graceful degradation
 4. Identify any hidden risks, unhandled edge cases, or non-obvious design trade-offs.
+   - Trace representative concrete inputs through the full changed path to the public result. Do not stop after confirming that data reaches a helper or handler; verify the exact classification, exception, response, or state produced.
+   - For parsing, routing, or classification changes, include cases where useful fields are missing or disagree. For provider errors, check code-only, message-only, and status-only evidence when those shapes are supported, then verify both the internal category and externally visible behavior.
+   - Inspect the changed tests' assertions, not just their names or breadth. Confirm they assert the important input-to-output behavior, and identify high-impact combinations the tests do not cover.
 5. Output a **numbered list of issues** (if any), each with:
-   - A concise description of the problem
+   - A concise description with the relevant input and observed versus expected result when applicable
    - Why it matters
    - A suggested fix
 
