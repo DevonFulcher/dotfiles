@@ -1,4 +1,6 @@
 secrets
 __pycache__
+/CLAUDE.md
+!home/.agents/
 !home/.codex/
 !home/.codex/AGENTS.md

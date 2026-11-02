@@ -24,6 +24,7 @@ Perform a production-quality code review. Be direct, specific, and practical, pr
    - Keep each rule and invariant in one clear owner; flag parallel implementations and duplicated sources of truth that can drift.
    - Prefer removing unnecessary states, branches, flags, and special cases over adding layers that hide them. Understand why each exists before recommending its removal.
    - Judge simplicity by how easily callers and maintainers can understand the behavior, not just by line count. Keep suggested changes within the reviewed scope.
+   - For each relevant review dimension, consider whether an existing library, standard-library feature, different architecture, or modest behavior change would satisfy it better. Compare credible alternatives against the current approach, including integration effort, dependency and maintenance costs, compatibility, and operational trade-offs; do not assume a rewrite or a new dependency is an improvement.
 
    **Code Quality & Clarity:**
    - Readability: Clear logic flow, appropriate abstraction levels, self-documenting code
@@ -68,5 +69,7 @@ Perform a production-quality code review. Be direct, specific, and practical, pr
    - A concise description of the problem
    - Why it matters
    - A suggested fix
+
+Include an **Alternatives considered** section in the final report. For each materially better or meaningfully competitive option, name the review dimension it improves, explain the trade-offs, and recommend whether to keep the current approach or pursue the alternative. Separate optional design alternatives from blocking correctness issues. If no alternative offers a meaningful benefit, say so briefly rather than inventing options.
 
 At the end of your analysis, clearly indicate whether you would approve this code for production or if additional changes are required. Summarize your reasoning.

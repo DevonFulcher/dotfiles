@@ -19,6 +19,7 @@
 
 ## Git
 
+- For the dotfiles and toolbelt repositories, work and commit directly on `main`; do not create task branches or pull requests unless explicitly requested. Use `toolbelt git save` to commit and push verified changes. This exception takes precedence over the branching and stacked-PR rules below.
 - Only open PRs in draft mode unless the user says otherwise.
 - For a non-draft PR in the Claude desktop app, bind it with the `ccd_pr` tools (`get_status`, then `bind_pr`) and always turn on Auto-fix (`set_monitor` with `auto_fix: true` and the PR's url) without asking, so the app wakes the session on CI failures, conflicts and comments, instead of polling CI. When woken, follow the PR-feedback flow below. If the app refuses because the session did not open the PR, tell the user to switch Auto-fix on themselves. Never poll CI with `gh` instead. Draft PRs skip this.
 - Verify a change end to end before opening a PR for review: run it on real data or in the real tool (render, open generated links, exercise the code path), not just unit tests and validators. State in the PR what was verified and how.

@@ -13,7 +13,8 @@ the private `dotfiles-private` repo. Which repos are used is set by
 - `tt dotfiles link [--dry-run]`: link everything; anything displaced is first
   moved into `~/.toolbelt/dotfiles-backups/<timestamp>/`.
 
-Shared skills are installed into `~/.agents/skills/` from both dotfiles repos.
+Shared skills in this repo live in `home/.agents/skills/` and are installed into
+`~/.agents/skills/`, alongside skills contributed by the private dotfiles repo.
 `~/.claude/skills/` contains compatibility links to those canonical entries.
 Both directories remain real directories; each app keeps its own `synced/`
 directory. Edit shared skills through `~/.agents/skills/`, and rerun
@@ -21,6 +22,9 @@ directory. Edit shared skills through `~/.agents/skills/`, and rerun
 Personal instructions are maintained in `home/.codex/AGENTS.md` and installed
 at `~/.codex/AGENTS.md`. Claude's `~/.claude/CLAUDE.md` links to that canonical
 file, so both agents read the same personal instructions.
+Repository instructions for dotfiles and toolbelt live in each repo's `AGENTS.md`;
+the manifest creates ignored `CLAUDE.md` compatibility links in `~/git/dotfiles`
+and `~/git/toolbelt`. These two repos use direct commits to `main` by default.
 
 `bootstrap.sh` also installs the toolbelt Claude Code mods (`toolbelt-claims`,
 `toolbelt-usage`; user scope) and registers the `toolbelt-decisions` MCP server

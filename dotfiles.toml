@@ -1,6 +1,15 @@
 # Manifest for `tt dotfiles` (toolbelt). Layered first: dotfiles-private overlays this.
 visibility = "public"
 
+# Repository instructions are canonical in AGENTS.md too.
+[[link]]
+src = "AGENTS.md"
+dest = "~/git/dotfiles/CLAUDE.md"
+
+[[link]]
+src = "~/git/toolbelt/AGENTS.md"
+dest = "~/git/toolbelt/CLAUDE.md"
+
 # Personal instructions are canonical in AGENTS.md; Claude gets a compatibility link.
 [[link]]
 src = "home/.codex/AGENTS.md"
@@ -36,7 +45,7 @@ dest = "~/.claude/commands"
 kind = "dir"
 
 [[link]]
-src = "home/.claude/skills"
+src = "home/.agents/skills"
 dest = "~/.agents/skills"
 kind = "merge_dir"
 
