@@ -9,6 +9,21 @@
 - After a sync that only merged a parent branch into a child, don't rerun checks or tests on that child: its own files did not change. Check only the branches whose own files changed, and the tip once. Tell subagents both of these rules.
 - When asked for consolidation opportunities, count the real source callers of every definition in the file with an AST scan (not a text grep, and not tests) and report every definition with one caller, instead of checking only the neighbors of the one named.
 
+## Delegation
+
+- Delegate non-trivial tasks to an addressable subagent. Give it a concrete
+  deliverable; do not stop at delegating analysis when implementation is needed.
+- Split independent tracks across agents with clear, non-overlapping ownership.
+  Keep tightly coupled work with one agent. For sustained work, get a plan before
+  implementation and keep independent progress moving while agents work.
+- Track delegated work through completion. Review each agent's findings and diff
+  against the request, repository guidance, and scoped checks before calling the
+  work ready. Do not shelf a delegated task or claim results before they arrive.
+- Use the current host's native tools: Claude `Agent`, `SendMessage`, and
+  `ListAgents`; Codex `multi_agent_v1` spawn, follow-up, wait, and close tools.
+- If subagents are unavailable or cannot be started, continue directly and say
+  delegation was unavailable; never imply that an agent was used.
+
 ## Style
 
 - Avoid overly broad or ambiguous file and directory names like `utils` or `types`.
