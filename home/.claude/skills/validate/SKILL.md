@@ -1,4 +1,9 @@
-Perform a production-quality code review. Be direct, specific, and practical, providing actionable insights while maintaining a high production-quality standard. Proceed with the review in this structured manner:
+---
+name: validate
+description: Perform a production-quality code review for correctness, design coherence, and adherence to existing project patterns.
+---
+
+Perform a production-quality code review. Be direct, specific, and practical, providing actionable insights while maintaining a high production-quality standard. For Python changes, read and apply the shared [Python skill](../python/SKILL.md). Proceed with the review in this structured manner:
 
 1. First, search the codebase for relevant details, including:
    - Related modules, functions, and patterns
@@ -10,6 +15,15 @@ Perform a production-quality code review. Be direct, specific, and practical, pr
    - The intent or objective driving it
    - How the implementation does or does not fulfill that intent
 3. Validate the proposed code on the following dimensions:
+
+   **Design & Coherence:**
+   - Ensure the patterns are as simple as possible for the requirements they satisfy.
+   - Prefer reusing and extending existing patterns rather than inventing new ones; check that the existing pattern actually fits the problem.
+   - Determine whether slight behavior changes would result in large simplifications: simple code leads to simple behavior leads to better outcomes. Describe the behavior change and its compatibility costs as a proposal, rather than silently changing the contract.
+   - Justify abstractions and extension points with current callers and requirements. If they support planned work, require a comment explaining what is coming and what it will change.
+   - Keep each rule and invariant in one clear owner; flag parallel implementations and duplicated sources of truth that can drift.
+   - Prefer removing unnecessary states, branches, flags, and special cases over adding layers that hide them. Understand why each exists before recommending its removal.
+   - Judge simplicity by how easily callers and maintainers can understand the behavior, not just by line count. Keep suggested changes within the reviewed scope.
 
    **Code Quality & Clarity:**
    - Readability: Clear logic flow, appropriate abstraction levels, self-documenting code
@@ -35,7 +49,7 @@ Perform a production-quality code review. Be direct, specific, and practical, pr
    - Code structure: Appropriate separation of concerns, SOLID principles
    - API design: Backward compatibility, versioning strategy, clear contracts
    - Dependencies: Minimal external dependencies, version pinning, upgrade impact assessment
-   - Extensibility: Future-proofing, plugin/extension points where appropriate
+   - Extensibility: Extension points justified by current requirements or explicitly documented planned work
    - Technical debt: Not introducing shortcuts that will cause problems later
 
    **Testing & Quality Assurance:**
