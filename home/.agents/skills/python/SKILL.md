@@ -11,6 +11,7 @@ description: Follow these guidelines for authoring or reviewing Python code.
 ## Functions and typing
 - Prefer organizing related functions into cohesive classes rather than standalone module-level functions. Use an existing class when the behavior belongs to it, or a dedicated class for a workflow such as selection or execution. Keep the workflow's public methods and private helpers together; use instance methods when they share state and class or static methods when they do not.
 - Always include type annotations for function inputs and outputs.
+- Prefix methods with `_` when their only callers are within their own class or in tests. Tests do not make a method public. Preserve names required by inherited or framework contracts, including Python special methods.
 - Never add parameters that are unused by callers to a function, even if the parameters have a default value.
 - Only use default arguments when there is a reason to do so.
 - When adjacent parameters share the same type, use `*` to avoid callers mixing up parameter order.
