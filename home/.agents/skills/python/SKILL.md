@@ -42,6 +42,9 @@ class Token:
 
 ## Data modeling
 - Prefer Pydantic models or dataclasses to dictionaries in net-new code.
+- Prefer immutable value and configuration objects when their meaning stays fixed through a workflow. Derive redundant views from their fields; keep request-specific policy and decisions separate when they have a different lifetime.
+- Keep property getters read-only and free of observable side effects: no mutation, I/O, feature-flag reads, or logging. Use explicit methods for those operations.
+- Avoid classes that merely copy the same fields to label successive workflow stages. Use a separate type when it enforces a distinct invariant or representation. Do not reconstruct an unchanged value just to attach policy; reconstruction is appropriate for a value whose meaning has changed.
 - When tightening existing code that already passes dicts around, a `TypedDict` is
   usually the right minimal step: it names the keys and types the values without
   changing call sites or runtime behavior. Prefer it to leaving `dict[str, Any]` in
