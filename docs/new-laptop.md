@@ -44,8 +44,11 @@ Developer > "Integrate with 1Password CLI"). Everything else it does by itself:
 - installs toolbelt, runs `toolbelt dotfiles link` and `toolbelt machine import`
   (secrets, the toolbelt DB with the old home rewritten to the new one, the repos
   toolbelt tracks cloned, their worktrees recreated);
-- runs `toolbelt machine setup` (`asdf install` and `uv sync` in each tracked
-  repo's checkout; `toolbelt machine setup --worktrees` does the worktrees too);
+- installs the Cursor extensions listed in `cursor/extensions.txt`, including
+  the Python extension and Cursor Pyright;
+- runs `toolbelt machine setup --worktrees` (`asdf install` and `uv sync` in each
+  tracked repo's checkout and each worktree). This creates a separate Python
+  virtual environment per worktree, which can take time and disk space;
 - installs the Claude plugins and MCP servers, builds the `tt ui` web app, loads
   the launchd agents, sets the keyboard repeat, starts yabai and skhd, and checks
   `secrets/machine.sh`.

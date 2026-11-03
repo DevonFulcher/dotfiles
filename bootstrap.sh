@@ -231,6 +231,25 @@ else
 fi
 
 # ---------------------------------------------------------------------------
+step "Installing Cursor extensions"
+cursor_extensions="$GIT_PROJECTS_WORKDIR/dotfiles/cursor/extensions.txt"
+if [ -f "$cursor_extensions" ]; then
+  if have cursor || [ "$DRY_RUN" = 1 ]; then
+    while IFS= read -r extension || [ -n "$extension" ]; do
+      case "$extension" in
+        '' | \#*) continue ;;
+      esac
+      run cursor --install-extension "$extension" ||
+        follow_up "Cursor extension $extension failed: install it from Cursor's Extensions panel, then re-run bootstrap.sh."
+    done < "$cursor_extensions"
+  else
+    follow_up "Cursor CLI is not on PATH: install extensions from $cursor_extensions using Cursor's Extensions panel."
+  fi
+else
+  follow_up "Cursor extension list is missing: expected $cursor_extensions."
+fi
+
+# ---------------------------------------------------------------------------
 step "Installing software with asdf"
 if have asdf; then
   # every plugin the ~/.tool-versions of this repo names (toolbelt builds its web app with pnpm)
@@ -244,10 +263,9 @@ step "Installing software with uv"
 run uv tool install nbdime # Used for jupyter notebook diffs
 run uv tool install dbt-core
 
-step "Setting up the repos toolbelt tracks (asdf install, uv sync in each checkout)"
-# Worktrees are plain checkouts: `toolbelt machine setup --worktrees` does them too.
-run toolbelt machine setup ||
-  follow_up "'toolbelt machine setup' had failures (listed above): fix them and re-run it. If the org's repos failed to clone, authorize the SSH key for the org's SSO (GitHub > Settings > SSH and GPG keys > Configure SSO) first."
+step "Setting up the repos and worktrees toolbelt tracks (asdf install, uv sync)"
+run toolbelt machine setup --worktrees ||
+  follow_up "'toolbelt machine setup --worktrees' had failures (listed above): fix them and re-run it. If the org's repos failed to clone, authorize the SSH key for the org's SSO (GitHub > Settings > SSH and GPG keys > Configure SSO) first."
 
 step "gh extensions"
 if have gh && gh auth status >/dev/null 2>&1; then
