@@ -9,7 +9,7 @@ description: Follow these guidelines for authoring or reviewing Python code.
 - Avoid putting code in `__init__.py` files.
 
 ## Functions and typing
-- Prefer organizing related functions into cohesive classes rather than standalone module-level functions. Use an existing class when the behavior belongs to it, or a dedicated class for a workflow such as selection or execution. Keep the workflow's public methods and private helpers together; use instance methods when they share state and class or static methods when they do not.
+- Prefer organizing related functions into cohesive classes rather than standalone module-level functions. Use an existing class when the behavior belongs to it, or a dedicated class for a workflow such as selection or execution. Keep the workflow's public methods and private helpers together. Prefer instance methods when behavior belongs to an object's workflow or uses its state. Use class methods when subclass-aware behavior or construction is needed, and use static methods sparingly for cohesive operations that genuinely need no instance or class state. Do not add irrelevant instance dependencies just to avoid a static or class method; a standalone function is also appropriate when the operation has no natural class owner.
 - Always include type annotations for function inputs and outputs.
 - Prefix methods with `_` when their only callers are within their own class or in tests. Tests do not make a method public. Preserve names required by inherited or framework contracts, including Python special methods.
 - Never add parameters that are unused by callers to a function, even if the parameters have a default value.
