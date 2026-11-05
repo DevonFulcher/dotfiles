@@ -55,6 +55,14 @@ if [ -f ~/.devspace-completion ]; then
     source ~/.devspace-completion
 fi
 
+# Strips the kubeconfig extensions `tsh login` writes, which make devspace panic
+# (https://github.com/devspace-sh/devspace/pull/3269). Copy it from
+# devspace-tools/scripts/devspace-wrapper.zsh; drop this block once devspace
+# ships the fix.
+if [ -f "$HOME/.local/share/devspace-tools/devspace-wrapper.zsh" ]; then
+    source "$HOME/.local/share/devspace-tools/devspace-wrapper.zsh"
+fi
+
 function ensure-k8s-context() {
     local expected_context="dbtlabs.teleport.sh-dbt-cloud-mc-aws-dev"
     local expected_namespace="$DEVSPACE_NAMESPACE"
@@ -103,7 +111,8 @@ function ds() {
     fi
   fi
 
-  command devspace "${args[@]}"
+  # Not `command devspace`: the wrapper above is a function of the same name.
+  devspace "${args[@]}"
 }
 
 function update-repos-clean-caches() {

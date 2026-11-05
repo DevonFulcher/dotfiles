@@ -71,6 +71,13 @@ These are the steps the script cannot check, so it does not list them.
    key, remove the old laptop's key from GitHub. If you restored the key from
    the archive, both laptops share it: leave it.
 
+5. devspace for dbt Labs repos: clone `dev-tools`, `devspace-tools` and `helm-charts`
+   under `$GIT_PROJECTS_WORKDIR`, run `devspace-tools/scripts/install-tsh-ecr-creds.sh`,
+   and copy `devspace-tools/scripts/devspace-wrapper.zsh` to
+   `~/.local/share/devspace-tools/` (`scripts/work/dbt_labs_zshrc.sh` sources it; do
+   not run `install-devspace-wrapper.sh`, which appends to the linked `~/.zshrc`).
+   Then `ds <devspace args>` signs in to AWS and Teleport and checks the repos are on `main`.
+
 Also worth knowing:
 
 - Repos that are not under `~/git` are not recreated.

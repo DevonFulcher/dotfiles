@@ -198,7 +198,8 @@ run brew trust FelixKratz/formulae asmvik/formulae
 run brew install \
   eza bat gh fzf git-delta difftastic direnv beads \
   asmvik/formulae/yabai asmvik/formulae/skhd borders \
-  rip2 1password-cli asdf starship tmux uv
+  rip2 1password-cli asdf starship tmux uv \
+  devspace kubernetes-cli teleport awscli k9s yq
 run brew install --cask iterm2 font-monaspace
 # cask_unless_installed APP.app CASK: leave an app that is already there (put there
 # by IT or by hand) alone: brew refuses to install over it.
