@@ -319,6 +319,7 @@ done
 step "Keyboard repeat (takes effect after you log out and in)"
 run defaults write NSGlobalDomain KeyRepeat -int 1 # 2 is the fastest the Settings slider allows
 run defaults write NSGlobalDomain InitialKeyRepeat -int 15
+run defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false # hold a key to repeat it, not to show the accent popup
 run defaults write NSGlobalDomain com.apple.mouse.scaling -float 3 # the Settings slider's maximum
 
 step "Dock: hide until the pointer reaches the screen edge"
