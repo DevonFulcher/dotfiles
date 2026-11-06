@@ -143,8 +143,6 @@ match shape.kind:
 - In an open class hierarchy you own (one that others may subclass), don't branch on a value's class, neither with `isinstance` nor with `match` and class patterns. Each such branch is a place a new subclass can be forgotten, and they pile up as the codebase grows (a status mapper here, a message mapper there, a classifier elsewhere, all keyed on the same hierarchy). Put the answer on the type instead: an abstract method or property on an `ABC` base that every subclass must implement, so a new subclass cannot be instantiated without answering.
   - Behavior that is intrinsic to the type is an abstract method (`error.retry_delay()`).
   - A concern that belongs to another layer (HTTP status, rendering, serialization, telemetry) does not go on the domain class. Put a discriminator on the type, an abstract property returning an enum (`error.kind`), and let each layer map it with an exhaustive `match` on the enum. That is matching on a value, so it stays preferred.
-- `match` on classes stays right for a closed discriminated union (a fixed set of data variants such as `Ok | Error`): the type checker proves it exhaustive, and adding an operation doesn't touch every variant. It also stays right at the boundary with types you do not own (SDK, stdlib and other third-party classes): branch on them in one place to convert them into your own type, and use that type everywhere else. Separate `except` clauses for different exception types are fine, since that is the language's own dispatch.
-- Don't add inheritance only to avoid a branch; where the variants share no behavior, prefer the closed union or composition.
 
 Bad (behavior intrinsic to the type lives in a chain outside it; a new subclass silently gets the default):
 ```python
@@ -173,6 +171,9 @@ class NotFoundError(AppError):
   def retry_delay(self) -> float:
     return 0.0  # retrying cannot help
 ```
+
+- `match` on classes stays right for a closed discriminated union (a fixed set of data variants such as `Ok | Error`): the type checker proves it exhaustive, and adding an operation doesn't touch every variant. It also stays right at the boundary with types you do not own (SDK, stdlib and other third-party classes): branch on them in one place to convert them into your own type, and use that type everywhere else. Separate `except` clauses for different exception types are fine, since that is the language's own dispatch.
+- Don't add inheritance only to avoid a branch; where the variants share no behavior, prefer the closed union or composition.
 
 Bad (every new subclass must be remembered in each of these chains; this one maps to another layer):
 ```python
