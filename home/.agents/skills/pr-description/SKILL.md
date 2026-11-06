@@ -1,11 +1,11 @@
 ---
 name: pr-description
-description: The standard for every pull request description. Use whenever writing, opening, editing, improving or reviewing a PR description or PR body, including via `gh pr create` or `gh pr edit`. Defines the header block (ticket, stack, design links), the sections (Why, What, Before, After, Decision Record, Verified, Details), when a mermaid diagram is worth it (always a class diagram when the class hierarchy changes), list-first writing, GitHub links for every code reference, and the PR conventions (Jira key, draft, links, attribution).
+description: The standard for every pull request description. Use whenever writing, opening, editing, improving or reviewing a PR description or PR body, including via `gh pr create` or `gh pr edit`. Defines the header block (ticket, stack, design links), the sections (Why, What, Before, After, Decision Record, Verified) and the one collapsed Details fold at the end, when a mermaid diagram is worth it (always a class diagram when the class hierarchy changes), list-first writing, GitHub links for every code reference, and the PR conventions (Jira key, draft, links, attribution).
 ---
 
-Every PR description is a header block, then these `##` sections in this order: `Why`, `What`, `Before`, `After`, `Decision Record`, `Verified`, `Details`.
+Every PR description is a header block, then these `##` sections in this order: `Why`, `What`, `Before`, `After`, `Decision Record`, `Verified`. `Why` always comes first, before `What`. The body ends with one collapsed `<details>` fold titled `Details`; it is a fold, not a `##` section.
 
-Keep everything except `Details` high level. A reviewer must understand the whole PR from the header, Why, What, Before/After, Decision Record and Verified in under a minute.
+Keep the visible body concise. A reviewer must understand the whole PR from the header, Why, What, Before/After, Decision Record and Verified in under a minute, so each visible section states the conclusion and the specifics sit under the fold: the Decision Record's supporting bullets, the `Verified` coverage list and full results, the file table and everything else go in `Details`.
 
 ## Header block
 
@@ -28,35 +28,26 @@ The first lines of the body, above `## Why` and with no heading of their own. Ti
 - **Why**: the motivation, the problem, what happens without the change. Link the originating discussion, PR review, Slack thread or incident when there is one (full URLs). Don't invent numbers or link what you cannot open.
 - **What**: 1-3 sentences on the change and its user-visible or reviewer-visible outcome. When the approach is not obvious from `Before`/`After`, follow with a short numbered list of how it works, one idea per step, linking each code reference. The detailed mechanics (every file, every call site) go in `Details`. No ticket or stack lines here; they are in the header. There is no separate `How` section.
 - **Before** and **After**: short excerpts of the relevant parts of the change, side by side in meaning, so a reviewer sees the shape of the change without reading the diff. See "Before and After" below.
-- **Decision Record**: the decisions the PR was built around and how each was carried out, written the way decisions are discussed in review. A decision comes from the author (me), a reviewer or another person: a request in chat, a review comment, a Slack thread, a ticket comment, a design doc. One entry per decision, in the order they were made, in exactly this shape: a bold lead a reviewer can read on its own, with the supporting bullets folded into a `Details` toggle.
+- **Decision Record**: the decisions the PR was built around and how each was carried out, written the way decisions are discussed in review. A decision comes from the author (me), a reviewer or another person: a request in chat, a review comment, a Slack thread, a ticket comment, a design doc. One entry per decision, in the order they were made, in exactly this shape: a bold lead a reviewer can read on its own, with no supporting bullets beneath it. The Context/Benefits/Costs/Risks/Alternatives bullets go in the `Details` fold at the end of the body.
 
   ```markdown
   - **Devon** (chat): **Keep the retry policy unchanged.** The new classifier feeds the existing schedule in [`retry_policy.py`](https://github.com/org/repo/blob/<sha>/src/app/retry_policy.py#L108) instead of replacing it, so retry timing stays the same as today.
-    <details>
-    <summary>Details</summary>
-
-    - Context: the new classifier could have replaced the schedule, and Devon wanted no behavior change in retries ("keep retries as they are").
-    - Benefits: retry timing is identical to today.
-    - Costs: the classifier keeps a mapping layer it could otherwise drop.
-    - Risks: the mapping can drift from the schedule table; a test pins it.
-    - Alternatives: derive the schedule from the new classes (rejected: changes retry timing).
-
-    </details>
   - **wiggzz** ([review comment](https://github.com/org/repo/pull/123#discussion_r1)): **Drop the fallback path.** <what was removed and what replaces it, with a code link>
-    <details>
-    <summary>Details</summary>
-
-    - Context: ...
-    - Benefits: ...
-    - Costs: ...
-    - Risks: ...
-    - Alternatives: ...
-
-    </details>
   ```
 
-  - **The lead line** is `**<Who>** (<where>): **<Decision title>.** <one or two sentences>`. Name who made the decision and where (link the thread, comment or doc when it can be opened; "chat" when it was said to the agent in a session). The bold title is a few words naming the decision, not the instruction's full text. The sentences after it say, in plain words, what was decided, what it was chosen over when there was a real alternative, and how the PR carries it out, linking the code or commit. A reviewer who reads only the lead lines should be able to follow the decisions without opening a toggle.
-  - **The `Details` toggle** holds the five sub-bullets, always in this order: `Context` (the situation and why it came up, with the person's short quote when they gave a reason), `Benefits`, `Costs`, `Risks`, `Alternatives` (what else was considered and why it was not chosen). Keep each to one or two lines; put long reasoning in the PR's own `Details`. Write `None` rather than dropping a sub-bullet. The toggle is indented to the list item, with a blank line after `<summary>` and before `</details>`, so it renders inside the list.
+  In the `Details` fold, under `### Decision Record`, one block per decision, in the same order and headed by the same bold title:
+
+  ```markdown
+  **Keep the retry policy unchanged**
+  - Context: the new classifier could have replaced the schedule, and Devon wanted no behavior change in retries ("keep retries as they are").
+  - Benefits: retry timing is identical to today.
+  - Costs: the classifier keeps a mapping layer it could otherwise drop.
+  - Risks: the mapping can drift from the schedule table; a test pins it.
+  - Alternatives: derive the schedule from the new classes (rejected: changes retry timing).
+  ```
+
+  - **The lead line** is `**<Who>** (<where>): **<Decision title>.** <one or two sentences>`. Name who made the decision and where (link the thread, comment or doc when it can be opened; "chat" when it was said to the agent in a session). The bold title is a few words naming the decision, not the instruction's full text. The sentences after it say, in plain words, what was decided, what it was chosen over when there was a real alternative, and how the PR carries it out, linking the code or commit. A reviewer who reads only the lead lines should be able to follow the decisions without opening the fold.
+  - **The supporting bullets** live in the `Details` fold, never under the entry in the visible body. Each decision has the five sub-bullets, always in this order: `Context` (the situation and why it came up, with the person's short quote when they gave a reason), `Benefits`, `Costs`, `Risks`, `Alternatives` (what else was considered and why it was not chosen). Keep each to one or two lines. Write `None` rather than dropping a sub-bullet.
   - Include decisions that shaped scope, design or behavior, and any that were deliberately **not** followed (record the instruction as the title, the reason in the lead sentences, and the person's quote in `Context`). Leave out routine ones (fix a typo, rename a variable).
   - It is not a changelog: do not list changes nobody asked for; those belong in `What` and `Details`.
   - Only human decisions go in the record. A choice the agent made itself (a scope limit, default, flag, rollout gate, list of statuses or types, naming, or where code lives) is not a decision entry, even labelled as the agent's: describe it in `What` or `Details` as how the change works, without attribution.
@@ -71,32 +62,47 @@ The first lines of the body, above `## Why` and with no heading of their own. Ti
   - **Quote, do not reword.** When the person gave a reason, put a short verbatim quote in `Context`. Never tidy or invent a quote, and never supply a rationale and attribute it to them.
   - **A brief is not a source.** When another agent, a summary or a delegation brief supplies the decisions, check each attribution against the original conversation, review comment or thread before publishing. A brief that says "put these in the record" does not make them the author's; decisions in it that the author never stated are left out.
   - **When you delegate the description,** write each human decision into the brief with who made it and their words, leave your own choices out of the decisions, and tell the agent to attribute exactly as given.
-- **Verified**: the testing done **in addition to** the normal tests and checks, a `Coverage` list of what is and is not tested, and a `Not verified` list. Do not list or count what CI already runs (unit tests, lint, type checks, build, pre-commit): the PR's checks show it. Include what CI cannot show:
+- **Verified**: one line per check done **in addition to** the normal tests and checks, then a short `Not verified` list. Do not list or count what CI already runs (unit tests, lint, type checks, build, pre-commit): the PR's checks show it. Include what CI cannot show:
   - a manual or end-to-end run, with the exact command and a link to the output or run;
   - a run on real data or in the real tool (a render, a deployed environment, a devspace);
   - a before/after comparison harness, a benchmark, a load or performance check, screenshots for a visual change.
 
-  For matrix testing (many inputs, configs, providers, models or event types), give one or two sentences: which dimensions were covered (for example "every provider x every reasoning effort") and any surprise or difference found. Put the full tables, counts and per-case results in `Details`.
+  For matrix testing (many inputs, configs, providers, models or event types), give one or two sentences: which dimensions were covered (for example "every provider x every reasoning effort") and any surprise or difference found.
 
-  Then a `Coverage` list describing what the PR's tests do and do not exercise, so a reviewer sees the gaps without reading the test files. Describe behavior and paths, not counts, and name the kind of test each is (unit test with fakes, integration test against a real service or environment, a comparison harness, none):
+  The visible `Verified` is those one-line results and the `Not verified` list. What supports them goes in the `Details` fold under `### Verified`: the `Coverage` list, exact commands and output, full tables, counts and per-case results, and reproduction steps.
+
+  `Coverage` (in the fold) describes what the PR's tests do and do not exercise, so a reviewer sees the gaps without reading the test files. Describe behavior and paths, not counts, and name the kind of test each is (unit test with fakes, integration test against a real service or environment, a comparison harness, none):
   - `Tested`: each behavior or path that has an automated test, and by what kind. Say when a test uses a fake where the real dependency matters (for example "the provider call is faked").
   - `Not tested`: each behavior or path with no automated test of any kind, including paths covered only by a fake, and why when it is known (no credentials in CI, no environment, not worth a test). Do not repeat CI totals.
 
   `Coverage` is about the tests that exist in the repo after the PR; `Not verified` is about what nobody observed. A path can be in both (no test and never run) or only in `Coverage` (tested with fakes, and the real run was done once by hand under Verified).
 
-  Then an explicit `Not verified` list: what was reasoned but not observed, what could not be run (credentials, Linux vs macOS, prod behavior, load), and known caveats. Never claim a check passed that you did not observe; keep "observed" and "reasoned" separate. If the only verification is what CI runs, write "Covered by CI." and keep the `Not verified` list. A visual or UI change includes screenshots of the changed parts and the states a reviewer needs.
-- **Details**: everything else, in a collapsible toggle so the body stays short:
+  `Not verified` stays visible, one line per item: what was reasoned but not observed, what could not be run (credentials, Linux vs macOS, prod behavior, load), and known caveats. Never claim a check passed that you did not observe; keep "observed" and "reasoned" separate. If the only verification is what CI runs, write "Covered by CI." and keep the `Not verified` list. A visual or UI change includes screenshots of the changed parts and the states a reviewer needs.
+- **Details**: one collapsed fold at the very end of the body, just above the attribution line, so the visible body stays short. It is a `<details>` element, not a `##` section: never write a `## Details` heading, and never leave its content (a table, a list) outside the element.
 
   ```
   <details>
   <summary>Details</summary>
 
-  ...content...
+  ### Decision Record
+  ...
+
+  ### Verified
+  ...
+
+  ### Changes
+  ...
 
   </details>
   ```
 
-  The blank line after `<summary>` is required so markdown renders. Put here: file-by-file or job-by-job changes, event/decision matrices and tables, full verification output and matrix results, edge cases, rejected alternatives, follow-ups, rollout/rollback notes, caveats and risks, lock/dependency changes. Mermaid diagrams may appear here too. Details must still be accurate and scannable: use headings and tables, not walls of text.
+  The blank line after `<summary>` is required so markdown renders. Inside it use `###` headings, in this order, omitting a heading that has nothing under it:
+  - `### Decision Record`: the Context/Benefits/Costs/Risks/Alternatives bullets for each decision (see `Decision Record`).
+  - `### Verified`: the `Coverage` list, exact commands and output links, matrix results and per-case tables, reproduction steps (see `Verified`).
+  - `### Changes`: the file-by-file or job-by-job table.
+  - Anything else: mechanics, event/decision matrices, edge cases, rejected alternatives, follow-ups, rollout/rollback notes, caveats and risks, lock/dependency changes. Mermaid diagrams may appear here too.
+
+  Details must still be accurate and scannable: use headings and tables, not walls of text.
 
 ## Before and After
 
@@ -166,12 +172,12 @@ When one is worth it:
 ## Improving an existing description
 
 1. Read the diff and the existing body: `gh pr view <n> --json title,body,files,commits` and `gh pr diff <n>`.
-2. Sort the old body into high level vs detail. Move all detail into `Details`. Move the ticket, stack and design lines into the header block. Add `Before` and `After` excerpts of the relevant parts of the change. Fold a `How` section into `What` (a short list) and `Details` (the mechanics). Add a `Decision Record` from the decisions and instructions in the old body, the PR's review threads and the conversation that produced it. Cut `Verified` down to testing beyond CI. Add a diagram only if it passes the test in "Mermaid diagrams"; remove one that does not. Turn prose that explains a concept into bulleted or numbered lists.
+2. Sort the old body into high level vs detail. Put `Why` before `What`. Move all detail into the `Details` fold (a `<details>` element, never a `## Details` heading), including the supporting bullets of each Decision Record entry, the `Verified` coverage list and full results, and the file table. Move the ticket, stack and design lines into the header block. Add `Before` and `After` excerpts of the relevant parts of the change. Fold a `How` section into `What` (a short list) and `Details` (the mechanics). Add a `Decision Record` (lead lines visible, supporting bullets in the fold) from the decisions and instructions in the old body, the PR's review threads and the conversation that produced it. Cut the visible `Verified` down to one line per check beyond CI plus `Not verified`. Add a diagram only if it passes the test in "Mermaid diagrams"; remove one that does not. Turn prose that explains a concept into bulleted or numbered lists.
 3. Check every attribution in the `Decision Record` against the source (see "Attribute only what the person said"): for each entry naming a person, find the message, comment or thread with their words and put a quote in `Context`; recheck whether the conversation later confirmed or changed the decision; remove any entry without their words from the record (describe it in `What` or `Details` if it still matters). Replace any chat shorthand (`D1`, `O1`, "option 2") with plain words. Do this even when the entries came from an old body, a summary or another agent's brief.
 4. Keep every verified fact, caveat and link from the old body. Relocate information, never drop it. Re-check cheap claims against the repo instead of trusting old text.
 5. Link every file, class, function, variable, key and statement mentioned (see "Link every code reference"): get the PR head SHA and the `main` SHA first, then link PR-changed code to the PR SHA and untouched code to `main`.
 6. Write the new body to a temp file and run `gh pr edit <n> --body-file <file>`. Never pass large bodies inline.
-7. Re-read the result: `gh pr view <n> --json body --jq .body`. Check any mermaid fences and the `<details>` structure are intact, and spot-check that code links resolve.
+7. Re-read the result: `gh pr view <n> --json body --jq .body`. Check any mermaid fences and the `<details>` structure are intact, and spot-check that code links resolve. Check `Why` comes before `What`, and that `Details` is a real `<details>` fold with no `## Details` heading and no content outside it.
 8. If the body has a mermaid diagram, validate it before publishing if a validator is available: `npx -y -p @mermaid-js/mermaid-cli mmdc -i diagram.mmd -o /tmp/out.svg`, or parse with the `mermaid` package. If it cannot be installed, say so and keep the diagram simple.
 
 ## Template
@@ -204,47 +210,38 @@ Design: [title](https://example.com/design)
 
 ## Decision Record
 - **<Who>** (<where, linked>): **<Decision title>.** <What was decided, what it was chosen over, and how the PR carries it out, with a code or commit link.>
-  <details>
-  <summary>Details</summary>
-
-  - Context: <the situation and why it came up; the person's short quote when they gave a reason>
-  - Benefits: ...
-  - Costs: ...
-  - Risks: ...
-  - Alternatives: ...
-
-  </details>
 - **<Who>** (<where>): **<An instruction deliberately not followed.>** <What was asked and why the PR does not do it.>
-  <details>
-  <summary>Details</summary>
-
-  - Context: ...
-  - Benefits: ...
-  - Costs: ...
-  - Risks: ...
-  - Alternatives: ...
-
-  </details>
 
 ## Verified
-- <testing beyond CI: the command or run and a link to its output>.
-- <matrix testing: the dimensions covered and any surprise; full results in Details>.
+- <testing beyond CI, one line: the command or run and a link to its output>.
+- <matrix testing: the dimensions covered and any surprise>.
 
+Not verified:
+- <reasoned but not observed, or could not run; one line each>
+
+<details>
+<summary>Details</summary>
+
+### Decision Record
+**<Decision title>**
+- Context: <the situation and why it came up; the person's short quote when they gave a reason>
+- Benefits: ...
+- Costs: ...
+- Risks: ...
+- Alternatives: ...
+
+### Verified
 Coverage:
 - Tested: <behavior or path> by <unit test with fakes | integration test against a real service | harness>.
 - Not tested: <behavior or path with no automated test, and why>.
 
-Not verified:
-- <reasoned but not observed, or could not run>
-
-<details>
-<summary>Details</summary>
+<exact commands, links to output, per-case and matrix results, reproduction steps>
 
 ### Changes
 | File or job | Change | Why |
 |---|---|---|
 
-### Mechanics, matrix results, edge cases, alternatives, rollout, follow-ups
+### Mechanics, edge cases, alternatives, rollout, follow-ups
 ...
 
 </details>
