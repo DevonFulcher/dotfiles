@@ -9,7 +9,8 @@ description: Follow these guidelines for authoring or reviewing Python code.
 - Avoid putting code in `__init__.py` files.
 
 ## Functions and typing
-- Prefer organizing related functions into cohesive classes rather than standalone module-level functions. Use an existing class when the behavior belongs to it, or a dedicated class for a workflow such as selection or execution. Keep the workflow's public methods and private helpers together. Prefer instance methods when behavior belongs to an object's workflow or uses its state. Use class methods when subclass-aware behavior or construction is needed, and use static methods sparingly for cohesive operations that genuinely need no instance or class state. Do not add irrelevant instance dependencies just to avoid a static or class method; a standalone function is also appropriate when the operation has no natural class owner.
+- Prefer organizing related functions into cohesive classes rather than standalone module-level functions.
+- Use static methods sparingly for cohesive operations that genuinely need no instance or class state.
 - Always include type annotations for function inputs and outputs.
 - Prefix methods with `_` when their only callers are within their own class or in tests. Tests do not make a method public. Preserve names required by inherited or framework contracts, including Python special methods.
 - Never add parameters that are unused by callers to a function, even if the parameters have a default value.
@@ -22,7 +23,7 @@ def build(project_id: int, *, name: str, owner: str) -> str:
   return f"{project_id}:{name}:{owner}"
 ```
 
-- Prefer methods on a class to separate module-level functions that take an instance of it, especially when the function is a relatively straightforward check or mapping over that class's own attributes. The behavior then travels with the type: callers find it by autocompletion, subclasses can override it, and a new subclass can't forget it. Logic spanning several unrelated types can belong to a dedicated workflow class, keeping orchestration out of passive data classes.
+- Prefer methods on a class to separate module-level functions that take an instance of it.
 
 Bad (a check on a class's own data lives elsewhere):
 ```python
@@ -42,18 +43,16 @@ class Token:
 
 ## Data modeling
 - Prefer Pydantic models or dataclasses to dictionaries in net-new code.
-- Prefer immutable value and configuration objects when their meaning stays fixed through a workflow. Derive redundant views from their fields; keep request-specific policy and decisions separate when they have a different lifetime.
+- Prefer immutable value and configuration objects when their meaning stays fixed through a workflow.
 - Keep property getters read-only and free of observable side effects: no mutation, I/O, feature-flag reads, or logging. Use explicit methods for those operations.
 - Avoid classes that merely copy the same fields to label successive workflow stages. Use a separate type when it enforces a distinct invariant or representation. Do not reconstruct an unchanged value just to attach policy; reconstruction is appropriate for a value whose meaning has changed.
 - When tightening existing code that already passes dicts around, a `TypedDict` is
   usually the right minimal step: it names the keys and types the values without
   changing call sites or runtime behavior. Prefer it to leaving `dict[str, Any]` in
-  place, and to a wholesale restructure into a model when the dict is only built,
-  read, and unpacked. Reach for a dataclass or Pydantic model instead once the type
-  needs behavior, validation, or invariants.
+  place.
 - Prefer distinct types over strings, including for IDs.
 - Use enums for categorical data rather than strings, when the categories carry no extra data.
-- Keep data about a thing on the thing itself. When items need extra attributes (a display name, a capability, an owner), make those attributes fields of a frozen dataclass. Don't keep separate dicts or sets keyed by the item elsewhere in the module: nothing forces anyone to update them when an item is added, so they drift. Don't reach for enum tricks either, such as a custom `__new__` that packs extra arguments into members; a plain dataclass is easier to read. If callers need to iterate over every item, give the container an explicit `all()`.
+- Keep data about a thing on the thing itself. When items need extra attributes (a display name, a capability, an owner), make those attributes fields of a frozen dataclass. Don't keep separate dicts or sets keyed by the item elsewhere in the module. Don't reach for enum tricks either, such as a custom `__new__` that packs extra arguments into members; a plain dataclass is easier to read.
 
 Bad (attribute kept in a separate set):
 ```python
@@ -147,7 +146,35 @@ match shape.kind:
 - `match` on classes stays right for a closed discriminated union (a fixed set of data variants such as `Ok | Error`): the type checker proves it exhaustive, and adding an operation doesn't touch every variant. It also stays right at the boundary with types you do not own (SDK, stdlib and other third-party classes): branch on them in one place to convert them into your own type, and use that type everywhere else. Separate `except` clauses for different exception types are fine, since that is the language's own dispatch.
 - Don't add inheritance only to avoid a branch; where the variants share no behavior, prefer the closed union or composition.
 
-Bad (every new subclass must be remembered in each of these chains):
+Bad (behavior intrinsic to the type lives in a chain outside it; a new subclass silently gets the default):
+```python
+def retry_delay(error: AppError) -> float:
+  if isinstance(error, RateLimitedError):
+    return error.retry_after
+  if isinstance(error, TimeoutError_):
+    return 1.0
+  return 0.0
+```
+
+Good (an abstract method on the base; a subclass that does not answer cannot be instantiated):
+```python
+class AppError(Exception, ABC):
+  @abstractmethod
+  def retry_delay(self) -> float: ...
+
+class RateLimitedError(AppError):
+  def __init__(self, retry_after: float) -> None:
+    self.retry_after = retry_after
+
+  def retry_delay(self) -> float:
+    return self.retry_after
+
+class NotFoundError(AppError):
+  def retry_delay(self) -> float:
+    return 0.0  # retrying cannot help
+```
+
+Bad (every new subclass must be remembered in each of these chains; this one maps to another layer):
 ```python
 def http_status(error: AppError) -> int:
   match error:
