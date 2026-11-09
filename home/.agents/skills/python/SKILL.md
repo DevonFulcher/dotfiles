@@ -202,7 +202,7 @@ class NotFoundError(AppError):
     return 0.0  # retrying cannot help
 ```
 
-- Give every loop in production code a fixed upper bound visible at the loop. Don't write `while True` (or a `while` whose only exit is a condition computed inside the body) for polling or draining; iterate over a bounded `range` or a finite collection, and handle running out of attempts explicitly. Retry with tenacity, not a hand-written loop. Reserve an unbounded loop for a process that is meant to run until shutdown (a worker or server loop), and say so in a comment.
+- Give every loop in production code a fixed upper bound visible at the loop. Don't write `while True` (or a `while` whose only exit is a condition computed inside the body) for polling or draining; iterate over a bounded `range` or a finite collection, and handle running out of attempts explicitly. Reserve an unbounded loop for a process that is meant to run until shutdown (a worker or server loop), and say so in a comment.
 
 Bad (the bound is hidden inside the body):
 ```python
