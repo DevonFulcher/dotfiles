@@ -46,11 +46,11 @@
 - Create the stacked branch with `toolbelt git append` before you start editing, not after. `append` commits any uncommitted changes onto the current branch as a checkpoint before it forks, so changes made first end up on the wrong branch and in its PR.
 - Before editing, verify the branch and PR match the task. Keep separate tasks on separate branches and PRs; for unrelated work, create a sibling branch instead of adding it to whichever PR is currently checked out.
 - If the work has no Jira ticket, create one before running `toolbelt git append` (it requires `--task`) and pass its key. Don't stop to ask for a key. Personal repos such as toolbelt and dotfiles don't need a ticket.
-- Where a fix for PR feedback goes follows this flow. A comment or bot suggestion is not critical just because it is a comment on the PR. Adding, removing or editing tests in response to PR feedback goes on the PR itself, never a stacked branch, even on an approved PR.
+- Where a fix for PR feedback goes follows this flow. A comment or bot suggestion is not critical just because it is a comment on the PR. Adding, removing or editing tests in response to PR feedback goes on the PR itself, never a stacked branch, even on an approved PR. The same holds for a wording-only fix (alert or log message text, a label, a name, a typo) and for any change of a few lines that touches the same file the PR already changes and alters no behavior: put it on the PR's own branch even when the PR is approved and not a draft. A stacked branch needs its own review, so open one only when the change is large enough to deserve that.
 
   ```mermaid
   flowchart TD
-      A([Feedback or a needed change on a PR]) --> C{Docs, comment or<br/>test change only?}
+      A([Feedback or a needed change on a PR]) --> C{Docs, comment, test or<br/>wording-only change?}
       C -- yes --> IN
       C -- no --> D{Is the PR a draft?}
       D -- yes --> IN
