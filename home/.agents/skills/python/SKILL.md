@@ -81,12 +81,19 @@ def load(row: UserRow) -> User: ...
 - Prefer immutable value and configuration objects when their meaning stays fixed through a workflow.
 - Keep property getters read-only and free of observable side effects: no mutation, I/O, feature-flag reads, or logging. Use explicit methods for those operations.
 
-Bad:
+Bad (reading the property changes state, so two reads differ):
 ```python
 @property
-def total(self) -> int:
-  logger.info("reading total")
-  return self._total
+def next_id(self) -> int:
+  self._counter += 1
+  return self._counter
+```
+
+Good (the change is visible in the call):
+```python
+def allocate_id(self) -> int:
+  self._counter += 1
+  return self._counter
 ```
 
 - Avoid classes that merely copy the same fields to label successive workflow stages. Use a separate type when it enforces a distinct invariant or representation. Do not reconstruct an unchanged value just to attach policy; reconstruction is appropriate for a value whose meaning has changed.
