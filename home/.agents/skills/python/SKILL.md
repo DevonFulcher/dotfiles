@@ -23,6 +23,25 @@ def build(project_id: int, *, name: str, owner: str) -> str:
   return f"{project_id}:{name}:{owner}"
 ```
 
+- Inline a function whose body is a single expression: write the expression at its call sites instead of naming it. Keep it only when it is a method on the class that owns the data it reads (next bullet), or its name and signature are required by an inherited or framework contract.
+
+Bad (a one-expression helper):
+```python
+def _is_adult(age: int) -> bool:
+  return age >= 18
+
+if _is_adult(age):
+  ...
+```
+
+Good:
+```python
+if age >= 18:
+  ...
+```
+
+When the same expression is needed in several places in one function, bind it to a local variable once instead of repeating it or naming a helper.
+
 - Prefer methods on a class to separate module-level functions that take an instance of it.
 
 Bad (a check on a class's own data lives elsewhere):
