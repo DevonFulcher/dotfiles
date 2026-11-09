@@ -96,23 +96,6 @@ def allocate_id(self) -> int:
   return self._counter
 ```
 
-- Avoid classes that merely copy the same fields to label successive workflow stages. Use a separate type when it enforces a distinct invariant or representation. Do not reconstruct an unchanged value just to attach policy; reconstruction is appropriate for a value whose meaning has changed.
-
-Bad (the stages share every field):
-```python
-@dataclass(frozen=True)
-class RawOrder:
-  id: OrderId
-  total: Decimal
-
-@dataclass(frozen=True)
-class ValidatedOrder:
-  id: OrderId
-  total: Decimal
-```
-
-Good: one `Order`, and a second type only when it enforces something the first does not.
-
 - Prefer distinct types over strings, including for IDs.
 - Use enums for categorical data rather than strings, when the categories carry no extra data.
 - Keep data about a thing on the thing itself. When items need extra attributes (a display name, a capability, an owner), make those attributes fields of a frozen dataclass. Don't keep separate dicts or sets keyed by the item elsewhere in the module. Don't reach for enum tricks either, such as a custom `__new__` that packs extra arguments into members; a plain dataclass is easier to read.
