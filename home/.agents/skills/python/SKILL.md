@@ -160,8 +160,6 @@ match shape.kind:
 ```
 
 - In an open class hierarchy you own (one that others may subclass), don't branch on a value's class, neither with `isinstance` nor with `match` and class patterns. Each such branch is a place a new subclass can be forgotten, and they pile up as the codebase grows (a status mapper here, a message mapper there, a classifier elsewhere, all keyed on the same hierarchy). Put the answer on the type instead: an abstract method or property on an `ABC` base that every subclass must implement, so a new subclass cannot be instantiated without answering.
-  - Behavior that is intrinsic to the type is an abstract method (`error.retry_delay()`).
-  - A concern that belongs to another layer (HTTP status, rendering, serialization, telemetry) does not go on the domain class. Put a discriminator on the type, an abstract property returning an enum (`error.kind`), and let each layer map it with an exhaustive `match` on the enum. That is matching on a value, so it stays preferred.
 
 Bad (behavior intrinsic to the type lives in a chain outside it; a new subclass silently gets the default):
 ```python
@@ -189,47 +187,6 @@ class RateLimitedError(AppError):
 class NotFoundError(AppError):
   def retry_delay(self) -> float:
     return 0.0  # retrying cannot help
-```
-
-- `match` on classes stays right for a closed discriminated union (a fixed set of data variants such as `Ok | Error`): the type checker proves it exhaustive, and adding an operation doesn't touch every variant. It also stays right at the boundary with types you do not own (SDK, stdlib and other third-party classes): branch on them in one place to convert them into your own type, and use that type everywhere else. Separate `except` clauses for different exception types are fine, since that is the language's own dispatch.
-- Don't add inheritance only to avoid a branch; where the variants share no behavior, prefer the closed union or composition.
-
-Bad (every new subclass must be remembered in each of these chains; this one maps to another layer):
-```python
-def http_status(error: AppError) -> int:
-  match error:
-    case NotFoundError():
-      return 404
-    case ConflictError():
-      return 409
-    case _:
-      return 500
-```
-
-Good (the type states its kind; the web layer maps the kind exhaustively):
-```python
-class ErrorKind(Enum):
-  NOT_FOUND = "not_found"
-  CONFLICT = "conflict"
-
-class AppError(Exception, ABC):
-  @property
-  @abstractmethod
-  def kind(self) -> ErrorKind: ...
-
-class NotFoundError(AppError):
-  @property
-  def kind(self) -> ErrorKind:
-    return ErrorKind.NOT_FOUND
-
-def http_status(error: AppError) -> int:
-  match error.kind:
-    case ErrorKind.NOT_FOUND:
-      return 404
-    case ErrorKind.CONFLICT:
-      return 409
-    case _:
-      assert_never(error.kind)
 ```
 
 - Give every loop in production code a fixed upper bound visible at the loop. Don't write `while True` (or a `while` whose only exit is a condition computed inside the body) for retries, polling or draining; iterate over a bounded `range` or a finite collection, and handle running out of attempts explicitly. Reserve an unbounded loop for a process that is meant to run until shutdown (a worker or server loop), and say so in a comment.
@@ -323,7 +280,7 @@ def label(count: int | None) -> str:
 - Avoid unpacking a dict into call arguments (`f(**fields)`) when the argument list is
   small and known. Write the arguments out so the call site shows what is being
   passed. Exception: unpacking a `TypedDict` into a signature whose keyword
-  parameters it mirrors is acceptable when tightening existing code, because mypy
+  parameters it mirrors is acceptable when tightening existing code, because the type checker
   checks the keys and value types against the signature.
 - Avoid parameter-driven branching for core behavior selection. Prefer explicit composition.
 
