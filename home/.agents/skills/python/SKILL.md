@@ -2,6 +2,10 @@
 name: python
 description: Follow these guidelines for authoring or reviewing Python code.
 ---
+## Scope
+- These rules apply to code you write or touch. Don't rewrite untouched code to match them.
+- Examples below use bare functions for brevity; in real code they usually belong on a class (see Functions and typing).
+
 ## Imports and layout
 - Prefer imports at the top of files. Don't import modules mid-file unless there is a strong, explicit reason.
 - Prefer absolute imports over relative imports.
@@ -9,40 +13,8 @@ description: Follow these guidelines for authoring or reviewing Python code.
 - Avoid putting code in `__init__.py` files.
 
 ## Functions and typing
-- Prefer organizing related functions into cohesive classes rather than standalone module-level functions.
+- Prefer cohesive classes to standalone module-level functions, and a method on the class that owns the data to a separate function that takes an instance of it.
 - Use static methods sparingly for cohesive operations that genuinely need no instance or class state.
-- Always include type annotations for function inputs and outputs.
-- Prefix methods with `_` when their only callers are within their own class or in tests. Tests do not make a method public. Preserve names required by inherited or framework contracts, including Python special methods.
-- Never add parameters that are unused by callers to a function, even if the parameters have a default value.
-- Only use default arguments when there is a reason to do so.
-- When adjacent parameters share the same type, use `*` to avoid callers mixing up parameter order.
-
-Example:
-```python
-def build(project_id: int, *, name: str, owner: str) -> str:
-  return f"{project_id}:{name}:{owner}"
-```
-
-- Inline a function whose body is a single expression: write the expression at its call sites instead of naming it. Keep it only when it is a method on the class that owns the data it reads (next bullet), or its name and signature are required by an inherited or framework contract.
-
-Bad (a one-expression helper):
-```python
-def _is_adult(age: int) -> bool:
-  return age >= 18
-
-if _is_adult(age):
-  ...
-```
-
-Good:
-```python
-if age >= 18:
-  ...
-```
-
-When the same expression is needed in several places in one function, bind it to a local variable once instead of repeating it or naming a helper.
-
-- Prefer methods on a class to separate module-level functions that take an instance of it.
 
 Bad (a check on a class's own data lives elsewhere):
 ```python
@@ -60,15 +32,80 @@ class Token:
     return self.expires_at <= now
 ```
 
+- Always include type annotations for function inputs and outputs.
+- Prefix methods with `_` when their only callers are within their own class or in tests. Tests do not make a method public. Preserve names required by inherited or framework contracts, including Python special methods.
+- Never add parameters that no caller uses, even with a default value. Use default arguments only when there is a reason to.
+- When adjacent parameters share the same type, use `*` to avoid callers mixing up parameter order.
+
+Example:
+```python
+def build(project_id: int, *, name: str, owner: str) -> str:
+  return f"{project_id}:{name}:{owner}"
+```
+
+- Inline a function whose body is a single expression: write the expression at its call sites instead of naming it. Keep it only when it is a method on the class that owns the data it reads, or its name and signature are required by an inherited or framework contract. When the same expression is needed in several places in one function, bind it to a local variable once.
+
+Bad (a one-expression helper):
+```python
+def _is_adult(age: int) -> bool:
+  return age >= 18
+
+if _is_adult(age):
+  ...
+```
+
+Good:
+```python
+if age >= 18:
+  ...
+```
+
 ## Data modeling
 - Prefer Pydantic models or dataclasses to dictionaries in net-new code.
+- When tightening existing code that already passes dicts around, a `TypedDict` is usually the right minimal step: it names the keys and types the values without changing call sites or runtime behavior.
+
+Bad:
+```python
+def load(row: dict[str, Any]) -> User: ...
+```
+
+Good:
+```python
+class UserRow(TypedDict):
+  id: int
+  name: str
+
+def load(row: UserRow) -> User: ...
+```
+
 - Prefer immutable value and configuration objects when their meaning stays fixed through a workflow.
 - Keep property getters read-only and free of observable side effects: no mutation, I/O, feature-flag reads, or logging. Use explicit methods for those operations.
+
+Bad:
+```python
+@property
+def total(self) -> int:
+  logger.info("reading total")
+  return self._total
+```
+
 - Avoid classes that merely copy the same fields to label successive workflow stages. Use a separate type when it enforces a distinct invariant or representation. Do not reconstruct an unchanged value just to attach policy; reconstruction is appropriate for a value whose meaning has changed.
-- When tightening existing code that already passes dicts around, a `TypedDict` is
-  usually the right minimal step: it names the keys and types the values without
-  changing call sites or runtime behavior. Prefer it to leaving `dict[str, Any]` in
-  place.
+
+Bad (the stages share every field):
+```python
+@dataclass(frozen=True)
+class RawOrder:
+  id: OrderId
+  total: Decimal
+
+@dataclass(frozen=True)
+class ValidatedOrder:
+  id: OrderId
+  total: Decimal
+```
+
+Good: one `Order`, and a second type only when it enforces something the first does not.
+
 - Prefer distinct types over strings, including for IDs.
 - Use enums for categorical data rather than strings, when the categories carry no extra data.
 - Keep data about a thing on the thing itself. When items need extra attributes (a display name, a capability, an owner), make those attributes fields of a frozen dataclass. Don't keep separate dicts or sets keyed by the item elsewhere in the module. Don't reach for enum tricks either, such as a custom `__new__` that packs extra arguments into members; a plain dataclass is easier to read.
@@ -94,9 +131,7 @@ class Plans:
   PRO = Plan("pro", paid=True)
 ```
 
-- Prefer discriminated unions for variants with different shapes; include a literal tag field and exhaustively match on it.
-- Be pedantic with modeling types.
-- Avoid union-typed fields (including `| None`) when the value correlates with other fields' validity/requiredness, or when code branches on it at more than one call site. Model it as a discriminated union of classes instead, so exhaustive `match` catches new call sites when variants change.
+- Prefer discriminated unions for variants with different shapes: include a literal tag field and exhaustively match on it. Avoid union-typed fields (including `| None`) when the value correlates with other fields' validity or requiredness, or when code branches on it at more than one call site; a discriminated union lets exhaustive `match` catch new call sites when variants change.
 
 Bad (correlated union fields — invalid states representable):
 ```python
@@ -123,24 +158,10 @@ Response = Ok | Error
 ```
 
 ## Control flow
-- Prefer match-case statements instead of if-else.
+- Prefer match-case over if-else chains for enums, tags and structural patterns. Use a plain `if` for a simple condition.
 - Avoid nested and multi-line ternary operators (single expression if-else). Use a regular if-else statement instead.
 - Use `assert_never(*)` in `case _:` statements to ensure type safety.
 - To narrow a discriminated union (a `Union` of dataclasses/models tagged by a `Literal` field, per the Data modeling section), use `match`/`case` on the tag rather than `isinstance` checks — it stays exhaustive-checkable with `assert_never` and reads as one decision instead of a chain of type tests.
-
-Example:
-```python
-from typing import assert_never
-
-def to_label(kind: Kind) -> str:
-  match kind:
-    case Kind.FOO:
-      return "foo"
-    case Kind.BAR:
-      return "bar"
-    case _:
-      assert_never(kind)
-```
 
 Bad (isinstance narrowing on a tagged union):
 ```python
@@ -150,6 +171,8 @@ if isinstance(shape, Circle):
 
 Good (match on the tag):
 ```python
+from typing import assert_never
+
 match shape.kind:
   case ShapeKind.CIRCLE:
     return shape.radius
@@ -159,7 +182,7 @@ match shape.kind:
     assert_never(shape.kind)
 ```
 
-- In an open class hierarchy you own (one that others may subclass), don't branch on a value's class, neither with `isinstance` nor with `match` and class patterns. Each such branch is a place a new subclass can be forgotten, and they pile up as the codebase grows (a status mapper here, a message mapper there, a classifier elsewhere, all keyed on the same hierarchy). Put the answer on the type instead: an abstract method or property on an `ABC` base that every subclass must implement, so a new subclass cannot be instantiated without answering.
+- In an open class hierarchy you own (one that others may subclass), don't branch on a value's class with `isinstance` or `match` class patterns: each branch is a place a new subclass can be forgotten. Put the answer on the type instead: an abstract method or property on an `ABC` base, so a subclass that does not answer cannot be instantiated.
 
 Bad (behavior intrinsic to the type lives in a chain outside it; a new subclass silently gets the default):
 ```python
@@ -189,45 +212,72 @@ class NotFoundError(AppError):
     return 0.0  # retrying cannot help
 ```
 
-- Give every loop in production code a fixed upper bound visible at the loop. Don't write `while True` (or a `while` whose only exit is a condition computed inside the body) for retries, polling or draining; iterate over a bounded `range` or a finite collection, and handle running out of attempts explicitly. Reserve an unbounded loop for a process that is meant to run until shutdown (a worker or server loop), and say so in a comment.
+- Give every loop in production code a fixed upper bound visible at the loop. Don't write `while True` (or a `while` whose only exit is a condition computed inside the body) for polling or draining; iterate over a bounded `range` or a finite collection, and handle running out of attempts explicitly. Retry with tenacity, not a hand-written loop. Reserve an unbounded loop for a process that is meant to run until shutdown (a worker or server loop), and say so in a comment.
 
 Bad (the bound is hidden inside the body):
 ```python
-attempt = 0
 while True:
-  try:
-    return call()
-  except TransientError:
-    if attempt >= policy.max_retries:
-      raise
-    attempt += 1
+  page = fetch(cursor)
+  items.extend(page.items)
+  if page.next_cursor is None:
+    break
+  cursor = page.next_cursor
 ```
 
 Good (the bound is in the loop header):
 ```python
-for attempt in range(MAX_RETRIES):
-  try:
-    return call()
-  except TransientError:
-    wait(attempt)
-return call()
+for _ in range(MAX_PAGES):
+  page = fetch(cursor)
+  items.extend(page.items)
+  if page.next_cursor is None:
+    return items
+  cursor = page.next_cursor
+return PageLimitExceeded(MAX_PAGES)
+```
+
+## Error handling
+- Prefer errors as values to errors as exceptions. When failure is an expected outcome (not found, invalid input, rate limited), return a result that includes the failure, usually a discriminated union (`Found | NotFound`), instead of raising. The caller has to handle each case, and exhaustive `match` catches new failure variants.
+- Reserve exceptions for bugs and unrecoverable conditions (a violated invariant, a programmer error), and let them propagate. At a boundary with code that raises (stdlib, SDKs, httpx), catch once and convert to a value; don't let those exception types spread through your code.
+
+Bad (the caller can't see from the signature that it may fail):
+```python
+def find_user(user_id: UserId) -> User:
+  user = db.get(user_id)
+  if user is None:
+    raise UserNotFoundError(user_id)
+  return user
+```
+
+Good (the failure is part of the return type):
+```python
+@dataclass(frozen=True)
+class Found:
+  status: Literal["found"]
+  user: User
+
+@dataclass(frozen=True)
+class NotFound:
+  status: Literal["not_found"]
+  user_id: UserId
+
+def find_user(user_id: UserId) -> Found | NotFound:
+  user = db.get(user_id)
+  if user is None:
+    return NotFound("not_found", user_id)
+  return Found("found", user)
+
+result = find_user(user_id)
+match result.status:
+  case "found":
+    return result.user
+  case "not_found":
+    return None
+  case _:
+    assert_never(result.status)
 ```
 
 ## Async and concurrency
-- Prefer concurrent execution over sequential calls when awaiting multiple independent async functions.
-
-Bad (sequential):
-```python
-result_a = await fetch_a()
-result_b = await fetch_b()
-```
-
-Good (concurrent):
-```python
-result_a, result_b = await asyncio.gather(fetch_a(), fetch_b())
-```
-
-- Avoid awaiting inside loops; gather coroutines and await them concurrently.
+- Prefer concurrent execution over sequential awaits of independent async calls, including calls in a loop: gather the coroutines (`asyncio.gather(fetch_a(), fetch_b())` for a fixed few).
 
 Bad (sequential in loop):
 ```python
@@ -257,7 +307,7 @@ results = await asyncio.gather(*[fetch(item) for item in items])
   - Any union with `None` (e.g. `T | None`): compare with `is` / `is not None`, never `if x:`.
   - Any value where a falsy literal (`0`, `0.0`, `""`, `b""`, `[]`, `{}`, `False`) is a legal, meaningful value: compare to that literal explicitly.
 
-  Implicit truthiness on these types can silently change meaning without a type error when the schema, annotation, or upstream API evolves (e.g. a field gains `0` as a valid value, or a required field becomes optional). Truthiness on a plain `bool` or on a non-optional collection where emptiness is the question (`if items:`) is fine.
+  Truthiness on a plain `bool` or on a non-optional collection where emptiness is the question (`if items:`) is fine.
 
 Bad (truthy check on `int | None`—conflates `0` with absent):
 ```python
@@ -277,11 +327,18 @@ def label(count: int | None) -> str:
 
 - Avoid `getattr` and `hasattr`. Prefer explicit attributes or protocol/ABC interfaces (methods on a class hierarchy).
 - Avoid `args` and `kwargs` parameters. Use specific types.
-- Avoid unpacking a dict into call arguments (`f(**fields)`) when the argument list is
-  small and known. Write the arguments out so the call site shows what is being
-  passed. Exception: unpacking a `TypedDict` into a signature whose keyword
-  parameters it mirrors is acceptable when tightening existing code, because the type checker
-  checks the keys and value types against the signature.
+- Avoid unpacking a dict into call arguments (`f(**fields)`) when the argument list is small and known. Write the arguments out so the call site shows what is being passed. Exception: unpacking a `TypedDict` into a signature whose keyword parameters it mirrors is acceptable when tightening existing code, because the type checker checks the keys and value types against the signature.
+
+Bad:
+```python
+create_user(**fields)
+```
+
+Good:
+```python
+create_user(name=name, owner=owner)
+```
+
 - Avoid parameter-driven branching for core behavior selection. Prefer explicit composition.
 
 Bad (core behavior selection by flag):
