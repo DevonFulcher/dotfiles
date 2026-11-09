@@ -148,7 +148,7 @@ Response = Ok | Error
 ```
 
 ## Control flow
-- Prefer match-case over if-else chains for enums, tags and structural patterns. Use a plain `if` for a simple condition.
+- Encode the cases a value can be in as types (enums, tagged unions, structural patterns) and branch with match-case instead of if-else, so the type checker proves every case is handled. Reach for a plain `if` only for a simple boolean condition that no type models.
 - Avoid nested and multi-line ternary operators (single expression if-else). Use a regular if-else statement instead.
 - Use `assert_never(*)` in `case _:` statements to ensure type safety.
 - To narrow a discriminated union (a `Union` of dataclasses/models tagged by a `Literal` field, per the Data modeling section), use `match`/`case` on the tag rather than `isinstance` checks — it stays exhaustive-checkable with `assert_never` and reads as one decision instead of a chain of type tests.
