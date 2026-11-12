@@ -32,6 +32,33 @@ class Token:
     return self.expires_at <= now
 ```
 
+- Put behavior that varies per case in a method on a class, not in a callable stored in a field or passed as a parameter. Define an abstract method on an `ABC` base and have each case subclass it. A field that holds a function hides the contract, has nowhere to keep named state, and lets a case be built without supplying the behavior. A one-off callback to a library API (`key=` for `sorted`) is fine.
+
+Bad (the behavior is a function in a field; state hides in a closure):
+```python
+@dataclass(frozen=True)
+class Job:
+  run: Callable[[], Awaitable[Result]]
+
+Job(run=lambda: fetch(url, timeout))
+```
+
+Good (the behavior is a method; the state is named fields):
+```python
+@dataclass(frozen=True)
+class Job(ABC):
+  @abstractmethod
+  async def run(self) -> Result: ...
+
+@dataclass(frozen=True)
+class FetchJob(Job):
+  url: str
+  timeout: float
+
+  async def run(self) -> Result:
+    return await fetch(self.url, self.timeout)
+```
+
 - Always include type annotations for function inputs and outputs.
 - Prefix methods with `_` when their only callers are within their own class or in tests. Tests do not make a method public. Preserve names required by inherited or framework contracts, including Python special methods.
 - Never add parameters that no caller uses, even with a default value. Use default arguments only when there is a reason to.
